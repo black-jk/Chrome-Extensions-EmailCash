@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  
+  "name": "EmailCash Daily Operator",
+  
+  "version": "0.1",
+  
+  "author": "BlackJK",
+  
+  "description": "EmailCash Daily Operator",
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "http://emailcash.com.tw/*",
+        "http://www.emailcash.com.tw/*"
+      ],
+      "js": ["jquery-2.1.1.min.js", "operator.js"],
+      "run_at": "document_start",
+      "all_frames": true
+     }
+  ]
+}
