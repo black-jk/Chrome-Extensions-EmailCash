@@ -19,16 +19,19 @@
 	// ====================================================================================================
 	
 	function exec(fn, debug) {
+		/*/
 		fn();
-		/*
-		var script = document.createElement('script');
-		script.setAttribute("type", "application/javascript");
-		script.textContent = '(' + fn + ')();';
-		document.body.appendChild(script); // run the script
-		if (!debug) {
-			document.body.removeChild(script); // clean up
-		}
-		*/
+		/*/
+		$(document).ready(function() {
+			var script = document.createElement('script');
+			script.setAttribute("type", "application/javascript");
+			script.textContent = '(' + fn + ')();';
+			document.body.appendChild(script); // run the script
+			if (!debug) {
+				document.body.removeChild(script); // clean up
+			}
+		});
+		/**/
 	}
 	
 	// ====================================================================================================
@@ -211,8 +214,8 @@
 					
 					// ------------------------------
 					
-					//US.loadJQuery(window.ecAdview = function() {
-					window.ecAdview = function() {
+					US.loadJQuery(window.ecAdview = function() {
+					//window.ecAdview = function() {
 						var $topFrame = $(window.parent.frames["topFrame"].document);
 						
 						/// <span id="lblMsg"><span class="fbNeg"><img src="edmrating/images/topFrameCrossBox.gif" align="absmiddle" border="0" vspace="2">廣告e元獎勵已入帳</span></span>
@@ -243,9 +246,9 @@
 						/// retry later
 						US.debug("Retry later ...");
 						window.setTimeout(window.ecAdview, 1000);
-					};
-					window.ecAdview();
-					//});
+					//};
+					//window.ecAdview();
+					});
 					
 				} else
 				if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {
@@ -259,7 +262,7 @@
 						US.log("found: '" + $b.text().trim() + "'");
 						
 						US.log("call: barclick();");
-						barclick();
+						window.barclick();
 						
 						US.log("call: stopBar();");
 						stopBar();
