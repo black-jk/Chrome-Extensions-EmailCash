@@ -152,24 +152,26 @@
 					/// <a href="view_adc.asp?id=1711&amp;sid=543928748&amp;u=w214nt8f4f2o&amp;c=244F90E1C2BB7C6" target="_blank" title="UDN買東西">UDN買東西</a>
 					/// <a href="view_adc.asp?id=1895&amp;sid=543928748&amp;u=w214nt8f4f2o&amp;c=244F90E1C2BB7C6" target="_blank" title="IKEA 櫥櫃收納">IKEA 櫥櫃收納</a>
 					
-					patterns = [
-						"UDN買東西",
-						"IKEA 櫥櫃收納",
-						"momo購物超划算"
-					];
-					
-					var $href = undefined;
-					for (var i in patterns) {
-						var pattern = patterns[i];
-						$href = $("a[title='"+pattern+"'][target='_blank']:contains('"+pattern+"')").attr("href");
-						if ($href != "undefined" && $href != undefined && $href.length > 0) {
-							US.debug("Url fund: '"+pattern+"'.");
-							break;
+					var $href = (function() {
+						patterns = [
+							"UDN買東西",
+							"IKEA 櫥櫃收納",
+							"momo購物超划算"
+						];
+						
+						for (var i in patterns) {
+							var pattern = patterns[i];
+							$href = $("a[title='"+pattern+"'][target='_blank']:contains('"+pattern+"')").attr("href");
+							if ($href != "undefined" && $href != undefined && $href.length > 0) {
+								return $href;
+							}
+							US.debug("Missing url of '"+pattern+"'.");
 						}
-						US.debug("Missing url of '"+pattern+"'.");
-					}
+						
+						return undefined;
+					})();
 					
-					if ($href == "undefined" || $href == undefined) {
+					if (!$href) {
 						US.debug("Retry ...");
 						US.goto("http://www.emailcash.com.tw/adclicks.asp", 1000);
 						return;
@@ -177,15 +179,19 @@
 					
 					// ------------------------------
 					
+					/// open ad-view url
 					US.log("open url: '" + $href + "'  (waiting for callback)");
 					var adWindow = window.open($href, "", "width:100, height:100");
+					
+					/// set callback function and wait
 					adWindow.adClosed = function() {
 						adWindow.close();
 						US.debug("DONE");
 						US.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", 1000);
 						return;
 					};
-					US.debug("WAITING");
+					
+					US.debug("Waiting for callback ...");
 					
 				} else
 				if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/view_adc\.asp/)) {
