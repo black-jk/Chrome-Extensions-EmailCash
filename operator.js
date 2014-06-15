@@ -175,19 +175,7 @@
 						return;
 					}
 					
-					/*
-					//var $href = $("a[title='UDN買東西'][target='_blank'][href='^view_adc.asp']:contains('UDN買東西')").attr("href");
-					var $href = $("a[title='UDN買東西'][target='_blank']:contains('UDN買東西')").attr("href");
-					if ($href == "undefined" || $href == undefined) {
-						//var $href = $("a[title='momo購物超划算'][target='_blank'][href='^view_adc.asp']:contains('momo購物超划算')").attr("href");
-						var $href = $("a[title='momo購物超划算'][target='_blank']:contains('momo購物超划算')").attr("href");
-						if ($href == "undefined" || $href == undefined) {
-							US.debug("Missing url of 'UDN買東西' or 'momo購物超划算'. Retry ...");
-							US.goto("http://www.emailcash.com.tw/adclicks.asp", 1000);
-							return;
-						}
-					}
-					*/
+					// ------------------------------
 					
 					US.log("open url: '" + $href + "'  (waiting for callback)");
 					var adWindow = window.open($href, "", "width:100, height:100");
@@ -225,6 +213,7 @@
 						/// <span id="lblMsg"><span class="fbPos"><img src="edmrating/images/topFrameTickBox.gif" align="absmiddle" border="0" vspace="2">2 e元及1金幣已加入您的EmailCash帳戶</span></span>
 						var $span = $topFrame.find("#lblMsg").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
 						if ($span.length > 0) {
+							/// done
 							US.log($span.text().trim());
 							window.setTimeout(window.adClosed, 1000);
 							return;
