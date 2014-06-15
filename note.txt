@@ -1,0 +1,41 @@
+
+https://developer.chrome.com/extensions/manifest
+https://developer.chrome.com/extensions/match_patterns
+
+http://blog.kenyang.net/2010/07/chrome-app.html
+http://blog.longwin.com.tw/2014/01/chrome-extensions-plugin-develop-2014/
+
+http://ephrain.pixnet.net/blog/post/46329708-%5Bchrome-extension%5D-%E8%A2%AB-chrome-extension-manifest-v2-%E6%90%9E%E7%BF%BB
+
+
+
+
+[example]
+  manifest.example.json
+  
+  {
+    "name": "WebDriver",
+    "version": "1.9.19",
+    "description": "WebDriver extension for Chrome",
+    "browser_action": {
+      "default_title": "WebDriver",
+      "default_icon": "icons/free.png"
+    },
+    "background_page": "background.html",
+    "content_scripts": [
+      {
+        "matches": ["http://*/*", "https://*/*", "file:///*"],
+        "js": ["content_prescript.js"],
+        "run_at": "document_start",
+        "all_frames": true
+      },
+      {
+        "matches": ["http://*/*", "https://*/*", "file:///*"],
+        "js": ["utils.js", "content_script.js"],
+        "run_at": "document_end",
+        "all_frames": true
+      }
+    ],
+    "plugins": [{"path": "npchromedriver.dll", "public": true}],
+    "permissions": ["http://*/*", "tabs", "cookies"]
+  }
