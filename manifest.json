@@ -15,6 +15,19 @@
         "http://emailcash.com.tw/*",
         "http://www.emailcash.com.tw/*"
       ],
+      "exclude_matches": [
+        "http://emailcash.com.tw/login.asp*",
+        "http://www.emailcash.com.tw/login.asp*",
+        
+        "http://emailcash.com.tw/itemjoin.asp*",
+        "http://www.emailcash.com.tw/itemjoin.asp*",
+        
+        "http://emailcash.com.tw/account.asp*",
+        "http://www.emailcash.com.tw/account.asp*",
+        
+        "http://emailcash.com.tw/adtop.asp*",
+        "http://www.emailcash.com.tw/adtop.asp*"
+      ],
       "js": ["jquery-2.1.1.min.js", "operator.js"],
       "run_at": "document_start",
       "all_frames": true
