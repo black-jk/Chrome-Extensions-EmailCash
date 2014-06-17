@@ -3,7 +3,7 @@
   
   "name": "EmailCash Daily Operator",
   
-  "version": "1.0.2",
+  "version": "1.0.3",
   
   "author": "BlackJK",
   
@@ -21,9 +21,6 @@
         
         "http://emailcash.com.tw/itemjoin.asp*",
         "http://www.emailcash.com.tw/itemjoin.asp*",
-        
-        "http://emailcash.com.tw/account.asp*",
-        "http://www.emailcash.com.tw/account.asp*",
         
         "http://emailcash.com.tw/adtop.asp*",
         "http://www.emailcash.com.tw/adtop.asp*"

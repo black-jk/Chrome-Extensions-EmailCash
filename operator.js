@@ -316,14 +316,18 @@
     // ----------------------------------------------------------------------------------------------------
     
     var location = window.location.toString();
+    //US.debug("location: " + location);
     
     // exclude for http://www.emailcash.com.tw/login.asp
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login\.asp|itemjoin\.asp|FaceBook\/WebLogin.asp.*)$/)) {
       return;
     }
     
-    US.debug("location: " + location);
-    window.onload = US.main;
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(view_adc|account)\.asp/)) {
+      window.onload = US.main;
+    } else {
+      $(document).ready(US.main);
+    }
     
     // ----------------------------------------------------------------------------------------------------
     
