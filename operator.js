@@ -214,8 +214,8 @@
           
           // ------------------------------
           
-          US.loadJQuery(window.ecAdview = function() {
-          //window.ecAdview = function() {
+          US.loadJQuery(function() {
+            window.ecAdview = function() {
             var $topFrame = $(window.parent.frames["topFrame"].document);
             
             /// <span id="lblMsg"><span class="fbNeg"><img src="edmrating/images/topFrameCrossBox.gif" align="absmiddle" border="0" vspace="2">廣告e元獎勵已入帳</span></span>
@@ -246,8 +246,7 @@
             /// retry later
             US.debug("Retry later ...");
             window.setTimeout(window.ecAdview, 1000);
-          //};
-          //window.ecAdview();
+            };
           });
           
         } else
