@@ -216,36 +216,36 @@
           
           US.loadJQuery(function() {
             window.ecAdview = function() {
-            var $topFrame = $(window.parent.frames["topFrame"].document);
-            
-            /// <span id="lblMsg"><span class="fbNeg"><img src="edmrating/images/topFrameCrossBox.gif" align="absmiddle" border="0" vspace="2">廣告e元獎勵已入帳</span></span>
-            /// <span id="lblMsg"><span class="fbPos"><img src="edmrating/images/topFrameTickBox.gif" align="absmiddle" border="0" vspace="2">2 e元及1金幣已加入您的EmailCash帳戶</span></span>
-            var $span = $topFrame.find("#lblMsg").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
-            if ($span.length > 0) {
-              /// done
-              US.log($span.text().trim());
-              window.setTimeout(window.adClosed, 1000);
-              return;
-            }
-            
-            // ------------------------------
-            
-            /// set focus
-            $topFrame.find("#frameTop").attr("value", "1");
-            
-            /// jump second
-            $obj = $topFrame.find("#curSec");
-            if ($obj.length > 0) {
-              var second = parseInt($obj.text());
-              if (second > 1) {
-                $obj.text("1");
+              var $topFrame = $(window.parent.frames["topFrame"].document);
+              
+              /// <span id="lblMsg"><span class="fbNeg"><img src="edmrating/images/topFrameCrossBox.gif" align="absmiddle" border="0" vspace="2">廣告e元獎勵已入帳</span></span>
+              /// <span id="lblMsg"><span class="fbPos"><img src="edmrating/images/topFrameTickBox.gif" align="absmiddle" border="0" vspace="2">2 e元及1金幣已加入您的EmailCash帳戶</span></span>
+              var $span = $topFrame.find("#lblMsg").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
+              if ($span.length > 0) {
+                /// done
+                US.log($span.text().trim());
+                window.setTimeout(window.adClosed, 1000);
+                return;
               }
-              US.debug("curSec: " + second);
-            }
-            
-            /// retry later
-            US.debug("Retry later ...");
-            window.setTimeout(window.ecAdview, 1000);
+              
+              // ------------------------------
+              
+              /// set focus
+              $topFrame.find("#frameTop").attr("value", "1");
+              
+              /// jump second
+              $obj = $topFrame.find("#curSec");
+              if ($obj.length > 0) {
+                var second = parseInt($obj.text());
+                if (second > 1) {
+                  $obj.text("1");
+                }
+                US.debug("curSec: " + second);
+              }
+              
+              /// retry later
+              US.debug("Retry later ...");
+              window.setTimeout(window.ecAdview, 1000);
             };
           });
           
