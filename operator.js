@@ -46,6 +46,7 @@
       
       name: "EC",
       title: null,
+      version: '1.0.6',
       
       
       
@@ -54,16 +55,16 @@
       // ----------------------------------------------------------------------------------------------------
       
       log: function(msg) {
-        console.log("[" + US.name + "] [LOG] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.log("[" + US.name + "] [LOG] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       warn: function(msg) {
-        console.warn("[" + US.name + "] [WARN] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.warn("[" + US.name + "] [WARN] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       error: function(msg) {
-        console.error("[" + US.name + "] [ERROR] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.error("[" + US.name + "] [ERROR] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       debug: function(msg) {
-        console.debug("[" + US.name + "] [DEBUG] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.debug("[" + US.name + "] [DEBUG] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       
       // ----------------------------------------------------------------------------------------------------
