@@ -46,7 +46,10 @@
       
       name: "EC",
       title: null,
+      
       version: '1.0.6',
+      
+      redirect_delay: /*/ true /*/ false /**/,
       
       
       
@@ -70,12 +73,13 @@
       // ----------------------------------------------------------------------------------------------------
       
       goto: function(url, sleep) {
-        US.debug("goto '" + url + "'   (sleep: " + sleep + ")");
-        if (sleep > 0) {
+        if (US.redirect_delay && sleep > 0) {
+          US.debug("goto '" + url + "'   (sleep: " + sleep + ")");
           window.setTimeout(function() {
             window.location = url;
           }, sleep);
         } else {
+          US.debug("goto '" + url);
           window.location = url;
         }
       },
