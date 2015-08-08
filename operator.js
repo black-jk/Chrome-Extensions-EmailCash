@@ -215,7 +215,7 @@
           
           // ------------------------------
           
-          US.loadJQuery(function() {
+          //US.loadJQuery(function() {
             (window.ecAdview = function() {
               var $topFrame = $(window.parent.frames["topFrame"].document);
               
@@ -248,7 +248,7 @@
               US.debug("Retry later ...");
               window.setTimeout(window.ecAdview, 1000);
             })();
-          });
+          //});
           
         } else
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {
@@ -284,7 +284,7 @@
           US.title = "e元報表";
           US.debug("START");
           
-          US.loadJQuery(function() {
+          //US.loadJQuery(function() {
             ///<a href="account.asp?go=points&amp;u=w214nt8f4f2o&amp;c=B0EE1F5580D0F7A&amp;st=last"><b>&lt;&lt;</b> 上月明細</a>
             var scrollTop = Math.max(0, $("td a:contains('上月明細')").offset().top - 100);
             $("body").scrollTop(scrollTop);
@@ -296,7 +296,7 @@
             */
             
             US.debug("DONE");
-          });
+          //});
           
         } else
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login|itemjoin|account|adtop)\.asp/)) {
@@ -324,7 +324,14 @@
     }
     
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(view_adc|account)\.asp/)) {
-      window.onload = US.main;
+      US.loadJQuery(function() {
+        try {
+          $(document).ready(US.main);
+        } catch (e) {
+          console.log(e);
+          window.onload = US.main;
+        }
+      });
     } else {
       $(document).ready(US.main);
     }
