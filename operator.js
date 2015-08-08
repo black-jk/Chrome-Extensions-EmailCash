@@ -47,6 +47,10 @@
       name: "EC",
       title: null,
       
+      version: '1.0.6',
+      
+      redirect_delay: /*/ true /*/ false /**/,
+      
       
       
       // ----------------------------------------------------------------------------------------------------
@@ -54,27 +58,28 @@
       // ----------------------------------------------------------------------------------------------------
       
       log: function(msg) {
-        console.log("[" + US.name + "] [LOG] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.log("[" + US.name + "] [LOG] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       warn: function(msg) {
-        console.warn("[" + US.name + "] [WARN] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.warn("[" + US.name + "] [WARN] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       error: function(msg) {
-        console.error("[" + US.name + "] [ERROR] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.error("[" + US.name + "] [ERROR] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       debug: function(msg) {
-        console.debug("[" + US.name + "] [DEBUG] " + (US.title ? "[" + US.title + "] " : "") + msg);
+        console.debug("[" + US.name + "] [DEBUG] " + (US.title ? "[" + US.title + "] " : "") + (US.version ? "[" + US.version + "] " : "") + msg);
       },
       
       // ----------------------------------------------------------------------------------------------------
       
       goto: function(url, sleep) {
-        US.debug("goto '" + url + "'   (sleep: " + sleep + ")");
-        if (sleep > 0) {
+        if (US.redirect_delay && sleep > 0) {
+          US.debug("goto '" + url + "'   (sleep: " + sleep + ")");
           window.setTimeout(function() {
             window.location = url;
           }, sleep);
         } else {
+          US.debug("goto '" + url);
           window.location = url;
         }
       },
@@ -214,7 +219,7 @@
           
           // ------------------------------
           
-          US.loadJQuery(function() {
+          //US.loadJQuery(function() {
             (window.ecAdview = function() {
               var $topFrame = $(window.parent.frames["topFrame"].document);
               
@@ -247,7 +252,7 @@
               US.debug("Retry later ...");
               window.setTimeout(window.ecAdview, 1000);
             })();
-          });
+          //});
           
         } else
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {
@@ -283,7 +288,7 @@
           US.title = "e元報表";
           US.debug("START");
           
-          US.loadJQuery(function() {
+          //US.loadJQuery(function() {
             ///<a href="account.asp?go=points&amp;u=w214nt8f4f2o&amp;c=B0EE1F5580D0F7A&amp;st=last"><b>&lt;&lt;</b> 上月明細</a>
             var scrollTop = Math.max(0, $("td a:contains('上月明細')").offset().top - 100);
             $("body").scrollTop(scrollTop);
@@ -295,7 +300,7 @@
             */
             
             US.debug("DONE");
-          });
+          //});
           
         } else
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login|itemjoin|account|adtop)\.asp/)) {
@@ -323,7 +328,14 @@
     }
     
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(view_adc|account)\.asp/)) {
-      window.onload = US.main;
+      US.loadJQuery(function() {
+        try {
+          $(document).ready(US.main);
+        } catch (e) {
+          console.log(e);
+          window.onload = US.main;
+        }
+      });
     } else {
       $(document).ready(US.main);
     }
