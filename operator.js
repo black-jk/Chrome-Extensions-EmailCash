@@ -187,17 +187,30 @@
           
           // ------------------------------
           
-          /// open ad-view url
-          US.log("open url: '" + $href + "'  (waiting for callback)");
-          var adWindow = window.open($href, "", "width:100, height:100");
+          var adWindow;
           
-          /// set callback function and wait
-          adWindow.adClosed = function() {
-            adWindow.close();
-            US.debug("DONE");
-            US.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", 1000);
-            return;
+          /// open ad-view url
+          var openAdWindow = function() {
+            US.log("open url: '" + $href + "'  (waiting for callback)");
+            adWindow = window.open($href, "", "width:100, height:100");
+            
+            /// set callback function and wait
+            adWindow.adClosed = function() {
+              adWindow.close();
+              US.debug("DONE");
+              US.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", 1000);
+              return;
+            };
           };
+          
+          openAdWindow();
+          
+          /// set timeout for retry
+          window.setInterval(function() {
+            adWindow.close();
+            US.debug("RETRY");
+            openAdWindow();
+          }, 60000);
           
           US.debug("Waiting for callback ...");
           
@@ -229,7 +242,15 @@
               if ($span.length > 0) {
                 /// done
                 US.log($span.text().trim());
-                window.setTimeout(window.adClosed, 1000);
+                
+                /**/
+                window.adClosed();
+                /*/
+                window.setTimeout(function() {
+                  window.adClosed();
+                }, 1000);
+                /**/
+                
                 return;
               }
               
