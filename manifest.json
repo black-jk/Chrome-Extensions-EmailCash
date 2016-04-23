@@ -28,6 +28,6 @@
       "js": ["jquery-2.1.1.min.js", "operator.js"],
       "run_at": "document_start",
       "all_frames": true
-     }
+    }
   ]
 }
