@@ -47,7 +47,7 @@
       name: "EC",
       title: null,
       
-      version: '1.0.6',
+      version: '1.0.8',
       
       redirect_delay: /*/ true /*/ false /**/,
       
@@ -71,6 +71,32 @@
       },
       
       // ----------------------------------------------------------------------------------------------------
+      
+      go_latto: function(sleep) {
+        US.goto("http://www.emailcash.com.tw/dailylatto.asp", sleep);
+      },
+      
+      // --------------------------------------------------
+      
+      go_adclick: function(sleep) {
+        US.goto("http://www.emailcash.com.tw/4G/Rewards/DailyAdvertising.aspx", sleep);
+      },
+      
+      // --------------------------------------------------
+      
+      go_earn: function(sleep) {
+        US.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", sleep);
+      },
+      
+      // --------------------------------------------------
+      
+      go_account: function(sleep) {
+        var href = $("a[title='查看e元報表']").attr("href");
+        US.goto(href, sleep);
+      },
+      
+      
+      // --------------------------------------------------
       
       goto: function(url, sleep) {
         if (US.redirect_delay && sleep > 0) {
@@ -114,7 +140,7 @@
         
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(default\.asp)?$/)) {
           US.title = "EmailCash";
-          US.goto("http://www.emailcash.com.tw/dailylatto.asp", 1000);
+          US.go_latto(1000);
         } else
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/earn.asp\?go=qsurvey/)) {
           US.title = "每日問答";
@@ -125,8 +151,7 @@
           $td = $("td[colspan='4']:contains('謝謝您的參與，您已經獲得了今天的獎勵'),td[class='fbPos']:contains('感謝您的回應，您獲得了')");
           if ($td.length > 0) {
             US.log($td.text().trim());
-            var href = $("a[title='查看e元報表']").attr("href");
-            US.goto(href, 1000);
+            US.go_account(1000);
             US.debug("DONE");
             return;
           }
@@ -151,7 +176,7 @@
           US.error("action terminated.");
           
         } else
-        if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/adclicks\.asp/)) {
+        if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdvertising.aspx/)) {
           US.title = "每日廣告";
           US.debug("START");
           
@@ -181,7 +206,7 @@
           
           if (!$href) {
             US.debug("Retry ...");
-            US.goto("http://www.emailcash.com.tw/adclicks.asp", 1000);
+            US.go_adclick(1000);
             return;
           }
           
@@ -198,7 +223,7 @@
             adWindow.adClosed = function() {
               adWindow.close();
               US.debug("DONE");
-              US.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", 1000);
+              US.go_earn(1000);
               return;
             };
           };
@@ -215,7 +240,7 @@
           US.debug("Waiting for callback ...");
           
         } else
-        if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/view_adc\.asp/)) {
+        if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdClicks.aspx\?id=/)) {
           US.title = "每日廣告 VIEW";
           US.debug("START");
           
@@ -234,11 +259,7 @@
           
           //US.loadJQuery(function() {
             (window.ecAdview = function() {
-              var $topFrame = $(window.parent.frames["topFrame"].document);
-              
-              /// <span id="lblMsg"><span class="fbNeg"><img src="edmrating/images/topFrameCrossBox.gif" align="absmiddle" border="0" vspace="2">廣告e元獎勵已入帳</span></span>
-              /// <span id="lblMsg"><span class="fbPos"><img src="edmrating/images/topFrameTickBox.gif" align="absmiddle" border="0" vspace="2">2 e元及1金幣已加入您的EmailCash帳戶</span></span>
-              var $span = $topFrame.find("#lblMsg").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
+              var $span = $("#sViewStatus").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
               if ($span.length > 0) {
                 /// done
                 US.log($span.text().trim());
@@ -257,10 +278,10 @@
               // ------------------------------
               
               /// set focus
-              $topFrame.find("#frameTop").attr("value", "1");
+              $("#frameTop").attr("value", "1");
               
               /// jump second
-              $obj = $topFrame.find("#curSec");
+              $obj = $("#curSec");
               if ($obj.length > 0) {
                 var second = parseInt($obj.text());
                 if (second > 1) {
@@ -301,7 +322,7 @@
             US.debug("DONE");
           } else {
             US.debug("DONE");
-            US.goto("http://www.emailcash.com.tw/adclicks.asp", 1000);
+            US.go_adclick(1000);
           }
           
         } else
