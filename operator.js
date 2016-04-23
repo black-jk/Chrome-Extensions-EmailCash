@@ -72,6 +72,32 @@
       
       // ----------------------------------------------------------------------------------------------------
       
+      go_latto: function(sleep) {
+        US.goto("http://www.emailcash.com.tw/dailylatto.asp", sleep);
+      },
+      
+      // --------------------------------------------------
+      
+      go_adclick: function(sleep) {
+        US.goto("http://www.emailcash.com.tw/4G/Rewards/DailyAdvertising.aspx", sleep);
+      },
+      
+      // --------------------------------------------------
+      
+      go_earn: function(sleep) {
+        US.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", sleep);
+      },
+      
+      // --------------------------------------------------
+      
+      go_account: function(sleep) {
+        var href = $("a[title='查看e元報表']").attr("href");
+        US.goto(href, sleep);
+      },
+      
+      
+      // --------------------------------------------------
+      
       goto: function(url, sleep) {
         if (US.redirect_delay && sleep > 0) {
           US.debug("goto '" + url + "'   (sleep: " + sleep + ")");
@@ -114,7 +140,7 @@
         
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(default\.asp)?$/)) {
           US.title = "EmailCash";
-          US.goto("http://www.emailcash.com.tw/dailylatto.asp", 1000);
+          US.go_latto(1000);
         } else
         if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/earn.asp\?go=qsurvey/)) {
           US.title = "每日問答";
@@ -125,8 +151,7 @@
           $td = $("td[colspan='4']:contains('謝謝您的參與，您已經獲得了今天的獎勵'),td[class='fbPos']:contains('感謝您的回應，您獲得了')");
           if ($td.length > 0) {
             US.log($td.text().trim());
-            var href = $("a[title='查看e元報表']").attr("href");
-            US.goto(href, 1000);
+            US.go_account(1000);
             US.debug("DONE");
             return;
           }
@@ -181,7 +206,7 @@
           
           if (!$href) {
             US.debug("Retry ...");
-            US.goto("http://www.emailcash.com.tw/adclicks.asp", 1000);
+            US.go_adclick(1000);
             return;
           }
           
@@ -198,7 +223,7 @@
             adWindow.adClosed = function() {
               adWindow.close();
               US.debug("DONE");
-              US.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", 1000);
+              US.go_earn(1000);
               return;
             };
           };
@@ -297,7 +322,7 @@
             US.debug("DONE");
           } else {
             US.debug("DONE");
-            US.goto("http://www.emailcash.com.tw/adclicks.asp", 1000);
+            US.go_adclick(1000);
           }
           
         } else
