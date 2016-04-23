@@ -151,7 +151,7 @@
           US.error("action terminated.");
           
         } else
-        if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/adclicks\.asp/)) {
+        if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdvertising.aspx/)) {
           US.title = "每日廣告";
           US.debug("START");
           
