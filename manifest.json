@@ -9,6 +9,13 @@
   
   "description": "EmailCash Daily Operator",
   
+  
+  "options_page": "options.html",
+  
+  "permissions": [
+  	"storage"
+  ],
+  
   "content_scripts": [
     {
       "matches": [
