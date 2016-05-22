@@ -27,19 +27,52 @@
   var Logger = {
     
     log: function(msg) {
-      console.log(Logger.getHeader("LOG") + msg);
+      var _msg = Logger.getHeader("LOG") + msg;
+      console.debug(_msg);
+      Logger.addLog(_msg, "log");
     },
     
     warn: function(msg) {
-      console.warn(Logger.getHeader("WARN") + msg);
+      var _msg = Logger.getHeader("WARN") + msg;
+      console.debug(_msg);
+      Logger.addLog(_msg, "warn");
     },
     
     error: function(msg) {
-      console.error(Logger.getHeader("ERROR") + msg);
+      var _msg = Logger.getHeader("ERROR") + msg;
+      console.debug(_msg);
+      Logger.addLog(_msg, "error");
     },
     
     debug: function(msg) {
-      console.debug(Logger.getHeader("DEBUG") + msg);
+      var _msg = Logger.getHeader("DEBUG") + msg;
+      console.debug(_msg);
+      Logger.addLog(_msg, "debug");
+    },
+    
+    // ----------------------------------------------------------------------------------------------------
+    
+    addLog: function(msg, type) {
+      var key = "log-" + type;
+      var getter = {};
+      getter[key] = "";
+      
+      chrome.storage.local.get(getter, function(result) {
+        
+console.debug(result);
+        
+        var setter = {};
+        setter[key] = result.log + "\n" + msg;
+console.debug("setter:", setter);
+        chrome.storage.local.set(setter, function(result) {
+          
+console.debug(result);
+          
+        });
+        
+        
+        
+      });
     },
     
     // ----------------------------------------------------------------------------------------------------
