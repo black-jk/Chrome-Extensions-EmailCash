@@ -88,7 +88,8 @@
     // ----------------------------------------------------------------------------------------------------
     
     this.operation = function() {
-      this.go_latto(Config.redirectDelay);
+      //this.go_latto(Config.redirectDelay);
+      this.go_adclick(Config.redirectDelay);
     };
     
   }
@@ -108,6 +109,8 @@
     // ----------------------------------------------------------------------------------------------------
     
     this.operation = function() {
+      return;
+      
       $b = $("font[size='3'] b:contains('您還沒參與本期每日樂透')");
       if ($b != null && $b.length > 0) {
         Logger.log("Button found: '" + $b.text().trim() + "'");

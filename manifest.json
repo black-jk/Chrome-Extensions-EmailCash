@@ -33,7 +33,9 @@
         "http://www.emailcash.com.tw/FaceBook*",
         
         "http://emailcash.com.tw/adtop.asp*",
-        "http://www.emailcash.com.tw/adtop.asp*"
+        "http://www.emailcash.com.tw/adtop.asp*",
+        
+        "http://www.emailcash.com.tw/dailylatto.asp"
       ],
       "js": ["jquery-2.1.1.min.js", "configuration.js", "library.js", "classes.js", "main.js"],
       "run_at": "document_start",
