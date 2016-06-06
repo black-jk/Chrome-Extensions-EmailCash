@@ -3,11 +3,18 @@
   
   "name": "EmailCash Daily Operator",
   
-  "version": "1.0.8",
+  "version": "2.0.0",
   
   "author": "BlackJK",
   
   "description": "EmailCash Daily Operator",
+  
+  
+  "options_page": "options.html",
+  
+  "permissions": [
+  	"storage"
+  ],
   
   "content_scripts": [
     {
@@ -22,12 +29,17 @@
         "http://emailcash.com.tw/itemjoin.asp*",
         "http://www.emailcash.com.tw/itemjoin.asp*",
         
+        "http://emailcash.com.tw/FaceBook*",
+        "http://www.emailcash.com.tw/FaceBook*",
+        
         "http://emailcash.com.tw/adtop.asp*",
-        "http://www.emailcash.com.tw/adtop.asp*"
+        "http://www.emailcash.com.tw/adtop.asp*",
+        
+        "http://www.emailcash.com.tw/dailylatto.asp"
       ],
-      "js": ["jquery-2.1.1.min.js", "operator.js"],
+      "js": ["jquery-2.1.1.min.js", "configuration.js", "library.js", "classes.js", "main.js"],
       "run_at": "document_start",
       "all_frames": true
-     }
+    }
   ]
 }
