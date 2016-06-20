@@ -309,19 +309,19 @@
     // ----------------------------------------------------------------------------------------------------
     
     this.operation = function() {
-      $td = $("td[colspan='4']:contains('謝謝您的參與，您已經獲得了今天的獎勵'),td[class='fbPos']:contains('感謝您的回應，您獲得了')");
-      if ($td.length > 0) {
-        Logger.log($td.text().trim());
+      $obj = $("*:contains('謝謝您的參與，您已經獲得了今天的獎勵'),*:contains('感謝您的回應，您獲得了')");
+      if ($obj.length > 0) {
+        Logger.log($obj.text().trim());
         this.go_account(Config.redirectDelay);
         return;
       }
       
       // ------------------------------
       
-      $td = $("td:contains('目前的問題您都回答過了，請按下確認鈕取得本日點數')");
-      if ($td.length > 0) {
-        Logger.log($td.text().trim());
-        $input = $td.find("input[type='submit']");
+      $obj = $("*:contains('目前的問題您都回答過了，請按下確認鈕取得本日點數')");
+      if ($obj.length > 0) {
+        Logger.log($obj.text().trim());
+        $input = $obj.find("input[type='submit']");
         if ($input.length > 0) {
           Logger.log("click submit button");
           $input.click();  //$input.trigger("click");
