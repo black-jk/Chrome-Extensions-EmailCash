@@ -26,15 +26,15 @@
     Logger.debug("[execute] location: " + location);
     
     var operator = null;
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(default\.asp)?$/)) {
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(default\.aspx?)?$/i)) {
       operator = new HomeOperator;
     } else
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/earn.asp\?go=qsurvey/) ||
-        location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailySurvey.aspx/)
+        location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailySurvey.aspx?/i)
     ) {
       operator = new QuestionOperator;
     } else
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdvertising.aspx/)) {
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdvertising.aspx?/i)) {
       operator = new AdclickOperator;
     } else
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdClicks.aspx\?id=/)) {
@@ -43,10 +43,12 @@
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {
       operator = new LattoOperator();
     } else
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/account\.asp/)) {
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/account\.asp/i) ||
+        location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Account\/MyAccount.aspx?/i)
+    ) {
       operator = new AccountOperator();
     } else
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login|itemjoin|account|adtop)\.asp/)) {
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login|itemjoin|account|adtop)\.aspx?/i)) {
       Logger.debug("[execute] Do nothing for url: '" + location + "'");
     } else {
       // [TODO] fix match url
