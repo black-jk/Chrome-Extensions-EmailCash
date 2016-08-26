@@ -23,9 +23,6 @@
         "http://www.emailcash.com.tw/*"
       ],
       "exclude_matches": [
-        "http://emailcash.com.tw/login.asp*",
-        "http://www.emailcash.com.tw/login.asp*",
-        
         "http://emailcash.com.tw/itemjoin.asp*",
         "http://www.emailcash.com.tw/itemjoin.asp*",
         

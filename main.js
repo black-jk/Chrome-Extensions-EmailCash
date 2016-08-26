@@ -9,10 +9,12 @@
     }
     
     // exclude (double check)
+    /*
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login\.asp|itemjoin\.asp|FaceBook\/WebLogin.asp.*)$/)) {
       console.log('[main] skip!');
       return;
     }
+    */
     
     $(document).ready(execute);
   };
@@ -28,6 +30,9 @@
     var operator = null;
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(default\.aspx?)?$/i)) {
       operator = new HomeOperator;
+    } else
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(login\.aspx?)?$/i)) {
+      operator = new LoginOperator;
     } else
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/earn.asp\?go=qsurvey/) ||
         location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailySurvey.aspx?/i)

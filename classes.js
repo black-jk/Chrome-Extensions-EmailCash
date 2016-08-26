@@ -12,6 +12,12 @@
     
     // ----------------------------------------------------------------------------------------------------
     
+    this.go_home = function(sleep) {
+      this.goto("http://www.emailcash.com.tw/", sleep);
+    };
+    
+    // ----------------------------------------------------------------------------------------------------
+    
     this.go_latto = function(sleep) {
       this.goto("http://www.emailcash.com.tw/dailylatto.asp", sleep);
     };
@@ -107,6 +113,35 @@
   }
   
   HomeOperator.prototype = new Operator;
+  
+  
+  
+  // ====================================================================================================
+  // [Login]
+  // ====================================================================================================
+  
+  function LoginOperator() {
+    
+    this.title = "Login";
+    
+    // ----------------------------------------------------------------------------------------------------
+    
+    this.operation = function() {
+      
+      // check login
+      $login_link = $("a:contains('會員登入')");
+      if ($login_link != null && $login_link.length > 0) {
+        Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
+        Logger.log("Waiting for login!");
+        return;
+      }
+      
+      this.go_home(Config.redirectDelay);
+    };
+    
+  }
+  
+  LoginOperator.prototype = new Operator;
   
   
   
