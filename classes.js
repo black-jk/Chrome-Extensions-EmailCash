@@ -59,8 +59,26 @@
     
     // ----------------------------------------------------------------------------------------------------
     
+    this.autoLogin = true;
+    
     this.run = function() {
       this.start();
+      
+      // check login
+      $login_link = $("a:contains('會員登入')");
+      if ($login_link != null && $login_link.length > 0) {
+        Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
+        
+        if (this.autoLogin) {
+          var href = $login_link.attr("href");
+          this.goto(href, Config.redirectDelay);
+          Logger.log("Goto '" + href + "'");
+        } else {
+          Logger.log("Waiting for login!");
+        }
+        return;
+      }
+      
       this.operation();
       this.done();
     };
@@ -94,18 +112,6 @@
     // ----------------------------------------------------------------------------------------------------
     
     this.operation = function() {
-      
-      // check login
-      $login_link = $("a:contains('會員登入')");
-      if ($login_link != null && $login_link.length > 0) {
-        Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
-        
-        var href = $login_link.attr("href");
-        this.goto(href, Config.redirectDelay);
-        Logger.log("Goto '" + href + "'");
-        return;
-      }
-      
       //this.go_latto(Config.redirectDelay);
       this.go_adclick(Config.redirectDelay);
     };
@@ -127,15 +133,6 @@
     // ----------------------------------------------------------------------------------------------------
     
     this.operation = function() {
-      
-      // check login
-      $login_link = $("a:contains('會員登入')");
-      if ($login_link != null && $login_link.length > 0) {
-        Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
-        Logger.log("Waiting for login!");
-        return;
-      }
-      
       this.go_home(Config.redirectDelay);
     };
     
