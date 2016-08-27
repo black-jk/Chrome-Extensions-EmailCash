@@ -377,6 +377,27 @@
       
       // ------------------------------
       
+      /*
+      <div class="tr">
+          <div class="td">1</div>
+          <div class="td" style="text-align:left; padding-left:5px;">女性經痛調查</div>
+          <div class="td">1</div>
+          <div class="td tdColor">3 e元 + 1 金幣</div>
+          <div class="td" style="padding-top:5px">
+              <input type="image" name="ctl00$mainPlaceHolder$rptQP$ctl00$ibtnQP" id="ctl00_mainPlaceHolder_rptQP_ctl00_ibtnQP" src="../images/rewards/dailySurvey/edit.gif" style="border-width:0px;">
+              <input type="hidden" name="ctl00$mainPlaceHolder$rptQP$ctl00$hidSid" id="ctl00_mainPlaceHolder_rptQP_ctl00_hidSid" value="301">
+              <input type="hidden" name="ctl00$mainPlaceHolder$rptQP$ctl00$hidIdtCode" id="ctl00_mainPlaceHolder_rptQP_ctl00_hidIdtCode" value="E8AAAAD0-7DDD-45D9-934F-AAE5246267BA">
+          </div>
+      </div>
+      */
+      var $input = $("div[class='td'] input[type='image']");
+      if ($input != "undefined") {
+        $input.click();
+        return;
+      }
+      
+      // ------------------------------
+      
       Logger.error("action terminated.");
     };
     
