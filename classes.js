@@ -41,7 +41,31 @@
       this.goto(href, sleep);
     };
     
-    // --------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    
+    this.go_next = function() {
+      $ad_link = $('a[title="每日廣告"]');
+      if ($ad_link.length > 0) {
+        Logger.debug("\$ad_link.click();");
+        $ad_link.click();
+        
+        this.go_adclick(Config.redirectDelay);
+        return true;
+      }
+      
+      $question_link = $('a[title="每日問答"]');
+      if ($question_link.length > 0) {
+        Logger.debug("\$question_link.click();");
+        $question_link.click();
+        
+        this.go_earn(Config.redirectDelay);
+        return true;
+      }
+      
+      return false;
+    };
+    
+    // ----------------------------------------------------------------------------------------------------
     
     this.goto = function(url, sleep) {
       if (sleep > 0) {
@@ -110,10 +134,11 @@
     this.title = "EmailCash";
     
     // ----------------------------------------------------------------------------------------------------
-    
     this.operation = function() {
+      this.go_next();
+      
       //this.go_latto(Config.redirectDelay);
-      this.go_adclick(Config.redirectDelay);
+      //this.go_adclick(Config.redirectDelay);
     };
     
   }
@@ -430,6 +455,9 @@
         scrollTop: $("td a:contains('上月明細')").offset().top - 100
       }, 1000);
       */
+      
+      // check again if not all complete
+      this.go_next();
     };
     
   }
