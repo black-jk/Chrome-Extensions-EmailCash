@@ -3,7 +3,7 @@
   // ====================================================================================================
   
   var Config = {
-    name: "EmailCash",
+    name: "EmailCashOperator",
     
     title: null,
     
@@ -23,7 +23,7 @@
   }, function(items) {
     Config.debug = items.debug;
     Config.redirectDelay = items.redirect_delay;
-    console.debug("[Config]", Config);
+    console.debug("[" + Config.name + "] [Config]", Config);
   });
   
   
