@@ -151,7 +151,7 @@
   
   function HomeOperator() {
     
-    this.title = "EmailCash";
+    this.title = "EmailCash Home";
     
     // ----------------------------------------------------------------------------------------------------
     this.operation = function() {
