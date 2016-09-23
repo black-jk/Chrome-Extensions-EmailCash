@@ -155,10 +155,14 @@
     
     // ----------------------------------------------------------------------------------------------------
     this.operation = function() {
-      this.go_next();
+      var inOperation = this.go_next();
+      if (inOperation) {
+        return;
+      }
       
       //this.go_latto(Config.redirectDelay);
       //this.go_adclick(Config.redirectDelay);
+      this.go_account(Config.redirectDelay);
     };
     
   }
