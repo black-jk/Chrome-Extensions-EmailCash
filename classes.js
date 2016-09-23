@@ -284,9 +284,9 @@
       
       // callback function for ad-view
       window.onAdClosed = function() {
-        console.log('[onAdClosed] callback');
+        Logger.log('[onAdClosed] callback');
         adWindow.close();
-        thisObject.go_earn(1000);
+        thisObject.go_earn(Config.redirectDelay);
       };
       
       /// open ad-view url
@@ -347,7 +347,7 @@
             Logger.debug('call window.opener.onAdClosed()');
             window.opener.onAdClosed();
           } catch (e) {
-            console.log(e);
+            Logger.log(e);
             if (Config.debug) {
               alert(e);
             } else {
