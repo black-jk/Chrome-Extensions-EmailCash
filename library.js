@@ -22,6 +22,18 @@
   
   // ====================================================================================================
   
+  // [Error]
+  
+  function NotLoginError(message) {
+    this.name = "NotLoginError";
+    this.message = message;
+  }
+  NotLoginError.prototype = new Error;
+  
+  
+  
+  // ====================================================================================================
+  
   // [Logger]
   
   var Logger = {

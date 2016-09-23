@@ -84,15 +84,22 @@
     // ----------------------------------------------------------------------------------------------------
     
     this.run = function() {
-      this.start();
-      
-      // check login
-      if (!this.checkLogin()) {
-        return;
+      try {
+        this.start();
+        this.checkLogin();
+        this.operation();
+        this.done();
+      } catch (e) {
+        if (e instanceof NotLoginError) {
+          return; // do nothing
+        }
+        
+        console.error(e);
+        Logger.error(e.message);
+        if (Config.debug) {
+          alert(e);
+        }
       }
-      
-      this.operation();
-      this.done();
     };
     
     // --------------------------------------------------
@@ -117,9 +124,9 @@
         } else {
           Logger.log("Waiting for login!");
         }
-        return false;
+        
+        throw new NotLoginError("[" + this.title + "] Not login yet!");
       }
-      return true;
     };
     
     // --------------------------------------------------
@@ -167,6 +174,8 @@
   function LoginOperator() {
     
     this.title = "Login";
+    
+    this.autoLogin = false;
     
     // ----------------------------------------------------------------------------------------------------
     
