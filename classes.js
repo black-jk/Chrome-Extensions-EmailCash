@@ -348,13 +348,11 @@
             window.opener.onAdClosed();
           } catch (e) {
             Logger.log(e);
-            if (Config.debug) {
-              alert(e);
-            } else {
-              window.close();
+            if (Config.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
+              return;
             }
-          };
-          //window.close();
+            window.close();
+          }
           return;
         }
         
