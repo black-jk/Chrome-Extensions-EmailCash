@@ -41,7 +41,31 @@
       this.goto(href, sleep);
     };
     
-    // --------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    
+    this.go_next = function() {
+      $ad_link = $('a[title="每日廣告"]');
+      if ($ad_link.length > 0) {
+        Logger.debug("\$ad_link.click();");
+        $ad_link.click();
+        
+        this.go_adclick(Config.redirectDelay);
+        return true;
+      }
+      
+      $question_link = $('a[title="每日問答"]');
+      if ($question_link.length > 0) {
+        Logger.debug("\$question_link.click();");
+        $question_link.click();
+        
+        this.go_earn(Config.redirectDelay);
+        return true;
+      }
+      
+      return false;
+    };
+    
+    // ----------------------------------------------------------------------------------------------------
     
     this.goto = function(url, sleep) {
       if (sleep > 0) {
@@ -59,12 +83,36 @@
     
     // ----------------------------------------------------------------------------------------------------
     
+    this.run = function() {
+      try {
+        this.start();
+        this.checkLogin();
+        this.operation();
+        this.done();
+      } catch (e) {
+        if (e instanceof NotLoginError) {
+          return; // do nothing
+        }
+        
+        console.error(e);
+        Logger.error(e.message);
+        if (Config.debug) {
+          alert(e);
+        }
+      }
+    };
+    
+    // --------------------------------------------------
+    
+    this.start = function() {
+      Logger.debug("START");
+    };
+    
+    // --------------------------------------------------
+    
     this.autoLogin = true;
     
-    this.run = function() {
-      this.start();
-      
-      // check login
+    this.checkLogin = function() {
       $login_link = $("a:contains('會員登入')");
       if ($login_link != null && $login_link.length > 0) {
         Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
@@ -76,22 +124,18 @@
         } else {
           Logger.log("Waiting for login!");
         }
-        return;
+        
+        throw new NotLoginError("[" + this.title + "] Not login yet!");
       }
-      
-      this.operation();
-      this.done();
     };
     
     // --------------------------------------------------
     
-    this.start = function() {
-      Logger.debug("START");
+    this.operation = function() {
+      throw new Error("[" + this.title + "] Override this function first!");
     };
     
-    this.operation = function() {
-      throw new Error("Override this function first!");
-    };
+    // --------------------------------------------------
     
     this.done = function() {
       Logger.debug("DONE");
@@ -107,13 +151,18 @@
   
   function HomeOperator() {
     
-    this.title = "EmailCash";
+    this.title = "EmailCash Home";
     
     // ----------------------------------------------------------------------------------------------------
-    
     this.operation = function() {
+      var inOperation = this.go_next();
+      if (inOperation) {
+        return;
+      }
+      
       //this.go_latto(Config.redirectDelay);
-      this.go_adclick(Config.redirectDelay);
+      //this.go_adclick(Config.redirectDelay);
+      this.go_account(Config.redirectDelay);
     };
     
   }
@@ -129,6 +178,8 @@
   function LoginOperator() {
     
     this.title = "Login";
+    
+    this.autoLogin = false;
     
     // ----------------------------------------------------------------------------------------------------
     
@@ -237,9 +288,9 @@
       
       // callback function for ad-view
       window.onAdClosed = function() {
-        console.log('[onAdClosed] callback');
+        Logger.log('[onAdClosed] callback');
         adWindow.close();
-        thisObject.go_earn(1000);
+        thisObject.go_earn(Config.redirectDelay);
       };
       
       /// open ad-view url
@@ -300,14 +351,12 @@
             Logger.debug('call window.opener.onAdClosed()');
             window.opener.onAdClosed();
           } catch (e) {
-            console.log(e);
-            if (Config.debug) {
-              alert(e);
-            } else {
-              window.close();
+            Logger.log(e);
+            if (Config.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
+              return;
             }
-          };
-          //window.close();
+            window.close();
+          }
           return;
         }
         
@@ -430,6 +479,9 @@
         scrollTop: $("td a:contains('上月明細')").offset().top - 100
       }, 1000);
       */
+      
+      // check again if not all complete
+      this.go_next();
     };
     
   }
