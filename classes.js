@@ -89,17 +89,7 @@
       this.start();
       
       // check login
-      $login_link = $("a:contains('會員登入')");
-      if ($login_link != null && $login_link.length > 0) {
-        Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
-        
-        if (this.autoLogin) {
-          var href = $login_link.attr("href");
-          this.goto(href, Config.redirectDelay);
-          Logger.log("Goto '" + href + "'");
-        } else {
-          Logger.log("Waiting for login!");
-        }
+      if (!this.checkLogin()) {
         return;
       }
       
@@ -113,9 +103,32 @@
       Logger.debug("START");
     };
     
+    // --------------------------------------------------
+    
+    this.checkLogin = function() {
+      $login_link = $("a:contains('會員登入')");
+      if ($login_link != null && $login_link.length > 0) {
+        Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
+        
+        if (this.autoLogin) {
+          var href = $login_link.attr("href");
+          this.goto(href, Config.redirectDelay);
+          Logger.log("Goto '" + href + "'");
+        } else {
+          Logger.log("Waiting for login!");
+        }
+        return false;
+      }
+      return true;
+    };
+    
+    // --------------------------------------------------
+    
     this.operation = function() {
       throw new Error("[" + this.title + "] Override this function first!");
     };
+    
+    // --------------------------------------------------
     
     this.done = function() {
       Logger.debug("DONE");
