@@ -90,7 +90,7 @@
     };
     
     this.operation = function() {
-      throw new Error("Override this function first!");
+      throw new Error("[" + this.title + "] Override this function first!");
     };
     
     this.done = function() {
