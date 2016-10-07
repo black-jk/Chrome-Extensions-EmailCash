@@ -24,6 +24,12 @@
     
     // --------------------------------------------------
     
+    this.go_dailygames = function(sleep) {
+      this.goto("http://www.emailcash.com.tw/4G/Games/DailyGames.aspx", sleep);
+    };
+    
+    // --------------------------------------------------
+    
     this.go_adclick = function(sleep) {
       this.goto("http://www.emailcash.com.tw/4G/Rewards/DailyAdvertising.aspx", sleep);
     };
@@ -83,7 +89,32 @@
     
     // ----------------------------------------------------------------------------------------------------
     
+    this.delay = 0;
+    
     this.run = function() {
+      if (typeof this.delay == 'number' && this.delay > 0) {
+        Logger.debug("delay: " + this.delay);
+        var thisObject = this;
+        var delayId = window.setInterval(function() {
+          thisObject.run();
+          window.clearInterval(delayId);
+        }, this.delay);
+        this.delay = 0;
+        return;
+      } else
+      if (typeof this.delay == 'function') {
+        Logger.debug("delay...");
+        var thisObject = this;
+        var delayId = window.setInterval(function() {
+          if (!thisObject.delay()) {
+            window.clearInterval(delayId);
+            thisObject.delay = 0;
+            thisObject.run();
+          }
+        }, 100);
+        return;
+      }
+      
       try {
         this.start();
         this.checkLogin();
@@ -162,7 +193,8 @@
       
       //this.go_latto(Config.redirectDelay);
       //this.go_adclick(Config.redirectDelay);
-      this.go_account(Config.redirectDelay);
+      this.go_dailygames(Config.redirectDelay);
+      //this.go_account(Config.redirectDelay);
     };
     
   }
@@ -238,6 +270,53 @@
   }
   
   LattoOperator.prototype = new Operator;
+  
+  
+  
+  // ====================================================================================================
+  // [DailyGames]
+  // ====================================================================================================
+  
+  function DailyGamesOperator() {
+    
+    this.title = "以小搏大";
+    
+    //this.delay = 2000;
+    this.delay = function() {
+      if ($("#ReciTime").html().trim() != "") {
+        Logger.debug("#ReciTime: " + $("#ReciTime").html().trim());
+        Logger.debug("continue run");
+        return false;
+      }
+      Logger.debug("pause run. (waiting for DailyGamesJS.js ...)");
+      return true;
+    };
+    
+    // ----------------------------------------------------------------------------------------------------
+    
+    this.operation = function() {
+      /// http://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
+      
+      //取得投注扣除費用
+      var _efee = $("#ctl00_mainPlaceHolder_hidFee").val();
+      Logger.debug("_efee: " + _efee);
+      if (_efee > 0) {
+        this.go_account(Config.redirectDelay);
+        return;
+      }
+      
+      Logger.debug("Click AutoNumber.");
+      $(".AutoNumber").click();
+      
+      Logger.debug("Click SentFun.");
+      $(".SentFun").click();
+      
+      // $("td[class=GuessNoList]").find("input").each(function(index, object) { object.value = index; });
+    };
+    
+  }
+  
+  DailyGamesOperator.prototype = new Operator;
   
   
   
@@ -405,7 +484,8 @@
       $obj = $("*:contains('謝謝您的參與，您已經獲得了今天的獎勵'),*:contains('感謝您的回應，您獲得了')");
       if ($obj.length > 0) {
         Logger.log($obj.text().trim());
-        this.go_account(Config.redirectDelay);
+        this.go_dailygames(Config.redirectDelay);
+        //this.go_account(Config.redirectDelay);
         return;
       }
       
