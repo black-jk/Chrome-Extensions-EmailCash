@@ -500,9 +500,13 @@
             window.opener.onAdClosed();
           } catch (e) {
             Logger.log(e);
-            if (Config.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
-              return;
+            /*
+            if (window.opener.location.pathname == "/4G/Rewards/DailyAdvertising.aspx") {
+              if (Config.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
+                return;
+              }
             }
+            */
             window.close();
           }
           return;
