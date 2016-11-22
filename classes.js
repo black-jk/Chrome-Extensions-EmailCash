@@ -24,6 +24,12 @@
     
     // --------------------------------------------------
     
+    this.go_dailygames = function(sleep) {
+      this.goto("http://www.emailcash.com.tw/4G/Games/DailyGames.aspx", sleep);
+    };
+    
+    // --------------------------------------------------
+    
     this.go_adclick = function(sleep) {
       this.goto("http://www.emailcash.com.tw/4G/Rewards/DailyAdvertising.aspx", sleep);
     };
@@ -83,7 +89,32 @@
     
     // ----------------------------------------------------------------------------------------------------
     
+    this.delay = 0;
+    
     this.run = function() {
+      if (typeof this.delay == 'number' && this.delay > 0) {
+        Logger.debug("delay: " + this.delay);
+        var thisObject = this;
+        var delayId = window.setInterval(function() {
+          thisObject.run();
+          window.clearInterval(delayId);
+        }, this.delay);
+        this.delay = 0;
+        return;
+      } else
+      if (typeof this.delay == 'function') {
+        Logger.debug("delay...");
+        var thisObject = this;
+        var delayId = window.setInterval(function() {
+          if (!thisObject.delay()) {
+            window.clearInterval(delayId);
+            thisObject.delay = 0;
+            thisObject.run();
+          }
+        }, 100);
+        return;
+      }
+      
       try {
         this.start();
         this.checkLogin();
@@ -162,7 +193,8 @@
       
       //this.go_latto(Config.redirectDelay);
       //this.go_adclick(Config.redirectDelay);
-      this.go_account(Config.redirectDelay);
+      this.go_dailygames(Config.redirectDelay);
+      //this.go_account(Config.redirectDelay);
     };
     
   }
@@ -238,6 +270,122 @@
   }
   
   LattoOperator.prototype = new Operator;
+  
+  
+  
+  // ====================================================================================================
+  // [DailyGames]
+  // ====================================================================================================
+  
+  function DailyGamesOperator() {
+    
+    this.title = "以小搏大";
+    
+    //this.delay = 2000;
+    this.delay = function() {
+      if ($("#ReciTime").html().trim() != "") {
+        Logger.debug("#ReciTime: " + $("#ReciTime").html().trim());
+        Logger.debug("continue run");
+        return false;
+      }
+      Logger.debug("pause run. (waiting for DailyGamesJS.js ...)");
+      return true;
+    };
+    
+    // ----------------------------------------------------------------------------------------------------
+    
+    this.operation = function() {
+      /// http://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
+      
+      //取得投注扣除費用
+      var _efee = $("#ctl00_mainPlaceHolder_hidFee").val();
+      Logger.debug("_efee: " + _efee);
+      if (_efee > 0) {
+        this.go_account(Config.redirectDelay);
+        return;
+      }
+      
+      Logger.debug("Click AutoNumber.");
+      $(".AutoNumber").click();
+      
+      /*/
+      Logger.debug("Click SentFun.");
+      $(".SentFun").click();
+      /*/
+      
+      // act:0
+      // nick:w214nt8f4f2o
+      // numStr:|89|734|590|40|833|298|131|
+      
+      // copy from http://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
+      var BetNumStr="|";
+      var errmark=0;
+      var n = $(".GuessNoList input").length;
+      
+      for (var i=0; i<n; i++) {
+          var BetNum = $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").val().trim();
+          if (BetNum.length>0){
+              if (!isNaN(BetNum)) {
+                  if (BetNum > 0 && BetNum < 1000) {
+                      $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").removeClass("Markfoucs");
+                      BetNumStr = BetNumStr + BetNum + "|";
+                  }
+                  else {
+                      $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").addClass("Markfoucs");
+                      errmark = 2;
+                  }
+              }else{
+                  $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").addClass("Markfoucs");
+                  errmark=1;
+              }
+          }else{
+              $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").addClass("Markfoucs");
+              errmark=1;
+          }
+      }
+      
+      //設定存入DB的號碼
+      $("#ctl00_mainPlaceHolder_hidBetNumStr").val(BetNumStr);
+      
+      var nick = $("#ctl00_mainPlaceHolder_hidNick").val();
+      var numStr = $("#ctl00_mainPlaceHolder_hidBetNumStr").val();
+      var datastr = "act=0&nick=" + nick + "&numStr=" + numStr;
+      
+      $.ajax({
+          type: "POST",
+          url: "DailyGamesAjax.aspx",
+          data: datastr,
+          success: function (res) {
+              if (res == "1") {
+                  
+                  $("#ctl00_mainPlaceHolder_hidBetNumStr").value = "";
+                  window.location.reload();
+              }
+              else {
+                  alert("發生錯誤，請重新再試。");
+                  $("#loading").hide();
+                  $(".loadingimg").hide();
+              }
+              
+          },
+          beforeSend: function () {
+              $("#loading").show();
+              $(".loadingimg").show();
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+              alert("發生錯誤，請重新再試。");
+              $("#loading").hide();
+              $(".loadingimg").hide();
+          }
+      });
+      /**/
+      
+      // $("td[class=GuessNoList]").find("input").each(function(index, object) { object.value = index; });
+    };
+    
+  }
+  
+  DailyGamesOperator.prototype = new Operator;
   
   
   
@@ -352,9 +500,13 @@
             window.opener.onAdClosed();
           } catch (e) {
             Logger.log(e);
-            if (Config.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
-              return;
+            /*
+            if (window.opener.location.pathname == "/4G/Rewards/DailyAdvertising.aspx") {
+              if (Config.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
+                return;
+              }
             }
+            */
             window.close();
           }
           return;
@@ -405,7 +557,8 @@
       $obj = $("*:contains('謝謝您的參與，您已經獲得了今天的獎勵'),*:contains('感謝您的回應，您獲得了')");
       if ($obj.length > 0) {
         Logger.log($obj.text().trim());
-        this.go_account(Config.redirectDelay);
+        this.go_dailygames(Config.redirectDelay);
+        //this.go_account(Config.redirectDelay);
         return;
       }
       

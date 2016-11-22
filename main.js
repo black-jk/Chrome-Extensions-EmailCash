@@ -48,8 +48,11 @@
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {
       operator = new LattoOperator();
     } else
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Games\/DailyGames.aspx/i)) {
+      operator = new DailyGamesOperator();
+    } else
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/account\.asp/i) ||
-        location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Account\/MyAccount.aspx?/i)
+        location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Account\/MyAccount.aspx\?go=points?/i)
     ) {
       operator = new AccountOperator();
     } else
