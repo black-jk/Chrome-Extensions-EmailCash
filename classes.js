@@ -498,6 +498,13 @@
           try {
             Logger.debug('call window.opener.onAdClosed()');
             window.opener.onAdClosed();
+            
+            // reload for close window
+            var delayId = window.setInterval(function() {
+              Logger.debug('call window.location.reload()');
+              window.location.reload();
+              window.clearInterval(delayId);
+            }, 1000);
           } catch (e) {
             Logger.log(e);
             /*
