@@ -22,24 +22,24 @@
     
     var now = new Date();
     var date2 = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-    var time = date2.getTime() - now.getTime() + 10;
+    var time = (date2.getTime() - now.getTime() + 90) % 86400000 + 90;
     window.restartTimeoutId = setTimeout(function() {
-      Logger.debug("[window.reloadTimeoutId] do restart!");
+      Logger.debug("[auto-reload] do restart!");
       window.location = window.location;
     }, time);
-    Logger.debug("[window.reloadTimeoutId] set restart after " + Math.floor(time) + " seconds!");
+    Logger.debug("[auto-reload] set restart after " + Math.floor(time) + " seconds!");
     
     window.reloadTimeoutId = setTimeout(function() {
-      Logger.debug("[window.reloadTimeoutId] do reload!");
+      Logger.debug("[auto-reload] do reload!");
       window.location = window.location;
     }, 30000);
-    Logger.debug("[window.reloadTimeoutId] set reload after 30 seconds!");
+    Logger.debug("[auto-reload] set reload after 30 seconds!");
   };
   
   // ----------------------------------------------------------------------------------------------------
   
   var execute = function() {
-    Logger.debug("[window.reloadTimeoutId] clear!");
+    Logger.debug("[auto-reload] clear!");
     clearTimeout(window.reloadTimeoutId);
     
     Logger.debug("[execute] start");
@@ -75,6 +75,9 @@
         location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Account\/MyAccount.aspx\?go=points?/i)
     ) {
       operator = new AccountOperator();
+    } else
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/Survey\.aspx/i)) {
+      operator = new SurveyOperator();
     } else
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login|itemjoin|account|adtop)\.aspx?/i)) {
       Logger.debug("[execute] Do nothing for url: '" + location + "'");
