@@ -1,0 +1,28 @@
+  <div class="leftTd">
+    <a href="/4G/Rewards/Mail.aspx" title="查看郵件獎勵">
+    	郵件(<span class="pending">1</span>)
+    </a>
+  </div>
+  
+  $('a[href="/4G/Rewards/Mail.aspx"][title="查看郵件獎勵"] span').html();
+  
+  
+  
+  
+  
+  <div class="tr_Cb2light txt_bold">
+  	<div class="td"><a target="_blank" href="MailDetail.aspx?uid=w214nt8f4f2o&amp;aid={DA19E0C5-8E08-4C53-8D8D-580AE8FFA7AD}">每日獎勵，積少成多</a></div>
+  	<div class="td">2016/10/03</div>
+  	<div class="td">未閱讀</div>
+  </div>
+  
+  
+  
+  
+  <td bgcolor="#6e2d93">
+  	<img src="http://www.emailcash.com.tw/email/trans.gif" width="7" height="1" alt="" border="0">
+  	<a href="http://www.emailcash.com.tw/4G/Rewards/MailClicks.aspx?uid=w214nt8f4f2o&amp;aid={DA19E0C5-8E08-4C53-8D8D-580AE8FFA7AD}&amp;email=0" class="clickhere">
+	  	<img src="http://www.emailcash.com.tw/email/trans.gif" width="7" height="35" alt="" border="0" align="absmiddle">
+	  	按這裡賺取&nbsp;10&nbsp;e元
+  	</a>
+  </td>

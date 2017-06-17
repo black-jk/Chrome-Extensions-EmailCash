@@ -17,11 +17,31 @@
     */
     
     $(document).ready(execute);
+    
+    // ------------------------------
+    
+    var now = new Date();
+    var date2 = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    var time = date2.getTime() - now.getTime() + 10;
+    window.restartTimeoutId = setTimeout(function() {
+      Logger.debug("[window.reloadTimeoutId] do restart!");
+      window.location = window.location;
+    }, time);
+    Logger.debug("[window.reloadTimeoutId] set restart after " + Math.floor(time) + " seconds!");
+    
+    window.reloadTimeoutId = setTimeout(function() {
+      Logger.debug("[window.reloadTimeoutId] do reload!");
+      window.location = window.location;
+    }, 30000);
+    Logger.debug("[window.reloadTimeoutId] set reload after 30 seconds!");
   };
   
   // ----------------------------------------------------------------------------------------------------
   
   var execute = function() {
+    Logger.debug("[window.reloadTimeoutId] clear!");
+    clearTimeout(window.reloadTimeoutId);
+    
     Logger.debug("[execute] start");
     
     var location = window.location.toString();
