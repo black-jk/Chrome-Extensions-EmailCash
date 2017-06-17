@@ -47,6 +47,13 @@
       this.goto(href, sleep);
     };
     
+    // --------------------------------------------------
+    
+    this.go_survey = function(sleep) {
+      var href = $("a[title='查看市調獎勵']").attr("href");
+      this.goto(href, sleep);
+    };
+    
     // ----------------------------------------------------------------------------------------------------
     
     this.go_next = function() {
@@ -67,6 +74,14 @@
         this.go_earn(Config.redirectDelay);
         return true;
       }
+      
+      /*
+      var survey_count = $("a[title='查看市調獎勵']").find("span").html();
+      if (survey_count > 0) {
+        this.go_survey(Config.redirectDelay);
+        return true;
+      }
+      */
       
       return false;
     };
@@ -647,6 +662,31 @@
   }
   
   AccountOperator.prototype = new Operator;
+  
+  
+  
+  // ====================================================================================================
+  // [Survey]
+  // ====================================================================================================
+  
+  function SurveyOperator() {
+    
+    this.title = "";
+    
+    // ----------------------------------------------------------------------------------------------------
+    
+    this.operation = function() {
+      var survey_count = $("a[title='查看市調獎勵']").find("span").html();
+      if (survey_count > 0) {
+        return;
+      }
+      
+      this.go_account(Config.redirectDelay);
+    };
+    
+  }
+  
+  SurveyOperator.prototype = new Operator;
   
   
   

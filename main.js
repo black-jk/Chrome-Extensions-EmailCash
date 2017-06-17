@@ -76,6 +76,9 @@
     ) {
       operator = new AccountOperator();
     } else
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/Survey\.aspx/i)) {
+      operator = new SurveyOperator();
+    } else
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/(login|itemjoin|account|adtop)\.aspx?/i)) {
       Logger.debug("[execute] Do nothing for url: '" + location + "'");
     } else {
