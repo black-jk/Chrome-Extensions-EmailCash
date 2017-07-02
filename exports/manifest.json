@@ -1,21 +1,13 @@
 {
   "manifest_version": 2,
-  
   "name": "EmailCash Daily Operator",
-  
-  "version": "2.3.3",
-  
+  "version": "3.0.0",
   "author": "BlackJK",
-  
   "description": "EmailCash Daily Operator",
-  
-  
   "options_page": "options.html",
-  
   "permissions": [
-  	"storage"
+    "storage"
   ],
-  
   "content_scripts": [
     {
       "matches": [
@@ -25,16 +17,16 @@
       "exclude_matches": [
         "http://emailcash.com.tw/itemjoin.asp*",
         "http://www.emailcash.com.tw/itemjoin.asp*",
-        
         "http://emailcash.com.tw/FaceBook*",
         "http://www.emailcash.com.tw/FaceBook*",
-        
         "http://emailcash.com.tw/adtop.asp*",
         "http://www.emailcash.com.tw/adtop.asp*",
-        
         "http://www.emailcash.com.tw/dailylatto.asp"
       ],
-      "js": ["jquery-2.1.1.min.js", "configuration.js", "library.js", "classes.js", "main.js"],
+      "js": [
+        "jquery-3.2.1.min.js",
+        "main.js"
+      ],
       "run_at": "document_start",
       "all_frames": true
     }
