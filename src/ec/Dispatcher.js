@@ -13,6 +13,7 @@ import { AdviewOperator } from './operators/AdviewOperator';
 import { LattoOperator } from './operators/LattoOperator';
 import { DailyGamesOperator } from './operators/DailyGamesOperator';
 import { AccountOperator } from './operators/AccountOperator';
+import { MailOperator } from './operators/MailOperator';
 import { SurveyOperator } from './operators/SurveyOperator';
 
 export class Dispatcher {
@@ -73,6 +74,10 @@ export class Dispatcher {
       location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Account\/MyAccount.aspx\?go=points?/i)
     ) {
       return new AccountOperator();
+    }
+
+    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/Mail\.aspx/i)) {
+      return new MailOperator();
     }
 
     if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/Survey\.aspx/i)) {

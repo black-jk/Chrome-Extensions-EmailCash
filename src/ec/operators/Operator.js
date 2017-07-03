@@ -55,6 +55,13 @@ export class Operator {
 
   // --------------------------------------------------
 
+  go_mail(sleep) {
+    var href = $("a[title='查看郵件獎勵']").attr("href");
+    this.goto(href, sleep);
+  }
+
+  // --------------------------------------------------
+
   go_survey(sleep) {
     var href = $("a[title='查看市調獎勵']").attr("href");
     this.goto(href, sleep);
@@ -80,6 +87,18 @@ export class Operator {
       this.go_earn(AppConfig.redirectDelay);
       return true;
     }
+
+    //<a href="/4G/Rewards/Mail.aspx" title="查看郵件獎勵">郵件(<span class="pending">1</span>)</a>
+    /*
+    let $mail_link = $('a[title="查看郵件獎勵"]');
+    if ($mail_link.length > 0) {
+      Logger.debug("\$mail_link.click();");
+      $mail_link.click();
+
+      this.go_mail(AppConfig.redirectDelay);
+      return true;
+    }
+    */
 
     /*
     let survey_count = $("a[title='查看市調獎勵']").find("span").html();
