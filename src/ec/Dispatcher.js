@@ -1,8 +1,9 @@
 // ====================================================================================================
 // [Dispatcher]
 // ====================================================================================================
-import { Config } from '../global';
+import { AppConfig } from '../global';
 import { Logger } from '../lib/Logger';
+import * as AppActions from '../constants/actions/app';
 
 import { HomeOperator } from './operators/HomeOperator';
 import { LoginOperator } from './operators/LoginOperator';
@@ -24,7 +25,8 @@ export class Dispatcher {
 
     let operator = this._getOperator();
     if (operator != null) {
-      Config.title = operator.title; // [TODO] move to class
+      AppConfig.title = operator.title; // [TODO] move to class
+      AppConfig.store.dispatch({ type: AppActions.START, operator: operator });
       operator.run();
     }
 

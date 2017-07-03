@@ -1,7 +1,7 @@
 // ====================================================================================================
 // [Question]
 // ====================================================================================================
-import { Config } from '../../global';
+import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 
@@ -17,8 +17,8 @@ export class QuestionOperator extends Operator {
     let $obj = $("*:contains('謝謝您的參與，您已經獲得了今天的獎勵'),*:contains('感謝您的回應，您獲得了')");
     if ($obj.length > 0) {
       Logger.log($obj.text().trim());
-      this.go_dailygames(Config.redirectDelay);
-      //this.go_account(Config.redirectDelay);
+      this.go_dailygames(AppConfig.redirectDelay);
+      //this.go_account(AppConfig.redirectDelay);
       return;
     }
 

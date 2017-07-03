@@ -1,7 +1,7 @@
 // ====================================================================================================
 // [Adclick]
 // ====================================================================================================
-import { Config } from '../../global';
+import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 
@@ -22,7 +22,7 @@ export class AdclickOperator extends Operator {
     let $href = this._findLink();
     if (!$href) {
       Logger.debug("Ad link not found! Retry ...");
-      this.go_adclick(Config.redirectDelay);
+      this.go_adclick(AppConfig.redirectDelay);
       return;
     }
 
@@ -34,7 +34,7 @@ export class AdclickOperator extends Operator {
     window.onAdClosed = function () {
       Logger.log('[onAdClosed] callback');
       adWindow.close();
-      thisObject.go_earn(Config.redirectDelay);
+      thisObject.go_earn(AppConfig.redirectDelay);
     };
 
     /// open ad-view url
@@ -76,8 +76,8 @@ export class AdclickOperator extends Operator {
     for (var i in patterns) {
       Logger.debug("[AdclickOperator._findLink()] '" + pattern + "'");
 
-      var pattern = patterns[i];
-      $href = $("a[title='" + pattern + "'][target='_blank']:contains('" + pattern + "')").attr("href");
+      let pattern = patterns[i];
+      let $href = $("a[title='" + pattern + "'][target='_blank']:contains('" + pattern + "')").attr("href");
       if ($href != "undefined" && $href != undefined && $href.length > 0) {
         return $href;
       }

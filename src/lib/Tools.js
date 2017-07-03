@@ -1,6 +1,7 @@
 // ====================================================================================================
 // [Tools]
 // ====================================================================================================
+import { AppConfig } from '../global';
 import { Logger } from './Logger';
 
 export class Tools {
@@ -51,7 +52,7 @@ export const exec = (fn) => {
     script.setAttribute("type", "application/javascript");
     script.textContent = '(' + fn + ')();';
     document.body.appendChild(script); // run the script
-    if (!Config.debug) {
+    if (!AppConfig.debug) {
       document.body.removeChild(script); // clean up
     }
   //});

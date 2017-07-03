@@ -1,6 +1,7 @@
 // ====================================================================================================
 // [Adview]
 // ====================================================================================================
+import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 
@@ -36,7 +37,7 @@ export class AdviewOperator extends Operator {
           Logger.log(e);
           /*
           if (window.opener.location.pathname == "/4G/Rewards/DailyAdvertising.aspx") {
-            if (Config.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
+            if (AppConfig.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
               return;
             }
           }

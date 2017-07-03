@@ -1,6 +1,6 @@
 // ====================================================================================================
-// [Global]
+// [ENV]
 // ====================================================================================================
-import _AppConfig from './config/AppConfig';
 
-export const AppConfig = new _AppConfig;
+export const DEVELOPMENT                      = 'development';
+export const PRODUCTION                       = 'production';

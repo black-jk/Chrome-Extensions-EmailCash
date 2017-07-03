@@ -1,7 +1,7 @@
 // ====================================================================================================
 // [DailyGames]
 // ====================================================================================================
-import { Config } from '../../global';
+import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 
@@ -32,7 +32,7 @@ export class DailyGamesOperator extends Operator {
         var _efee = $("#ctl00_mainPlaceHolder_hidFee").val();
         Logger.debug("_efee: " + _efee);
         if (_efee > 0) {
-            this.go_account(Config.redirectDelay);
+            this.go_account(AppConfig.redirectDelay);
             return;
         }
 

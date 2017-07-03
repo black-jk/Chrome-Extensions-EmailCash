@@ -1,9 +1,10 @@
 // ====================================================================================================
 // [Operator]
 // ====================================================================================================
-import { Config } from '../../global';
+import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { NotLoginError } from '../../lib/error/NotLoginError';
+import * as AppActions from '../../constants/actions/app';
 
 export class Operator {
 
@@ -67,7 +68,7 @@ export class Operator {
       Logger.debug("\$ad_link.click();");
       $ad_link.click();
 
-      this.go_adclick(Config.redirectDelay);
+      this.go_adclick(AppConfig.redirectDelay);
       return true;
     }
 
@@ -76,14 +77,14 @@ export class Operator {
       Logger.debug("\$question_link.click();");
       $question_link.click();
 
-      this.go_earn(Config.redirectDelay);
+      this.go_earn(AppConfig.redirectDelay);
       return true;
     }
 
     /*
     let survey_count = $("a[title='查看市調獎勵']").find("span").html();
     if (survey_count > 0) {
-      this.go_survey(Config.redirectDelay);
+      this.go_survey(AppConfig.redirectDelay);
       return true;
     }
     */
@@ -138,9 +139,16 @@ export class Operator {
     }
 
     try {
+      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "start()" });
       this.start();
+
+      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "checkLogin()" });
       this.checkLogin();
+
+      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "operation()" });
       this.operation();
+
+      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "done()" });
       this.done();
     } catch (e) {
       if (e instanceof NotLoginError) {
@@ -149,7 +157,7 @@ export class Operator {
 
       console.error(e);
       Logger.error(e.message);
-      if (Config.debug) {
+      if (AppConfig.debug) {
         alert(e);
       }
     }
@@ -172,7 +180,7 @@ export class Operator {
 
       if (this.autoLogin) {
         var href = $login_link.attr("href");
-        this.goto(href, Config.redirectDelay);
+        this.goto(href, AppConfig.redirectDelay);
         Logger.log("Goto '" + href + "'");
       } else {
         Logger.log("Waiting for login!");

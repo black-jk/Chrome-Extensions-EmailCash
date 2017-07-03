@@ -1,6 +1,7 @@
 // ====================================================================================================
 // [Latto]
 // ====================================================================================================
+import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 
@@ -41,7 +42,7 @@ export class LattoOperator extends Operator {
       });
     } else {
       Logger.debug("Already Sent!");
-      this.go_adclick(Config.redirectDelay);
+      this.go_adclick(AppConfig.redirectDelay);
     }
     */
   }

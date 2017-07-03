@@ -1,7 +1,7 @@
 // ====================================================================================================
 // [Logger]
 // ====================================================================================================
-import { Config } from '../global';
+import { AppConfig } from '../global';
 
 export class Logger {
 
@@ -24,7 +24,7 @@ export class Logger {
   // ----------------------------------------------------------------------------------------------------
 
   static getHeader(type) {
-    return "[" + Config.name + "] [" + type + "] " + (Config.version ? "[" + Config.version + "] " : "") + (Config.title ? "[" + Config.title + "] " : "");
+    return "[" + AppConfig.name + "] [" + type + "] " + (AppConfig.version ? "[" + AppConfig.version + "] " : "") + (AppConfig.title ? "[" + AppConfig.title + "] " : "");
   }
 
 };

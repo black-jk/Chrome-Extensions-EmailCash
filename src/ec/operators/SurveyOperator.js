@@ -1,6 +1,7 @@
 // ====================================================================================================
 // [Survey]
 // ====================================================================================================
+import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 
@@ -18,7 +19,7 @@ export class SurveyOperator extends Operator {
       return;
     }
 
-    this.go_account(Config.redirectDelay);
+    this.go_account(AppConfig.redirectDelay);
   }
 
 };

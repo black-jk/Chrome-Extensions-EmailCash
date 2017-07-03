@@ -1,6 +1,11 @@
 // ====================================================================================================
-// [Global]
+// [Reducers]
 // ====================================================================================================
-import _AppConfig from './config/AppConfig';
+import { combineReducers } from 'redux';
+import app from './app';
 
-export const AppConfig = new _AppConfig;
+const appReducer = combineReducers({
+  app,
+});
+
+export default appReducer;

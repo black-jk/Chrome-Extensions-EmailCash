@@ -1,7 +1,7 @@
 // ====================================================================================================
 // [ChromeStorage]
 // ====================================================================================================
-import { Config } from '../global';
+import { AppConfig } from '../global';
 import { Logger } from '../lib/Logger';
 
 export class ChromeStorage {
@@ -12,10 +12,9 @@ export class ChromeStorage {
       debug: false,
       redirect_delay: 0
     }, function (items) {
-      Config.debug = items.debug;
-      Config.redirectDelay = items.redirect_delay;
-      Logger.debug("[ChromeStorage] [Config]", Config);
-      console.debug(Config);
+      AppConfig.debug = items.debug;
+      AppConfig.redirectDelay = items.redirect_delay;
+      console.debug(AppConfig);
     });
   }
 
