@@ -158,16 +158,16 @@ export class Operator {
     }
 
     try {
-      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "start()" });
+      Logger.debug("start()");
       this.start();
 
-      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "checkLogin()" });
+      Logger.debug("checkLogin()");
       this.checkLogin();
 
-      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "operation()" });
+      Logger.debug("operation()");
       this.operation();
 
-      AppConfig.store.dispatch({ type: AppActions.ACTION, actionTitle: "done()" });
+      Logger.debug("done()");
       this.done();
     } catch (e) {
       if (e instanceof NotLoginError) {

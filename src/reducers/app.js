@@ -5,7 +5,9 @@ import * as AppActions from '../constants/actions/app';
 import * as AppStatus from '../constants/status/app';
 
 const defaultState = {
-
+  operatorTitle: "",
+  operatorAction: "",
+  loggersCount: 0,
 };
 
 const app = (state = defaultState, action) => {
@@ -25,6 +27,12 @@ const app = (state = defaultState, action) => {
       return {
         ...state,
         operatorAction: action.actionTitle,
+      };
+
+    case AppActions.LOGGER:
+      return {
+        ...state,
+        loggersCount: action.loggersCount,
       };
 
     default:
