@@ -18,14 +18,15 @@ export class AdviewOperator extends Operator {
       // check finished
       var $span = $("#sViewStatus").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
       if ($span.length > 0) {
-        Logger.log($span.text().trim());
-        Logger.debug('ad finished');
+        Logger.debug($span.prop("outerHTML"));
+        Logger.log('ad finished');
 
         window.adFinished = true;
 
         try {
-          Logger.debug('call window.opener.onAdClosed()');
+          Logger.log('call window.opener.onAdClosed()');
           window.opener.onAdClosed();
+          Logger.log('call window.opener.onAdClosed() - success');
 
           // reload for close window
           var delayId = window.setInterval(function () {
@@ -34,7 +35,7 @@ export class AdviewOperator extends Operator {
             window.clearInterval(delayId);
           }, 1000);
         } catch (e) {
-          Logger.log(e);
+          Logger.error(e);
           /*
           if (window.opener.location.pathname == "/4G/Rewards/DailyAdvertising.aspx") {
             if (AppConfig.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
@@ -65,7 +66,7 @@ export class AdviewOperator extends Operator {
       */
 
       /// retry later
-      Logger.debug("Retry later ...");
+      Logger.warn("Retry later ...");
       window.setTimeout(window.ecAdview, 1000);
     };
     window.ecAdview();

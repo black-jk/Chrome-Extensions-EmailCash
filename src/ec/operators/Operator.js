@@ -158,16 +158,16 @@ export class Operator {
     }
 
     try {
-      Logger.debug("start()");
+      Logger.debug("[start()]");
       this.start();
 
-      Logger.debug("checkLogin()");
+      Logger.debug("[checkLogin()]");
       this.checkLogin();
 
-      Logger.debug("operation()");
+      Logger.debug("[operation()]");
       this.operation();
 
-      Logger.debug("done()");
+      Logger.debug("[done()]");
       this.done();
     } catch (e) {
       if (e instanceof NotLoginError) {
@@ -185,7 +185,7 @@ export class Operator {
   // --------------------------------------------------
 
   start() {
-    Logger.debug("START");
+    // Logger.debug("START");
   }
 
   // --------------------------------------------------
@@ -218,7 +218,7 @@ export class Operator {
   // --------------------------------------------------
 
   done() {
-    Logger.debug("DONE");
+    // Logger.debug("DONE");
   }
 
   // ----------------------------------------------------------------------------------------------------

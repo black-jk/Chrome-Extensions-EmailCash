@@ -21,7 +21,7 @@ export class AdclickOperator extends Operator {
 
     let $href = this._findLink();
     if (!$href) {
-      Logger.debug("Ad link not found! Retry ...");
+      Logger.log("Ad link not found! Retry ...");
       this.go_adclick(AppConfig.redirectDelay);
       return;
     }
@@ -41,11 +41,11 @@ export class AdclickOperator extends Operator {
     var openAdWindow = function () {
       if (adWindow != null) {
         if (adWindow.adFinished) {
-          Logger.debug("Ad finished, continue to next step.");
+          Logger.log("Ad finished, continue to next step.");
           window.onAdClosed();
           return;
         } else {
-          Logger.debug("Retry ad-view");
+          Logger.warn("Retry ad-view");
           adWindow.close();
         }
       }
@@ -53,13 +53,13 @@ export class AdclickOperator extends Operator {
       Logger.log("open url: '" + $href + "'  (waiting for callback)");
       adWindow = window.open($href, "", "width:100, height:100");
       adWindow.adFinished = false;
-      Logger.debug("Waiting for callback ...");
+      Logger.log("Waiting for callback ...");
     };
     openAdWindow();
 
     /// set timeout for retry
     window.setInterval(function () {
-      Logger.debug("Timeup. Call openAdWindow() again.");
+      Logger.warn("Timeup. Call openAdWindow() again.");
       openAdWindow();
     }, 60000);
   }

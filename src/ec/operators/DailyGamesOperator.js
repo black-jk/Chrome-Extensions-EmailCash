@@ -36,11 +36,11 @@ export class DailyGamesOperator extends Operator {
             return;
         }
 
-        Logger.debug("Click AutoNumber.");
+        Logger.log("Click AutoNumber.");
         $(".AutoNumber").click();
 
         /*/
-        Logger.debug("Click SentFun.");
+        Logger.log("Click SentFun.");
         $(".SentFun").click();
         /*/
 
