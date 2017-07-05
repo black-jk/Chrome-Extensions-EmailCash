@@ -3,13 +3,21 @@
   padding: 5px;
 }
 
+#root .Header {
+  color: whitesmoke;
+  background-color: black;
+}
+#root .Header > div {
+  display: inline-block;
+  box-shadow: none;
+  margin-right: 5px;
+}
+
 #root .EmailCashPanel {
   right: 30px;
   bottom: 60px;
   z-index: 99999;
   position: fixed;
-  padding: 10px;
-  border: blue 2px solid;
   background-color: white;
 }
 

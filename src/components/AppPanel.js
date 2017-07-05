@@ -13,11 +13,11 @@ export class AppPanel extends React.Component {
     return (
       <DraggableCore>
         <div className="EmailCashPanel">
-          <div style={{ border: "0px 0px 0px 1px black" }}>
-            <span>[{operatorTitle ? operatorTitle : "n/a"}]</span>
+          <div className="Header">
+            <div>[{operatorTitle ? operatorTitle : "n/a"}]</div>
             <RefreshTimeLabel />
-            <LoggerPanel {...this.props} />
           </div>
+          <LoggerPanel {...this.props} />
         </div>
       </DraggableCore>
     );

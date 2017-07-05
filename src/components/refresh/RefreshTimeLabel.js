@@ -26,15 +26,14 @@ export default class RefreshTimeLabel extends Component {
     let timeoutRestartTime = (timeoutRestartAt - nowTime) / 1000;
 
     let style = {
-      display: "inline-block",
-      boxShadow: "none",
-      top: 10,
-      right: 10,
-      position: "absolute",
+      // top: 7,
+      // right: 10,
+      // position: "absolute",
     };
+
     return (
       <div style={style}>
-        Reload After: <span>{dailyRestartTime.toFixed(0)}</span>
+        [Reload: <span>{dailyRestartTime.toFixed(0)}]</span>
       </div>
     );
   }
