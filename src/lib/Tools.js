@@ -27,10 +27,10 @@ export class Tools {
   // ----------------------------------------------------------------------------------------------------
 
   static refresh(time, label = "refresh") {
-    Logger.debug("[Tools.refresh()] [" + label + "] set refresh after " + Math.floor(time / 1000) + " seconds!");
+    Logger.log("[Tools.refresh()] [" + label + "] set refresh after " + Math.floor(time / 1000) + " seconds!");
 
     return setTimeout(function() {
-      Logger.debug("[Tools.refresh()] [" + label + "] do refresh!");
+      Logger.log("[Tools.refresh()] [" + label + "] do refresh!");
       window.location = window.location;
     }, time);
   }

@@ -4,6 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DraggableCore from 'react-draggable';
+import RefreshTimeLabel from './refresh/RefreshTimeLabel';
 import LoggerPanel from './logger/LoggerPanel';
 
 export class AppPanel extends React.Component {
@@ -14,6 +15,7 @@ export class AppPanel extends React.Component {
         <div className="EmailCashPanel">
           <div style={{ border: "0px 0px 0px 1px black" }}>
             <span>{operatorTitle}: {operatorAction}</span>
+            <RefreshTimeLabel />
             <LoggerPanel {...this.props} />
           </div>
         </div>

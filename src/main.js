@@ -28,16 +28,22 @@ function main() {
   // ------------------------------
 
   var now = new Date();
+  var nowTime = now.getTime();
   var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  var time = (tomorrow.getTime() - now.getTime() + 60000) % 86400000;
+  var time = (tomorrow.getTime() - nowTime + 90000) % 86400000;
+
   dailyRestartId = Tools.refresh(time, "AutoReload - Daily");
+  AppConfig.dailyRestartAt = nowTime + time;
+
   timeoutRestartId = Tools.refresh(30000, "AutoReload - Timeout");
+  AppConfig.timeoutRestartAt = nowTime + 30000;
 
   $(document).ready(function () {
     require('./css/main.css');
 
     Logger.debug("[AutoReload - Timeout] clear!");
     clearTimeout(timeoutRestartId);
+    AppConfig.timeoutRestartAt = 0;
 
     let root = document.createElement("div");
     root.setAttribute("id", "root");
