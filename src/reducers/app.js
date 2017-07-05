@@ -23,12 +23,6 @@ const app = (state = defaultState, action) => {
         operatorTitle: action.operator.title,
       };
 
-    case AppActions.ACTION:
-      return {
-        ...state,
-        operatorAction: action.actionTitle,
-      };
-
     case AppActions.LOGGER:
       return {
         ...state,

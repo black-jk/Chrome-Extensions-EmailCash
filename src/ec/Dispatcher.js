@@ -26,7 +26,7 @@ export class Dispatcher {
 
     let operator = this._getOperator();
     if (operator != null) {
-      AppConfig.title = operator.title; // [TODO] move to class
+      AppConfig.operator = operator;
       AppConfig.store.dispatch({ type: AppActions.START, operator: operator });
       operator.run();
     }

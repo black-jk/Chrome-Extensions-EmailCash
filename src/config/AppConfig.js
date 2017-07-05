@@ -12,13 +12,7 @@ export default class AppConfig {
 
   name = "EmailCashOperator";
 
-  title = null;
-
   version = "3.0.0";
-
-  debug = /*/ true /*/ false /**/;
-
-  redirectDelay = /*/ 3000 /*/ 0 /**/;
 
 
 
@@ -37,6 +31,43 @@ export default class AppConfig {
   dailyRestartAt = 0;
 
   timeoutRestartAt = 0;
+
+
+
+  // ----------------------------------------------------------------------------------------------------
+  // [Options]
+  // ----------------------------------------------------------------------------------------------------
+
+  debug = /*/ true /*/ false /**/;
+
+  redirectDelay = /*/ 3000 /*/ 0 /**/;
+
+
+
+  // ----------------------------------------------------------------------------------------------------
+  // [Operator]
+  // ----------------------------------------------------------------------------------------------------
+
+  _title = null;
+
+  _operator = null;
+
+  // --------------------------------------------------
+
+  get operator() {
+    return this._operator;
+  }
+
+  set operator(value) {
+    this._operator = value;
+    this._title = value.title;
+  }
+
+  // --------------------------------------------------
+
+  get title() {
+    return this._title;
+  }
 
 
 
