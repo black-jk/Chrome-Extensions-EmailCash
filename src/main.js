@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { AppConfig } from './global';
 import { Logger } from './lib/Logger';
 import { Tools } from './lib/Tools';
+import { DelayTimer } from './lib/DelayTimer';
 import { ChromeStorage } from './lib/ChromeStorage';
 import AppContainer from './containers/AppContainer';
 import { Dispatcher } from './ec/Dispatcher';
@@ -16,8 +17,8 @@ ChromeStorage.init();
 
 // --------------------------------------------------
 
-let dailyRestartId = 0;
-let timeoutRestartId = 0;
+let dailyRestartTimer: DelayTimer = 0;
+let timeoutRestartTimer: DelayTimer = 0;
 
 function main() {
   var location = window.location.toString();
@@ -32,17 +33,17 @@ function main() {
   var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
   var time = (tomorrow.getTime() - nowTime + 90000) % 86400000;
 
-  dailyRestartId = Tools.refresh(time, "AutoReload - Daily");
+  dailyRestartTimer = Tools.redirect(time, "http://www.emailcash.com.tw/");
   AppConfig.dailyRestartAt = nowTime + time;
 
-  timeoutRestartId = Tools.refresh(30000, "AutoReload - Timeout");
+  timeoutRestartTimer = Tools.redirect(30000, "");
   AppConfig.timeoutRestartAt = nowTime + 30000;
 
   $(document).ready(function () {
     require('./css/main.css');
 
     Logger.debug("[AutoReload - Timeout] clear!");
-    clearTimeout(timeoutRestartId);
+    timeoutRestartTimer.cancel();
     AppConfig.timeoutRestartAt = 0;
 
     let root = document.createElement("div");

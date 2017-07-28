@@ -3,6 +3,7 @@
 // ====================================================================================================
 import { AppConfig } from '../global';
 import { Logger } from './Logger';
+import { DelayTimer } from './DelayTimer';
 
 export class Tools {
 
@@ -26,13 +27,14 @@ export class Tools {
 
   // ----------------------------------------------------------------------------------------------------
 
-  static refresh(time, label = "refresh") {
-    Logger.log("[Tools.refresh()] [" + label + "] set refresh after " + Math.floor(time / 1000) + " seconds!");
+  static redirect(time, url = "") {
+    Logger.log("[Tools.redirect()] Set redirect after " + Math.floor(time / 1000) + " seconds!");
+    if (!url) url = window.location;
 
-    return setTimeout(function() {
-      Logger.log("[Tools.refresh()] [" + label + "] do refresh!");
-      window.location = window.location;
-    }, time);
+    return new DelayTimer(this, (url) => {
+      Logger.log("[Tools.redirect()] Do redirect! url = '" + url + "'");
+      window.location = url;
+    }, [url], time);
   }
 
 };
@@ -48,13 +50,13 @@ export const exec = (fn) => {
   fn();
   /*/
   //$(document).ready(function() {
-    var script = document.createElement('script');
-    script.setAttribute("type", "application/javascript");
-    script.textContent = '(' + fn + ')();';
-    document.body.appendChild(script); // run the script
-    if (!AppConfig.debug) {
-      document.body.removeChild(script); // clean up
-    }
+  var script = document.createElement('script');
+  script.setAttribute("type", "application/javascript");
+  script.textContent = '(' + fn + ')();';
+  document.body.appendChild(script); // run the script
+  if (!AppConfig.debug) {
+    document.body.removeChild(script); // clean up
+  }
   //});
   /**/
 };
