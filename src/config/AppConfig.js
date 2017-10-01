@@ -84,11 +84,11 @@ export default class AppConfig {
   constructor() {
     const middlewares = [];
 
-    if (this.env == ENV.DEVELOPMENT) {
-      /// redux-logger - http://ithelp.ithome.com.tw/articles/10187344
-      const logger = createLogger({ duration: true });
-      middlewares.push(logger);
-    }
+    // if (this.env == ENV.DEVELOPMENT) {
+    //   /// redux-logger - http://ithelp.ithome.com.tw/articles/10187344
+    //   const logger = createLogger({ duration: true });
+    //   middlewares.push(logger);
+    // }
 
     this.store = createStore(
       appReducer,
