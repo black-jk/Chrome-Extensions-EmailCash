@@ -48,7 +48,7 @@ export class DailyGamesOperator extends Operator {
         // nick:w214nt8f4f2o
         // numStr:|89|734|590|40|833|298|131|
 
-        // copy from http://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
+        // copy from https://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
         var BetNumStr = "|";
         var errmark = 0;
         var n = $(".GuessNoList input").length;

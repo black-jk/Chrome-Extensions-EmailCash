@@ -40,50 +40,49 @@ export class Dispatcher {
     let location = window.location.toString();
     Logger.debug("[Dispatcher] location: " + location);
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(default\.aspx?)?$/i)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/?(default\.aspx?)?$/i)) {
       return new HomeOperator;
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/?(login\.aspx?)?$/i)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/?(login\.aspx?)?$/i)) {
       return new LoginOperator;
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/earn.asp\?go=qsurvey/) ||
-      location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailySurvey.aspx?/i)
-    ) {
+    if (location.match(/^https?:\/\/www\.emailcash\.com\.tw\/Rewards\/DailySurvey\.aspx?/i)) {
       return new QuestionOperator;
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdvertising.aspx?/i)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/DailyAdvertising.aspx?/i)) {
       return new AdclickOperator;
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/DailyAdClicks.aspx\?id=/)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/DailyAdClicks.aspx\?id=/)) {
       return new AdviewOperator;
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {
       return new LattoOperator();
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Games\/DailyGames.aspx/i)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Games\/DailyGames.aspx/i)) {
       return new DailyGamesOperator();
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/account\.asp/i) ||
-      location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Account\/MyAccount.aspx\?go=points?/i)
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/account\.asp/i) ||
+      location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Account\/MyAccount.aspx\?go=points?/i)
     ) {
       return new AccountOperator();
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/Mail\.aspx/i)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/Mail\.aspx/i)) {
       return new MailOperator();
     }
 
-    if (location.match(/^http:\/\/(www\.)?emailcash\.com\.tw\/4G\/Rewards\/Survey\.aspx/i)) {
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/Survey\.aspx/i)) {
       return new SurveyOperator();
     }
 
+    Logger.debug("[Dispatcher] No operator!");
     return null;
   }
 

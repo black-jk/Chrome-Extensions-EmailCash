@@ -9,10 +9,10 @@ export class Tools {
 
   static loadJQuery(callback) {
     var script = document.createElement("script");
-    //script.setAttribute("src", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
-    //script.setAttribute("src", "http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.7.2.js");
-    script.setAttribute("src", "http://www.emailcash.com.tw/lib/jquery.min_1.6.1.js");
-    //script.setAttribute("src", "http://code.jquery.com/jquery-1.9.1.js");
+    //script.setAttribute("src", "https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+    //script.setAttribute("src", "https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.7.2.js");
+    script.setAttribute("src", "https://www.emailcash.com.tw/lib/jquery.min_1.6.1.js");
+    //script.setAttribute("src", "https://code.jquery.com/jquery-1.9.1.js");
 
     script.addEventListener("load", function () {
       var script = document.createElement("script");

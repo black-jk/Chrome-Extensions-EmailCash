@@ -19,31 +19,31 @@ export class Operator {
   // ----------------------------------------------------------------------------------------------------
 
   go_home(sleep) {
-    this.goto("http://www.emailcash.com.tw/", sleep);
+    this.goto("https://www.emailcash.com.tw/", sleep);
   }
 
   // --------------------------------------------------
 
   go_latto(sleep) {
-    this.goto("http://www.emailcash.com.tw/dailylatto.asp", sleep);
+    this.goto("https://www.emailcash.com.tw/dailylatto.asp", sleep);
   }
 
   // --------------------------------------------------
 
   go_dailygames(sleep) {
-    this.goto("http://www.emailcash.com.tw/4G/Games/DailyGames.aspx", sleep);
+    this.goto("https://www.emailcash.com.tw/Games/DailyGames.aspx", sleep);
   }
 
   // --------------------------------------------------
 
   go_adclick(sleep) {
-    this.goto("http://www.emailcash.com.tw/4G/Rewards/DailyAdvertising.aspx", sleep);
+    this.goto("https://www.emailcash.com.tw/Rewards/DailyAdvertising.aspx", sleep);
   }
 
   // --------------------------------------------------
 
   go_earn(sleep) {
-    this.goto("http://www.emailcash.com.tw/earn.asp?go=qsurvey", sleep);
+    this.goto("https://www.emailcash.com.tw/Rewards/DailySurvey.aspx", sleep);
   }
 
   // --------------------------------------------------

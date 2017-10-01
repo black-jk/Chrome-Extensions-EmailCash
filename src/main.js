@@ -33,7 +33,7 @@ function main() {
   var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
   var time = (tomorrow.getTime() - nowTime + 90000) % 86400000;
 
-  dailyRestartTimer = Tools.redirect(time, "http://www.emailcash.com.tw/");
+  dailyRestartTimer = Tools.redirect(time, "https://www.emailcash.com.tw/");
   AppConfig.dailyRestartAt = nowTime + time;
 
   timeoutRestartTimer = Tools.redirect(30000, "");
