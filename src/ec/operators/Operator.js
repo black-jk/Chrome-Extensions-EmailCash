@@ -144,18 +144,18 @@ export class Operator {
       this.delay = 0;
       return;
     } else
-    if (typeof this.delay == 'function') {
-      Logger.debug("delay...");
-      var thisObject = this;
-      var delayId = window.setInterval(function () {
-        if (!thisObject.delay()) {
-          window.clearInterval(delayId);
-          thisObject.delay = 0;
-          thisObject.run();
-        }
-      }, 100);
-      return;
-    }
+      if (typeof this.delay == 'function') {
+        Logger.debug("delay...");
+        var thisObject = this;
+        var delayId = window.setInterval(function () {
+          if (!thisObject.delay()) {
+            window.clearInterval(delayId);
+            thisObject.delay = 0;
+            thisObject.run();
+          }
+        }, 100);
+        return;
+      }
 
     try {
       Logger.debug("[start()]");
