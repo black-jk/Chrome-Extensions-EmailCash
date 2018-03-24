@@ -7,7 +7,7 @@ import { Operator } from './Operator';
 
 export class QuestionOperator extends Operator {
 
-  title = "每日問答";
+  title: String = "每日問答";
 
 
 
@@ -52,7 +52,8 @@ export class QuestionOperator extends Operator {
         </div>
     </div>
     */
-    var $input = $("div[class='td'] input[type='image']");
+
+    let $input = $("div[class='td'] input[type='image']");
     if ($input != "undefined") {
       $input.click();
       return;

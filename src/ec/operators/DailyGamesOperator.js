@@ -7,7 +7,7 @@ import { Operator } from './Operator';
 
 export class DailyGamesOperator extends Operator {
 
-  title = "以小搏大";
+  title: String = "以小搏大";
 
 
 
@@ -29,7 +29,7 @@ export class DailyGamesOperator extends Operator {
     /// http://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
 
     //取得投注扣除費用
-    var _efee = $("#ctl00_mainPlaceHolder_hidFee").val();
+    let _efee = $("#ctl00_mainPlaceHolder_hidFee").val();
     Logger.debug("_efee: " + _efee);
     if (_efee > 0) {
       this.go_account(AppConfig.redirectDelay);
@@ -39,22 +39,17 @@ export class DailyGamesOperator extends Operator {
     Logger.log("Click AutoNumber.");
     $(".AutoNumber").click();
 
-    /*/
-    Logger.log("Click SentFun.");
-    $(".SentFun").click();
-    /*/
-
     // act:0
     // nick:w214nt8f4f2o
     // numStr:|89|734|590|40|833|298|131|
 
     // copy from https://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
-    var BetNumStr = "|";
-    var errmark = 0;
-    var n = $(".GuessNoList input").length;
+    let BetNumStr: String = "|";
+    let errmark: Number = 0;
+    let n = $(".GuessNoList input").length;
 
-    for (var i = 0; i < n; i++) {
-      var BetNum = $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").val().trim();
+    for (let i: Number = 0; i < n; i++) {
+      let BetNum = $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").val().trim();
       if (BetNum.length > 0) {
         if (!isNaN(BetNum)) {
           if (BetNum > 0 && BetNum < 1000) {
@@ -77,9 +72,9 @@ export class DailyGamesOperator extends Operator {
     //設定存入DB的號碼
     $("#ctl00_mainPlaceHolder_hidBetNumStr").val(BetNumStr);
 
-    var nick = $("#ctl00_mainPlaceHolder_hidNick").val();
-    var numStr = $("#ctl00_mainPlaceHolder_hidBetNumStr").val();
-    var datastr = "act=0&nick=" + nick + "&numStr=" + numStr;
+    let nick = $("#ctl00_mainPlaceHolder_hidNick").val();
+    let numStr = $("#ctl00_mainPlaceHolder_hidBetNumStr").val();
+    let datastr: String = `act=0&nick=${nick}&numStr=${numStr}`;
 
     $.ajax({
       type: "POST",
@@ -87,7 +82,6 @@ export class DailyGamesOperator extends Operator {
       data: datastr,
       success: function (res) {
         if (res == "1") {
-
           $("#ctl00_mainPlaceHolder_hidBetNumStr").value = "";
           window.location.reload();
         } else {
@@ -95,7 +89,6 @@ export class DailyGamesOperator extends Operator {
           $("#loading").hide();
           $(".loadingimg").hide();
         }
-
       },
       beforeSend: function () {
         $("#loading").show();
@@ -107,7 +100,6 @@ export class DailyGamesOperator extends Operator {
         $(".loadingimg").hide();
       }
     });
-    /**/
 
     // $("td[class=GuessNoList]").find("input").each(function(index, object) { object.value = index; });
   }

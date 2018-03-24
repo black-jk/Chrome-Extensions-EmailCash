@@ -4,10 +4,9 @@
 import React, { Component } from 'react';
 import { AppConfig } from '../../global';
 
+export class RefreshTimeLabel extends Component {
 
-export default class RefreshTimeLabel extends Component {
-
-  _intervalId = 0;
+  _intervalId: Number = 0;
 
   componentDidMount() {
     this._intervalId = setInterval(() => {
@@ -19,11 +18,11 @@ export default class RefreshTimeLabel extends Component {
 
   render() {
     let { dailyRestartAt, timeoutRestartAt } = AppConfig;
-    let now = new Date;
-    let nowTime = now.getTime();
+    let now: Date = new Date;
+    let nowTime: Number = now.getTime();
 
-    let dailyRestartTime = (dailyRestartAt - nowTime) / 1000;
-    let timeoutRestartTime = (timeoutRestartAt - nowTime) / 1000;
+    let dailyRestartTime: Number = (dailyRestartAt - nowTime) / 1000;
+    let timeoutRestartTime: Number = (timeoutRestartAt - nowTime) / 1000;
 
     let style = {
       // top: 7,
@@ -43,7 +42,5 @@ export default class RefreshTimeLabel extends Component {
   componentWillUnmount() {
     clearInterval(this._intervalId);
   }
-
-  // --------------------------------------------------
 
 };

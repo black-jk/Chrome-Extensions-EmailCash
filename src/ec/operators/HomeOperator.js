@@ -7,14 +7,14 @@ import { Operator } from './Operator';
 
 export class HomeOperator extends Operator {
 
-  title = "EmailCash Home";
+  title: String = "EmailCash Home";
 
 
 
   // ----------------------------------------------------------------------------------------------------
 
   operation() {
-    let inOperation = this.go_next();
+    let inOperation: Boolean = this.go_next();
     if (inOperation) {
       return;
     }

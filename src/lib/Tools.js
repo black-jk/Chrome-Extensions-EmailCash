@@ -8,14 +8,14 @@ import { DelayTimer } from './DelayTimer';
 export class Tools {
 
   static loadJQuery(callback) {
-    var script = document.createElement("script");
+    let script = document.createElement("script");
     //script.setAttribute("src", "https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
     //script.setAttribute("src", "https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.7.2.js");
     script.setAttribute("src", "https://www.emailcash.com.tw/lib/jquery.min_1.6.1.js");
     //script.setAttribute("src", "https://code.jquery.com/jquery-1.9.1.js");
 
     script.addEventListener("load", function () {
-      var script = document.createElement("script");
+      let script = document.createElement("script");
       script.textContent = "(" + callback.toString() + ")();";
       document.body.appendChild(script);
     }, false);
@@ -27,11 +27,11 @@ export class Tools {
 
   // ----------------------------------------------------------------------------------------------------
 
-  static redirect(time, url = "") {
+  static redirect(time: Number, url: String = ""): DelayTimer {
     Logger.log("[Tools.redirect()] Set redirect after " + Math.floor(time / 1000) + " seconds!");
     if (!url) url = window.location;
 
-    return new DelayTimer(this, (url) => {
+    return new DelayTimer(this, (url: String) => {
       Logger.log("[Tools.redirect()] Do redirect! url = '" + url + "'");
       window.location = url;
     }, [url], time);
@@ -50,7 +50,7 @@ export const exec = (fn) => {
   fn();
   /*/
   //$(document).ready(function() {
-  var script = document.createElement('script');
+  let script = document.createElement('script');
   script.setAttribute("type", "application/javascript");
   script.textContent = '(' + fn + ')();';
   document.body.appendChild(script); // run the script

@@ -4,7 +4,7 @@
 import { AppConfig } from '../global';
 import { Logger } from '../lib/Logger';
 import * as AppActions from '../constants/actions/app';
-
+import { Operator } from './operators/Operator';
 import { HomeOperator } from './operators/HomeOperator';
 import { LoginOperator } from './operators/LoginOperator';
 import { QuestionOperator } from './operators/QuestionOperator';
@@ -21,10 +21,10 @@ export class Dispatcher {
   static execute() {
     Logger.debug("[Dispatcher.execute()] start");
 
-    let location = window.location.toString();
+    let location: String = window.location.toString();
     Logger.debug("[Dispatcher.execute()] location: " + location);
 
-    let operator = this._getOperator();
+    let operator: Operator = this._getOperator();
     if (operator != null) {
       AppConfig.operator = operator;
       AppConfig.store.dispatch({ type: AppActions.START, operator: operator });
@@ -37,7 +37,7 @@ export class Dispatcher {
   // --------------------------------------------------
 
   static _getOperator() {
-    let location = window.location.toString();
+    let location: String = window.location.toString();
     Logger.debug("[Dispatcher] location: " + location);
 
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/?(default\.aspx?)?$/i)) {

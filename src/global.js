@@ -3,4 +3,4 @@
 // ====================================================================================================
 import _AppConfig from './config/AppConfig';
 
-export const AppConfig = new _AppConfig;
+export const AppConfig: _AppConfig = new _AppConfig;

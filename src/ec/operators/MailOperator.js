@@ -7,7 +7,7 @@ import { Operator } from './Operator';
 
 export class MailOperator extends Operator {
 
-  title = "查看郵件獎勵";
+  title: String = "查看郵件獎勵";
 
 
 
@@ -26,7 +26,7 @@ export class MailOperator extends Operator {
     if ($links.length > 0) {
       Logger.log($links.text().trim());
 
-      var href = $links.attr("href");
+      let href = $links.attr("href");
       Logger.log(href);
       return;
     }

@@ -2,5 +2,5 @@
 // [ENV]
 // ====================================================================================================
 
-export const DEVELOPMENT                      = 'development';
-export const PRODUCTION                       = 'production';
+export const DEVELOPMENT: String                      = 'development';
+export const PRODUCTION: String                       = 'production';

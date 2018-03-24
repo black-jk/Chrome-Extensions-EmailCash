@@ -10,7 +10,7 @@ export class Operator {
 
   // ----------------------------------------------------------------------------------------------------
 
-  title = "EmailCash Operator";
+  title: String = "EmailCash Operator";
 
 
 
@@ -18,58 +18,58 @@ export class Operator {
   // [Method]
   // ----------------------------------------------------------------------------------------------------
 
-  go_home(sleep) {
+  go_home(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/", sleep);
   }
 
   // --------------------------------------------------
 
-  go_latto(sleep) {
+  go_latto(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/dailylatto.asp", sleep);
   }
 
   // --------------------------------------------------
 
-  go_dailygames(sleep) {
+  go_dailygames(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/Games/DailyGames.aspx", sleep);
   }
 
   // --------------------------------------------------
 
-  go_adclick(sleep) {
+  go_adclick(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/Rewards/DailyAdvertising.aspx", sleep);
   }
 
   // --------------------------------------------------
 
-  go_earn(sleep) {
+  go_earn(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/Rewards/DailySurvey.aspx", sleep);
   }
 
   // --------------------------------------------------
 
-  go_account(sleep) {
-    var href = $("a[title='查看e元報表']").attr("href");
+  go_account(sleep: Number) {
+    let href: String = $("a[title='查看e元報表']").attr("href");
     this.goto(href, sleep);
   }
 
   // --------------------------------------------------
 
-  go_mail(sleep) {
-    var href = $("a[title='查看郵件獎勵']").attr("href");
+  go_mail(sleep: Number) {
+    let href: String = $("a[title='查看郵件獎勵']").attr("href");
     this.goto(href, sleep);
   }
 
   // --------------------------------------------------
 
-  go_survey(sleep) {
-    var href = $("a[title='查看市調獎勵']").attr("href");
+  go_survey(sleep: Number) {
+    let href: String = $("a[title='查看市調獎勵']").attr("href");
     this.goto(href, sleep);
   }
 
   // ----------------------------------------------------------------------------------------------------
 
-  go_next() {
+  go_next(): Boolean {
     let $ad_link = $('a[title="每日廣告"]');
     if ($ad_link.length > 0) {
       Logger.debug("\$ad_link.click();");
@@ -131,31 +131,30 @@ export class Operator {
   // [Operation]
   // ----------------------------------------------------------------------------------------------------
 
-  delay = 0;
+  delay: Number = 0;
 
   run() {
+    let thisObject: Operator = this;
+
     if (typeof this.delay == 'number' && this.delay > 0) {
       Logger.debug("delay: " + this.delay);
-      var thisObject = this;
-      var delayId = window.setInterval(function () {
+      let delayId: Number = window.setInterval(function () {
         thisObject.run();
         window.clearInterval(delayId);
       }, this.delay);
       this.delay = 0;
       return;
-    } else
-      if (typeof this.delay == 'function') {
-        Logger.debug("delay...");
-        var thisObject = this;
-        var delayId = window.setInterval(function () {
-          if (!thisObject.delay()) {
-            window.clearInterval(delayId);
-            thisObject.delay = 0;
-            thisObject.run();
-          }
-        }, 100);
-        return;
-      }
+    } else if (typeof this.delay == 'function') {
+      Logger.debug("delay...");
+      let delayId: Number = window.setInterval(function () {
+        if (!thisObject.delay()) {
+          window.clearInterval(delayId);
+          thisObject.delay = 0;
+          thisObject.run();
+        }
+      }, 100);
+      return;
+    }
 
     try {
       Logger.debug("[start()]");
@@ -190,7 +189,7 @@ export class Operator {
 
   // --------------------------------------------------
 
-  autoLogin = true;
+  autoLogin: Boolean = true;
 
   checkLogin() {
     let $login_link = $("a:contains('會員登入')");
@@ -198,14 +197,14 @@ export class Operator {
       Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
 
       if (this.autoLogin) {
-        var href = $login_link.attr("href");
+        let href = $login_link.attr("href");
         this.goto(href, AppConfig.redirectDelay);
         Logger.log("Goto '" + href + "'");
       } else {
         Logger.log("Waiting for login!");
       }
 
-      throw new NotLoginError("[" + this.title + "] Not login yet!");
+      throw new NotLoginError(`[${this.title}] Not login yet!`);
     }
   }
 
@@ -220,7 +219,5 @@ export class Operator {
   done() {
     // Logger.debug("DONE");
   }
-
-  // ----------------------------------------------------------------------------------------------------
 
 };

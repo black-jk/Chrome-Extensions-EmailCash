@@ -7,7 +7,7 @@ import { Operator } from './Operator';
 
 export class SurveyOperator extends Operator {
 
-  title = "";
+  title: String = "";
 
 
 

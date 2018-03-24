@@ -4,7 +4,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-
 import { AppConfig } from './global';
 import { Logger } from './lib/Logger';
 import { Tools } from './lib/Tools';
@@ -21,17 +20,17 @@ let dailyRestartTimer: DelayTimer = 0;
 let timeoutRestartTimer: DelayTimer = 0;
 
 function main() {
-  var location = window.location.toString();
+  let location = window.location.toString();
   if (AppConfig.debug) {
     Logger.debug("[main] location: " + location);
   }
 
   // ------------------------------
 
-  var now = new Date();
-  var nowTime = now.getTime();
-  var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  var time = (tomorrow.getTime() - nowTime + 90000) % 86400000;
+  let now: Date = new Date();
+  let nowTime: Number = now.getTime();
+  let tomorrow: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  let time: Number = (tomorrow.getTime() - nowTime + 90000) % 86400000;
 
   dailyRestartTimer = Tools.redirect(time, "https://www.emailcash.com.tw/");
   AppConfig.dailyRestartAt = nowTime + time;
@@ -46,10 +45,10 @@ function main() {
     timeoutRestartTimer.cancel();
     AppConfig.timeoutRestartAt = 0;
 
-    let root = document.createElement("div");
+    let root: HTMLDivElement = document.createElement("div");
     root.setAttribute("id", "root");
 
-    let body = document.getElementsByTagName("body")[0];
+    let body: HTMLBodyElement = document.getElementsByTagName("body")[0];
     body.appendChild(root);
 
     ReactDOM.render(
@@ -76,7 +75,3 @@ if (window.jQuery) {
     main();
   };
 }
-
-
-
-// ----------------------------------------------------------------------------------------------------
