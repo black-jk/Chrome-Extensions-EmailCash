@@ -16,15 +16,16 @@
 
 #root .EmailCashPanel {
   right: 30px;
-  bottom: 60px;
+  bottom: 65px;
   z-index: 99999;
   position: fixed;
   background-color: white;
+  width: 80%;
 }
 
 #root .LoggerPanel {
-  width: 1200px;
-  height: 300px;
+  width: calc(100% - 10px);
+  height: 250px;
   overflow: auto;
   background-color: whitesmoke;
 }
