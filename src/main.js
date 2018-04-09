@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppConfig } from './global';
+import { HotKeyManager } from './global';
 import { Logger } from './lib/Logger';
 import { Tools } from './lib/Tools';
 import { DelayTimer } from './lib/DelayTimer';

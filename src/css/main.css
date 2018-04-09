@@ -21,11 +21,12 @@
   position: fixed;
   background-color: white;
   width: 80%;
+  height: 500px;
 }
 
 #root .LoggerPanel {
   width: calc(100% - 10px);
-  height: 250px;
+  height: calc(100% - 10px - 40px);
   overflow: auto;
   background-color: whitesmoke;
 }
