@@ -91,5 +91,4 @@ EmailCacheConfig.on("event_read_complete", () => {
       main();
     };
   }
-
 });
