@@ -9,13 +9,11 @@ import { HotKeyManager } from './global';
 import { Logger } from './lib/Logger';
 import { Tools } from './lib/Tools';
 import { DelayTimer } from './lib/DelayTimer';
-import { ChromeStorage } from './lib/ChromeStorage';
+import { EmailCacheConfig } from './lib/ChromeStorage';
 import AppContainer from './containers/AppContainer';
 import { Dispatcher } from './ec/Dispatcher';
 
-ChromeStorage.init();
-
-// --------------------------------------------------
+// ----------------------------------------------------------------------------------------------------
 
 let dailyRestartTimer: DelayTimer = 0;
 let timeoutRestartTimer: DelayTimer = 0;
@@ -65,14 +63,33 @@ function main() {
 
 // ----------------------------------------------------------------------------------------------------
 
-if (window.jQuery) {
-  main();
-} else {
-  Logger.debug('Load jQuery');
-  window.onload = function () {
-    Tools.loadJQuery(function () {
-      // do nothing
-    });
+EmailCacheConfig.read();
+EmailCacheConfig.on("event_read_complete", () => {
+  AppConfig.debug = EmailCacheConfig.debug;
+  AppConfig.redirectDelay = EmailCacheConfig.redirectDelay;
+  console.debug(AppConfig, EmailCacheConfig);
+
+  // [test]
+  // try {
+  //   EmailCacheConfig.test += 1;
+  //   EmailCacheConfig.save();
+  //   EmailCacheConfig.on("event_save_complete", () => {
+  //     console.debug(AppConfig, EmailCacheConfig);
+  //   });
+  // } catch (e) {
+  //   console.log(`[error]`, e);
+  // }
+
+  if (window.jQuery) {
     main();
-  };
-}
+  } else {
+    Logger.debug('Load jQuery');
+    window.onload = function () {
+      Tools.loadJQuery(function () {
+        // do nothing
+      });
+      main();
+    };
+  }
+
+});
