@@ -15,9 +15,12 @@ export class AccountOperator extends Operator {
   operation() {
     ///<a href="account.asp?go=points&amp;u=w214nt8f4f2o&amp;c=B0EE1F5580D0F7A&amp;st=last"><b>&lt;&lt;</b> 上月明細</a>
 
+    $(`table[class="tbList"]`).width(350);
+
     Logger.log('scroll to end');
     let scrollTop: Number = Math.max(0, $("td a:contains('上月明細')").offset().top - 100);
     $("body").scrollTop(scrollTop);
+    Logger.log(`body.scrollTop = ${scrollTop}`);
 
     /*
     // ok
