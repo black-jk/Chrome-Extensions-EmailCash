@@ -3,11 +3,12 @@
 // ====================================================================================================
 import { AppConfig } from '../global';
 import { Logger } from '../lib/Logger';
+import { EmailCacheConfig } from '../lib/ChromeStorage';
 import * as AppActions from '../constants/actions/app';
 import { Operator } from './operators/Operator';
 import { HomeOperator } from './operators/HomeOperator';
 import { LoginOperator } from './operators/LoginOperator';
-import { QuestionOperator } from './operators/QuestionOperator';
+import { DailySurveyOperator } from './operators/DailySurveyOperator';
 import { AdclickOperator } from './operators/AdclickOperator';
 import { AdviewOperator } from './operators/AdviewOperator';
 import { LattoOperator } from './operators/LattoOperator';
@@ -25,10 +26,34 @@ export class Dispatcher {
     Logger.debug("[Dispatcher.execute()] location: " + location);
 
     let operator: Operator = this._getOperator();
-    if (operator != null) {
+    if (operator) {
       AppConfig.operator = operator;
       AppConfig.store.dispatch({ type: AppActions.START, operator: operator });
       operator.run();
+    }
+
+    if (!operator) {
+      operator = new Operator;
+    }
+
+    if (!operator.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
+      if (!(operator instanceof AdclickOperator || operator instanceof AdviewOperator)) {
+        Logger.log("[Dispatcher.execute()] go ad-click!");
+        operator.go_adclick(AppConfig.redirectDelay);
+        return;
+      }
+    } else if (!operator.checkFinished(EmailCacheConfig.lastDailySurveyAt)) {
+      if (!(operator instanceof DailySurveyOperator)) {
+        Logger.log("[Dispatcher.execute()] go daily-survey!");
+        operator.go_dailysurvey(AppConfig.redirectDelay);
+        return;
+      }
+    } else if (!operator.checkFinished(EmailCacheConfig.lastDailyGameAt)) {
+      if (!(operator instanceof DailyGamesOperator)) {
+        Logger.log("[Dispatcher.execute()] go daily-games!");
+        operator.go_dailygames(AppConfig.redirectDelay);
+        return;
+      }
     }
 
     Logger.debug("[Dispatcher.execute()] end");
@@ -48,16 +73,17 @@ export class Dispatcher {
       return new LoginOperator;
     }
 
-    if (location.match(/^https?:\/\/www\.emailcash\.com\.tw\/Rewards\/DailySurvey\.aspx?/i)) {
-      return new QuestionOperator;
-    }
-
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/DailyAdvertising.aspx?/i)) {
       return new AdclickOperator;
     }
 
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/DailyAdClicks.aspx\?id=/)) {
       return new AdviewOperator;
+    }
+
+    if (location.match(/^https?:\/\/www\.emailcash\.com\.tw\/Rewards\/DailySurvey\.aspx?/i) ||
+      location.match(/^https?:\/\/www\.emailcash\.com\.tw\/Rewards\/DailySurveryQP\.aspx?/i)) {
+      return new DailySurveyOperator;
     }
 
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/dailylatto\.asp/i)) {

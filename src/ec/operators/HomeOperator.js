@@ -19,7 +19,7 @@ export class HomeOperator extends Operator {
       return;
     }
 
-    //this.go_latto(AppConfig.redirectDelay);
+    //this.go_dailylatto(AppConfig.redirectDelay);
     //this.go_adclick(AppConfig.redirectDelay);
     this.go_dailygames(AppConfig.redirectDelay);
     //this.go_account(AppConfig.redirectDelay);

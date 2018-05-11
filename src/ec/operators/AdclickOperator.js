@@ -4,6 +4,7 @@
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
 export class AdclickOperator extends Operator {
 
@@ -34,7 +35,11 @@ export class AdclickOperator extends Operator {
     window.onAdClosed = function () {
       Logger.log('[onAdClosed] callback');
       adWindow.close();
-      thisObject.go_earn(AppConfig.redirectDelay);
+
+      EmailCacheConfig.lastAdClickedAt = (new Date).getTime();
+      EmailCacheConfig.save([`lastAdClickedAt`], () => {
+        thisObject.go_dailysurvey(AppConfig.redirectDelay);
+      });
     };
 
     /// open ad-view url

@@ -54,11 +54,13 @@ class ChromeStorageBase extends EventsDispatcher {
 
   // ----------------------------------------------------------------------------------------------------
 
-  save(fields: Array = null) {
-    let pattern: Object = this._makePattern();
-    // console.log(`[SET]`, pattern);
+  save(fields: Array = null, callback: Function = null) {
+    let pattern: Object = this._makePattern(fields);
     chrome.storage.sync.set(pattern,
       () => {
+        if (typeof callback == "function") {
+          callback();
+        }
         this.trigger("event_save_complete", [this]);
       });
   }
@@ -77,12 +79,20 @@ class EmailCacheConfig_ extends ChromeStorageBase {
 
   redirectDelay: Number = 0;
 
+  lastAdClickedAt: Number = 0;
+  lastDailySurveyAt: Number = 0;
+  lastDailyGameAt: Number = 0;
+
   // ----------------------------------------------------------------------------------------------------
 
   _makeDefaultPattern(): Object {
     return {
       debug: this.debug,
       redirectDelay: this.redirectDelay,
+
+      lastAdClickedAt: this.lastAdClickedAt,
+      lastDailySurveyAt: this.lastDailySurveyAt,
+      lastDailyGameAt: this.lastDailyGameAt,
     };
   }
 

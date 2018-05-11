@@ -24,14 +24,8 @@ export class Operator {
 
   // --------------------------------------------------
 
-  go_latto(sleep: Number) {
+  go_dailylatto(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/dailylatto.asp", sleep);
-  }
-
-  // --------------------------------------------------
-
-  go_dailygames(sleep: Number) {
-    this.goto("https://www.emailcash.com.tw/Games/DailyGames.aspx", sleep);
   }
 
   // --------------------------------------------------
@@ -42,8 +36,14 @@ export class Operator {
 
   // --------------------------------------------------
 
-  go_earn(sleep: Number) {
+  go_dailysurvey(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/Rewards/DailySurvey.aspx", sleep);
+  }
+
+  // --------------------------------------------------
+
+  go_dailygames(sleep: Number) {
+    this.goto("https://www.emailcash.com.tw/Games/DailyGames.aspx", sleep);
   }
 
   // --------------------------------------------------
@@ -84,7 +84,7 @@ export class Operator {
       Logger.debug("\$question_link.click();");
       $question_link.click();
 
-      this.go_earn(AppConfig.redirectDelay);
+      this.go_dailysurvey(AppConfig.redirectDelay);
       return true;
     }
 
@@ -218,6 +218,34 @@ export class Operator {
 
   done() {
     // Logger.debug("DONE");
+  }
+
+
+
+  // ----------------------------------------------------------------------------------------------------
+
+  checkFinished(lastTime: String): Boolean {
+    let seconds: Number = lastTime % 86400000;
+    lastTime = lastTime - seconds + 86400000;
+
+    let now: Date = new Date();
+    let nowTime: Number = now.getTime();
+
+    if (nowTime >= lastTime) {
+      return false;
+    }
+    return true;
+  };
+
+  // ----------------------------------------------------------------------------------------------------
+
+  // [timezoneShift]
+  // 28800000 = 8 * 60 * 60 * 1000
+
+  parseNextActionDatetime(time: Number, timezoneShift: Number = 28800000): String {
+    let date: Date = new Date(time + timezoneShift);
+    let datetime: String = date.toISOString().replace(/T/, " ").replace(/\.[0-9][0-9][0-9]Z$/, "");
+    return datetime;
   }
 
 };

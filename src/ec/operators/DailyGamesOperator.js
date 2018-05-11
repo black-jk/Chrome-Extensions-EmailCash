@@ -4,6 +4,7 @@
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
 export class DailyGamesOperator extends Operator {
 
@@ -32,7 +33,10 @@ export class DailyGamesOperator extends Operator {
     let _efee = $("#ctl00_mainPlaceHolder_hidFee").val();
     Logger.debug("_efee: " + _efee);
     if (_efee > 0) {
-      this.go_account(AppConfig.redirectDelay);
+      EmailCacheConfig.lastDailyGameAt = (new Date).getTime();
+      EmailCacheConfig.save([`lastDailyGameAt`], () => {
+        this.go_account(AppConfig.redirectDelay);
+      });
       return;
     }
 

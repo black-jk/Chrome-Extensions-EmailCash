@@ -64,18 +64,7 @@ EmailCacheConfig.read();
 EmailCacheConfig.on("event_read_complete", () => {
   AppConfig.debug = EmailCacheConfig.debug;
   AppConfig.redirectDelay = EmailCacheConfig.redirectDelay;
-  console.debug(AppConfig, EmailCacheConfig);
-
-  // [test]
-  // try {
-  //   EmailCacheConfig.test += 1;
-  //   EmailCacheConfig.save();
-  //   EmailCacheConfig.on("event_save_complete", () => {
-  //     console.debug(AppConfig, EmailCacheConfig);
-  //   });
-  // } catch (e) {
-  //   console.log(`[error]`, e);
-  // }
+  // console.debug(AppConfig, EmailCacheConfig);
 
   if (window.jQuery) {
     main();
