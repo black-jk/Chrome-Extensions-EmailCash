@@ -21,15 +21,16 @@ export class ChromeOptionsPanel extends React.Component {
     let operator: Operator = new Operator;
 
     return (
-      <div style={{ position: "absolute", top: 20, right: 20, width: 500, backgroundColor: "#EEEEEE" }}>
+      <div style={{ position: "absolute", top: 20, right: 20, width: 550, backgroundColor: "#EEEEEE" }}>
         <Alert color="primary" style={{ margin: 0 }}>
           {`[${AppConfig.name}] v${AppConfig.version}`}
         </Alert>
         <div style={{ padding: 15 }}>
           <Form>
-            <FormGroup check>
+            <FormGroup inline check>
               <Label check>
-                <Input id="debug" type="checkbox" checked={EmailCacheConfig.debug}
+                <Input id="debug" type="checkbox"
+                  checked={EmailCacheConfig.debug ? true : false}
                   onChange={(event) => {
                     EmailCacheConfig.debug = event.currentTarget.checked;
                     // console.log(`[CHANGE] [EmailCacheConfig.debug]`, EmailCacheConfig.debug);
@@ -37,22 +38,30 @@ export class ChromeOptionsPanel extends React.Component {
                   }} />{`Debug Mode`}
               </Label>
             </FormGroup>
+            <span>{`　`}</span>
 
-            <FormGroup row style={{ marginTop: 5 }}>
-              <Label for="redirectDelayInput" sm={4}>{`Redirect Delay`}</Label>
-              <Col sm={3}>
-                <Input id="redirectDelayInput" type="number" bsSize="sm" style={{ marginTop: 5 }}
-                  step="1000" min="0" max="50000"
-                  value={EmailCacheConfig.redirectDelay}
-                  checked={EmailCacheConfig.redirectDelay}
+            <FormGroup inline check>
+              <Label check style={{ width: 126 }}>
+                <Input id="debug" type="checkbox"
+                  checked={EmailCacheConfig.redirectDelay ? true : false}
                   onChange={(event) => {
-                    EmailCacheConfig.redirectDelay = parseInt(event.currentTarget.value);
+                    EmailCacheConfig.redirectDelay = event.currentTarget.checked;
                     // console.log(`[CHANGE] [EmailCacheConfig.redirectDelay]`, EmailCacheConfig.redirectDelay);
                     this.forceUpdate();
-                  }} />
-              </Col>
-              <Col sm={5}></Col>
+                  }} />{`Redirect Delay`}
+              </Label>
             </FormGroup>
+            <FormGroup inline check>
+              <Input id="redirectDelayTimeInput" type="number" bsSize="sm"
+                step="1" min="0" max="600"
+                value={parseInt(EmailCacheConfig.redirectDelayTime) / 1000}
+                onChange={(event) => {
+                  EmailCacheConfig.redirectDelayTime = parseInt(event.currentTarget.value) * 1000;
+                  // console.log(`[CHANGE] [EmailCacheConfig.redirectDelayTime]`, EmailCacheConfig.redirectDelayTime);
+                  this.forceUpdate();
+                }} />
+            </FormGroup>
+            <br />
             <br />
 
             <ECTimeFormGroup operator={operator} name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />

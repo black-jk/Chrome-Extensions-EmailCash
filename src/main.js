@@ -63,7 +63,7 @@ function main() {
 EmailCacheConfig.read();
 EmailCacheConfig.on("event_read_complete", () => {
   AppConfig.debug = EmailCacheConfig.debug;
-  AppConfig.redirectDelay = EmailCacheConfig.redirectDelay;
+  AppConfig.redirectDelay = (EmailCacheConfig.redirectDelay) ? EmailCacheConfig.redirectDelayTime : 0;
   // console.debug(AppConfig, EmailCacheConfig);
 
   if (window.jQuery) {
