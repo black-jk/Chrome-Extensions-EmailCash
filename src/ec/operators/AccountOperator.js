@@ -19,8 +19,12 @@ export class AccountOperator extends Operator {
 
     Logger.log('scroll to end');
     let scrollTop: Number = Math.max(0, $("td a:contains('上月明細')").offset().top - 100);
-    $("body").scrollTop(scrollTop);
-    Logger.log(`body.scrollTop = ${scrollTop}`);
+
+    let body: HTMLElement = (document.compatMode == "BackCompat") ?
+      document.body :
+      document.documentElement;
+    body.scrollTop = scrollTop;
+    Logger.log(`scrollTop = ${scrollTop}`);
 
     /*
     // ok
