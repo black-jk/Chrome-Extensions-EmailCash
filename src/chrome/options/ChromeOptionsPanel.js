@@ -22,7 +22,7 @@ export class ChromeOptionsPanel extends React.Component {
 
     return (
       <div style={{ position: "absolute", top: 20, right: 20, width: 550, backgroundColor: "#EEEEEE" }}>
-        <Alert color="primary" style={{ margin: 0 }}>
+        <Alert color="primary">
           {`[${AppConfig.name}] v${AppConfig.version}`}
         </Alert>
         <div style={{ padding: 15 }}>
@@ -41,14 +41,14 @@ export class ChromeOptionsPanel extends React.Component {
             <span>{`　`}</span>
 
             <FormGroup inline check>
-              <Label check style={{ width: 126 }}>
+              <Label check>
                 <Input id="debug" type="checkbox"
                   checked={EmailCacheConfig.redirectDelay ? true : false}
                   onChange={(event) => {
                     EmailCacheConfig.redirectDelay = event.currentTarget.checked;
                     // console.log(`[CHANGE] [EmailCacheConfig.redirectDelay]`, EmailCacheConfig.redirectDelay);
                     this.forceUpdate();
-                  }} />{`Redirect Delay`}
+                  }} />{`Redirect Delay (sec)`}
               </Label>
             </FormGroup>
             <FormGroup inline check>
@@ -67,12 +67,13 @@ export class ChromeOptionsPanel extends React.Component {
             <ECTimeFormGroup operator={operator} name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup operator={operator} name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup operator={operator} name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
-            <br />
 
-            <span>{`　`}</span>
-            <Button color="danger" onClick={this._handleRestoreClick}>{`Restore`}</Button>
-            <span>{`　`}</span>
-            <Button color="primary" onClick={this._handleSaveClick}>{`Save`}</Button>
+            <FormGroup style={{ marginTop: 25 }}>
+              <span>{`　`}</span>
+              <Button color="danger" onClick={this._handleRestoreClick}>{`Restore`}</Button>
+              <span>{`　`}</span>
+              <Button color="primary" onClick={this._handleSaveClick}>{`Save`}</Button>
+            </FormGroup>
           </Form>
         </div>
       </div>
@@ -119,10 +120,10 @@ class ECTimeFormGroup extends React.Component {
     let [date, time] = operator.parseNextActionDatetime(EmailCacheConfig[name]).split(" ");
 
     return (
-      <FormGroup row style={{ marginTop: 5 }}>
+      <FormGroup row>
         <Label for={`${name}Input`} sm={3}>{`${name}`}</Label>
         <Col sm={5}>
-          <Input id={`${name}Input`} type="date" name="date" placeholder="date placeholder"
+          <Input id={`${name}Input`} type="date" name="date" bsSize="sm"
             value={date}
             onChange={(event) => {
               this._handleChange(`${event.currentTarget.value} ${time}`);
@@ -130,7 +131,7 @@ class ECTimeFormGroup extends React.Component {
             }} />
         </Col>
         <Col sm={4}>
-          <Input type="time" name="time" placeholder="date placeholder"
+          <Input type="time" name="time" bsSize="sm"
             value={time}
             onChange={(event) => {
               this._handleChange(`${date} ${event.currentTarget.value}`);
