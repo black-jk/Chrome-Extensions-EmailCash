@@ -74,7 +74,6 @@ export class Operator {
     if ($ad_link.length > 0) {
       Logger.debug("\$ad_link.click();");
       $ad_link.click();
-
       this.go_adclick(AppConfig.redirectDelay);
       return true;
     }
@@ -83,30 +82,40 @@ export class Operator {
     if ($question_link.length > 0) {
       Logger.debug("\$question_link.click();");
       $question_link.click();
-
       this.go_dailysurvey(AppConfig.redirectDelay);
       return true;
     }
 
-    //<a href="/4G/Rewards/Mail.aspx" title="查看郵件獎勵">郵件(<span class="pending">1</span>)</a>
-    /*
-    let $mail_link = $('a[title="查看郵件獎勵"]');
-    if ($mail_link.length > 0) {
-      Logger.debug("\$mail_link.click();");
-      $mail_link.click();
-
-      this.go_mail(AppConfig.redirectDelay);
-      return true;
+    // <a href="/4G/Rewards/Mail.aspx" title="查看郵件獎勵">郵件(<span class="pending">1</span>)</a>
+    // <a href="/Account/MyAccount.aspx?go=message" title="查看個人訊息">個人訊息(<span class="pending">1</span>)</a>
+    // <a href="/Rewards/Survey.aspx" title="查看市調獎勵">問卷(<span class="pending">1</span>)</a>
+    let patterns: Array = [
+      '查看郵件獎勵',
+      '查看個人訊息',
+      '查看市調獎勵',
+    ];
+    for (let i: Number = 0; i < patterns.length; i++) {
+      let title: String = patterns[i];
+      let $link = $(`a[title="${title}"]`);
+      if ($link.length > 0) {
+        let $span = $($link[0]).find('span[class="pending"]');
+        if ($span.length > 0 && $span.html() > 0) {
+          let url: String = $link.attr("href");
+          Logger.debug(`\$link.click(); - ${url}`);
+          $link.click();
+          this.goto(url, AppConfig.redirectDelay);
+          return true;
+        }
+      }
     }
-    */
 
-    /*
+    /*/
     let survey_count = $("a[title='查看市調獎勵']").find("span").html();
     if (survey_count > 0) {
       this.go_survey(AppConfig.redirectDelay);
       return true;
     }
-    */
+    /**/
 
     return false;
   }
