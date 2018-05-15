@@ -15,6 +15,8 @@ import { LattoOperator } from './operators/LattoOperator';
 import { DailyGamesOperator } from './operators/DailyGamesOperator';
 import { AccountOperator } from './operators/AccountOperator';
 import { MailOperator } from './operators/MailOperator';
+import { MailDetailOperator } from './operators/MailDetailOperator';
+import { MailClickOperator } from './operators/MailClickOperator';
 import { SurveyOperator } from './operators/SurveyOperator';
 
 export class Dispatcher {
@@ -102,6 +104,14 @@ export class Dispatcher {
 
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/Mail\.aspx/i)) {
       return new MailOperator();
+    }
+
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/MailDetail\.aspx/i)) {
+      return new MailDetailOperator();
+    }
+
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/MailClicks\.aspx/i)) {
+      return new MailClickOperator();
     }
 
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/Survey\.aspx/i)) {

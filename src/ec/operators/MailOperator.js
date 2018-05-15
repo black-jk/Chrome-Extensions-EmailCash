@@ -4,6 +4,7 @@
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
 export class MailOperator extends Operator {
 
@@ -22,16 +23,60 @@ export class MailOperator extends Operator {
     </div>
     */
 
-    let $links = $("div[class='td']:contains('未閱讀')").parent().find("a");
-    if ($links.length > 0) {
-      Logger.log($links.text().trim());
+    let test: Boolean = /*/ true /*/ false /**/;
 
-      let href = $links.attr("href");
-      Logger.log(href);
+    let pattern: String = (test) ? "已獎勵" : "未閱讀";
+    let $links = $(`div[class='td']:contains('${pattern}')`).parent().find("a");
+    if ($links.length == 0) {
+      this.go_account(AppConfig.redirectDelay);
       return;
     }
 
-    this.go_account(AppConfig.redirectDelay);
+    Logger.log($links.text().trim());
+
+    let href: String = $links.attr("href");
+    Logger.log(href);
+
+    // ------------------------------
+
+    let mailWindow: Window;
+
+    // callback function for mail-click
+    window.onMailClosed = () => {
+      Logger.log('[onMailClosed] callback');
+      mailWindow.close();
+
+      // this.go_account(AppConfig.redirectDelay);
+      this.go_mail(AppConfig.redirectDelay);  // reload
+    };
+
+    /// open mail-click url
+    let openMailDetailWindow: Function = function () {
+      if (mailWindow != null) {
+        if (mailWindow.mailFinished) {
+          Logger.log("Mail finished, continue to next step.");
+          window.onMailClosed();
+          return;
+        } else {
+          Logger.warn("Retry mail-click");
+          mailWindow.close();
+        }
+      }
+
+      Logger.log(`open url: '${href}'  (waiting for callback)`);
+      mailWindow = window.open(href, "_blank");
+      mailWindow.mailFinished = false;
+      Logger.log("Waiting for callback ...");
+    };
+    openMailDetailWindow();
+
+    // ------------------------------
+
+    /// set timeout for retry
+    window.setInterval(function () {
+      Logger.warn("Timeup. Call openMailDetailWindow() again.");
+      openMailDetailWindow();
+    }, 60000);
   }
 
 };
