@@ -1,6 +1,7 @@
 // ====================================================================================================
 // [Account]
 // ====================================================================================================
+import { Tool } from '../../lib/Tool';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 
@@ -18,13 +19,7 @@ export class AccountOperator extends Operator {
     $(`table[class="tbList"]`).width(350);
 
     Logger.log('scroll to end');
-    let scrollTop: Number = Math.max(0, $("td a:contains('上月明細')").offset().top - 100);
-
-    let body: HTMLElement = (document.compatMode == "BackCompat") ?
-      document.body :
-      document.documentElement;
-    body.scrollTop = scrollTop;
-    Logger.log(`scrollTop = ${scrollTop}`);
+    Tool.scrollTo($("td a:contains('上月明細')"), -100);
 
     /*
     // ok

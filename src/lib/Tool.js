@@ -1,3 +1,5 @@
+import { Logger } from "./Logger";
+
 // ====================================================================================================
 // [Tool]
 // ====================================================================================================
@@ -69,6 +71,18 @@ export class Tool {
   static executeFunction(func: Function, thisObj: Object, args: Array = []) {
     if (!func || typeof func != "function") return;
     func.apply(thisObj, args);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  static scrollTo($element: HTMLElement, offset: Number = 0) {
+    let body: HTMLElement = (document.compatMode == "BackCompat") ?
+      document.body :
+      document.documentElement;
+
+    let scrollTop: Number = Math.max(0, $element.offset().top - 300);
+    body.scrollTop = scrollTop;
+    Logger.log(`[Tool.scrollTo()] scrollTop: ${scrollTop}`);
   }
 
 };
