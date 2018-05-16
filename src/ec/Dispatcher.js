@@ -39,18 +39,21 @@ export class Dispatcher {
     }
 
     if (!operator.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
+      Logger.debug("[Dispatcher.execute()] ad-click!");
       if (!(operator instanceof AdclickOperator || operator instanceof AdviewOperator)) {
         Logger.log("[Dispatcher.execute()] go ad-click!");
         operator.go_adclick(AppConfig.redirectDelay);
         return;
       }
     } else if (!operator.checkFinished(EmailCacheConfig.lastDailySurveyAt)) {
+      Logger.debug("[Dispatcher.execute()] daily-survey!");
       if (!(operator instanceof DailySurveyOperator)) {
         Logger.log("[Dispatcher.execute()] go daily-survey!");
         operator.go_dailysurvey(AppConfig.redirectDelay);
         return;
       }
     } else if (!operator.checkFinished(EmailCacheConfig.lastDailyGameAt)) {
+      Logger.debug("[Dispatcher.execute()] daily-games!");
       if (!(operator instanceof DailyGamesOperator)) {
         Logger.log("[Dispatcher.execute()] go daily-games!");
         operator.go_dailygames(AppConfig.redirectDelay);
