@@ -14,6 +14,10 @@ export class RefreshTimeLabel extends Component {
     }, 1000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this._intervalId);
+  }
+
   // --------------------------------------------------
 
   render() {
@@ -35,12 +39,6 @@ export class RefreshTimeLabel extends Component {
         [Reload: <span>{dailyRestartTime.toFixed(0)}]</span>
       </div>
     );
-  }
-
-  // --------------------------------------------------
-
-  componentWillUnmount() {
-    clearInterval(this._intervalId);
   }
 
 };
