@@ -9,6 +9,7 @@ import { HotKeyManager, AppConfig } from '../global';
 import { RefreshTimeLabel } from './refresh/RefreshTimeLabel';
 import { LoggerPanel } from './logger/LoggerPanel';
 import { CombinationListener } from '../ec/managers/HotKeyManager';
+import { DebugCheckbox } from './controls/DebugCheckbox';
 
 export class AppPanel extends React.Component {
 
@@ -48,6 +49,9 @@ export class AppPanel extends React.Component {
           <div className="Header">
             <div className="OperatorLabel">{operatorTitle ? operatorTitle : "n/a"}</div>
             <RefreshTimeLabel />
+            <div className="controls">
+              <DebugCheckbox />
+            </div>
           </div>
           <LoggerPanel {...this.props} hidden={hidden} />
         </div>
