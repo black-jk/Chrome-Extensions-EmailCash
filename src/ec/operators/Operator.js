@@ -5,6 +5,7 @@ import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { NotLoginError } from '../../lib/error/NotLoginError';
 import * as AppActions from '../../constants/actions/app';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
 export class Operator {
 
@@ -86,13 +87,15 @@ export class Operator {
       return true;
     }
 
+    // ------------------------------
+
     // <a href="/4G/Rewards/Mail.aspx" title="查看郵件獎勵">郵件(<span class="pending">1</span>)</a>
     // <a href="/Account/MyAccount.aspx?go=message" title="查看個人訊息">個人訊息(<span class="pending">1</span>)</a>
     // <a href="/Rewards/Survey.aspx" title="查看市調獎勵">問卷(<span class="pending">1</span>)</a>
     let patterns: Array = [
       '查看郵件獎勵',
       '查看個人訊息',
-      '查看市調獎勵',
+      // '查看市調獎勵',
     ];
     for (let i: Number = 0; i < patterns.length; i++) {
       let title: String = patterns[i];
@@ -109,13 +112,15 @@ export class Operator {
       }
     }
 
-    /*/
+    // ------------------------------
+
     let survey_count = $("a[title='查看市調獎勵']").find("span").html();
     if (survey_count > 0) {
-      this.go_survey(AppConfig.redirectDelay);
-      return true;
+      if (!this.checkFinished(EmailCacheConfig.lastSurveyAt)) {
+        this.go_survey(AppConfig.redirectDelay);
+        return true;
+      }
     }
-    /**/
 
     return false;
   }

@@ -6,10 +6,11 @@ import { Logger } from '../../lib/Logger';
 import { DelayTimer } from '../../lib/DelayTimer';
 import { AppConfig } from '../../global';
 import { Operator } from './Operator';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
 export class SurveyOperator extends Operator {
 
-  title: String = "";
+  title: String = "問卷";
 
 
 
@@ -53,7 +54,9 @@ export class SurveyOperator extends Operator {
     </tr>
     */
 
-    let $links = $("a:contains('開始')");
+    new DelayTimer(null, Tool.scrollTo, [$("span:contains('我的問卷箱')"), -100], 200);
+
+    let $links = $("tr:contains('新件')").find("a:contains('開始')");
     if ($links.length > 0) {
       new DelayTimer(null, Tool.scrollTo, [$links, -300], 500);
       return;
@@ -61,15 +64,10 @@ export class SurveyOperator extends Operator {
 
     // ------------------------------
 
-    let survey_count = $("a[title='查看市調獎勵']").find("span").html();
-    if (survey_count == 0) {
-      this.go_account(AppConfig.redirectDelay);
-      return;
-    }
-
-    // ------------------------------
-
-    new DelayTimer(null, Tool.scrollTo, [$("span:contains('我的問卷箱')"), -100], 500);
+    EmailCacheConfig.lastSurveyAt = (new Date).getTime();
+    EmailCacheConfig.save([`lastSurveyAt`], () => {
+      this.go_account(AppConfig.redirectDelay ? AppConfig.redirectDelay : 5000);
+    });
   }
 
 };

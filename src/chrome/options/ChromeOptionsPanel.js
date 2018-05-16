@@ -67,6 +67,7 @@ export class ChromeOptionsPanel extends React.Component {
             <ECTimeFormGroup operator={operator} name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup operator={operator} name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup operator={operator} name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup operator={operator} name="lastSurveyAt" onChange={() => { this.forceUpdate(); }} />
 
             <FormGroup style={{ marginTop: 25 }}>
               <span>{`　`}</span>
