@@ -64,10 +64,10 @@ export class ChromeOptionsPanel extends React.Component {
             <br />
             <br />
 
-            <ECTimeFormGroup operator={operator} name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
-            <ECTimeFormGroup operator={operator} name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
-            <ECTimeFormGroup operator={operator} name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
-            <ECTimeFormGroup operator={operator} name="lastSurveyAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup operator={operator} label="每日廣告" name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup operator={operator} label="每日問答" name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup operator={operator} label="以小搏大" name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup operator={operator} label="問卷" name="lastSurveyAt" onChange={() => { this.forceUpdate(); }} />
 
             <FormGroup style={{ marginTop: 25 }}>
               <span>{`　`}</span>
@@ -115,6 +115,7 @@ class ECTimeFormGroup extends React.Component {
 
   render() {
     let operator: Operator = this.props.operator;
+    let label: String = this.props.label;
     let name: String = this.props.name;
     let onChange: Function = this.props.onChange || (() => { });
 
@@ -122,7 +123,7 @@ class ECTimeFormGroup extends React.Component {
 
     return (
       <FormGroup row>
-        <Label for={`${name}Input`} sm={3}>{`${name}`}</Label>
+        <Label for={`${name}Input`} sm={3}>{`${label}`}</Label>
         <Col sm={5}>
           <Input id={`${name}Input`} type="date" name="date" bsSize="sm"
             value={date}

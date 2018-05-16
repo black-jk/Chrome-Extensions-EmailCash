@@ -18,7 +18,7 @@ export class LoggerPanel extends Component {
     let logs: Array = LoggerData.logs;
 
     return (
-      <div className="LoggerPanel" ref="contentsDiv">
+      <div className="LoggerPanel" ref="contentsDiv" hidden={this.props.hidden}>
         {
           logs.map((loggerData: LoggerData, index) => (
             <span key={index} style={{ color: loggerData.getColor() }}>{loggerData.message}<br /></span>

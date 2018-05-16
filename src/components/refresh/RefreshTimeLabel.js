@@ -36,7 +36,8 @@ export class RefreshTimeLabel extends Component {
 
     return (
       <div style={style}>
-        [Reload: <span>{dailyRestartTime.toFixed(0)}]</span>
+        <span>{`　[Reload: ${dailyRestartTime.toFixed(0)}]`}</span>
+        <span>{`　[Timeout: ${(timeoutRestartTime > 0) ? timeoutRestartTime.toFixed(0) : "--"}]`}</span>
       </div>
     );
   }

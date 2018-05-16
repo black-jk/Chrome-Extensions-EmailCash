@@ -40,15 +40,16 @@ export class AppPanel extends React.Component {
 
   render() {
     let { operatorTitle, loggersCount } = this.props;
+    let { hidden } = this.state;
 
     return (
       <DraggableCore>
-        <div className="EmailCashPanel" hidden={this.state.hidden}>
+        <div className={`EmailCashPanel ${hidden ? "small" : ""}`}>
           <div className="Header">
-            <div>{operatorTitle ? operatorTitle : "n/a"}</div>
+            <div className="OperatorLabel">{operatorTitle ? operatorTitle : "n/a"}</div>
             <RefreshTimeLabel />
           </div>
-          <LoggerPanel {...this.props} />
+          <LoggerPanel {...this.props} hidden={hidden} />
         </div>
       </DraggableCore>
     );
