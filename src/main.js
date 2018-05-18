@@ -47,7 +47,7 @@ function main() {
   let now: Date = new Date();
   let nowTime: Number = now.getTime();
   let tomorrow: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  let time: Number = (tomorrow.getTime() - nowTime + 90000) % 86400000;
+  let time: Number = (tomorrow.getTime() - nowTime + 5000) % 86400000;
 
   AppConfig.dailyRestartAt = nowTime + time;
   AppConfig.timeoutRestartAt = nowTime + 30000;
