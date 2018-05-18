@@ -15,6 +15,27 @@ import { Dispatcher } from './ec/Dispatcher';
 
 // ----------------------------------------------------------------------------------------------------
 
+EmailCacheConfig.read();
+EmailCacheConfig.on("event_read_complete", () => {
+  AppConfig.debug = EmailCacheConfig.debug;
+  AppConfig.redirectDelay = (EmailCacheConfig.redirectDelay) ? EmailCacheConfig.redirectDelayTime : 0;
+  // console.debug(AppConfig, EmailCacheConfig);
+
+  if (window.jQuery) {
+    main();
+  } else {
+    Logger.debug("Load jQuery");
+    window.onload = function () {
+      Tools.loadJQuery(function () {
+        // do nothing
+      });
+      main();
+    };
+  }
+});
+
+// ----------------------------------------------------------------------------------------------------
+
 function main() {
   let location = window.location.toString();
   if (AppConfig.debug) {
@@ -57,24 +78,3 @@ function main() {
     Dispatcher.execute();
   });
 };
-
-// ----------------------------------------------------------------------------------------------------
-
-EmailCacheConfig.read();
-EmailCacheConfig.on("event_read_complete", () => {
-  AppConfig.debug = EmailCacheConfig.debug;
-  AppConfig.redirectDelay = (EmailCacheConfig.redirectDelay) ? EmailCacheConfig.redirectDelayTime : 0;
-  // console.debug(AppConfig, EmailCacheConfig);
-
-  if (window.jQuery) {
-    main();
-  } else {
-    Logger.debug("Load jQuery");
-    window.onload = function () {
-      Tools.loadJQuery(function () {
-        // do nothing
-      });
-      main();
-    };
-  }
-});
