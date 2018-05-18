@@ -71,6 +71,8 @@ export class Operator {
   // ----------------------------------------------------------------------------------------------------
 
   go_next(): Boolean {
+    Logger.debug("[go_next();]");
+
     let $ad_link = $('a[title="每日廣告"]');
     if ($ad_link.length > 0) {
       Logger.debug("\$ad_link.click();");
@@ -238,12 +240,16 @@ export class Operator {
 
   // ----------------------------------------------------------------------------------------------------
 
-  checkFinished(lastTime: String): Boolean {
-    let seconds: Number = lastTime % 86400000;
-    lastTime = lastTime - seconds + 86400000;
+  checkFinished(time: String): Boolean {
+    let timeZoneShift: Number = 16 * 60 * 60 * 1000;
+    let seconds: Number = (time - timeZoneShift) % 86400000;
+    let lastTime = time - seconds + 86400000;
 
     let now: Date = new Date();
     let nowTime: Number = now.getTime();
+
+    // Logger.debug(`[lastTime] ${(new Date(lastTime)).toString()}`);
+    // Logger.debug(`[nowTime] ${(new Date(nowTime)).toString()}`);
 
     if (nowTime >= lastTime) {
       return false;
