@@ -18,8 +18,6 @@ export class AdclickOperator extends Operator {
   /// <a href="view_adc.asp?id=1895&amp;sid=543928748&amp;u=w214nt8f4f2o&amp;c=244F90E1C2BB7C6" target="_blank" title="IKEA 櫥櫃收納">IKEA 櫥櫃收納</a>
 
   operation() {
-    const thisObject: AdclickOperator = this;
-
     let $href = this._findLink();
     if (!$href) {
       Logger.log("Ad link not found! Retry ...");
@@ -32,13 +30,13 @@ export class AdclickOperator extends Operator {
     let adWindow: Window;
 
     // callback function for ad-view
-    window.onAdClosed = function () {
+    window.onAdClosed = () => {
       Logger.log('[onAdClosed] callback');
       adWindow.close();
 
       EmailCacheConfig.lastAdClickedAt = (new Date).getTime();
       EmailCacheConfig.save([`lastAdClickedAt`], () => {
-        thisObject.go_dailysurvey(AppConfig.redirectDelay);
+        this.go_dailysurvey(AppConfig.redirectDelay);
       });
     };
 

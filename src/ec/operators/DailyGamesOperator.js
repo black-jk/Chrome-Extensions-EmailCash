@@ -5,6 +5,7 @@ import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 import { EmailCacheConfig } from '../../lib/ChromeStorage';
+import { DelayTimer } from '../../lib/DelayTimer';
 
 export class DailyGamesOperator extends Operator {
 
@@ -14,14 +15,15 @@ export class DailyGamesOperator extends Operator {
 
   // ----------------------------------------------------------------------------------------------------
 
-  delay() {
-    if ($("#ReciTime").html().trim() != "") {
+  run() {
+    if ($("#ReciTime").html().trim() == "") {
+      Logger.debug("pause run. (waiting for DailyGamesJS.js ...)");
+      new DelayTimer(this, this.run, [], 500);
+    } else {
       Logger.debug("#ReciTime: " + $("#ReciTime").html().trim());
       Logger.debug("continue run");
-      return false;
+      super.run();
     }
-    Logger.debug("pause run. (waiting for DailyGamesJS.js ...)");
-    return true;
   };
 
   // ----------------------------------------------------------------------------------------------------

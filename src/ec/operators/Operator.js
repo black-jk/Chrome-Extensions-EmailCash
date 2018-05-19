@@ -147,31 +147,7 @@ export class Operator {
   // [Operation]
   // ----------------------------------------------------------------------------------------------------
 
-  delay: Number = 0;
-
   run() {
-    let thisObject: Operator = this;
-
-    if (typeof this.delay == 'number' && this.delay > 0) {
-      Logger.debug("delay: " + this.delay);
-      let delayId: Number = window.setInterval(function () {
-        thisObject.run();
-        window.clearInterval(delayId);
-      }, this.delay);
-      this.delay = 0;
-      return;
-    } else if (typeof this.delay == 'function') {
-      Logger.debug("delay...");
-      let delayId: Number = window.setInterval(function () {
-        if (!thisObject.delay()) {
-          window.clearInterval(delayId);
-          thisObject.delay = 0;
-          thisObject.run();
-        }
-      }, 100);
-      return;
-    }
-
     try {
       Logger.debug("[start()]");
       this.start();
