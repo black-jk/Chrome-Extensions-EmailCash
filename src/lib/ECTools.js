@@ -1,11 +1,11 @@
 // ====================================================================================================
-// [Tools]
+// [ECTools]
 // ====================================================================================================
 import { AppConfig } from '../global';
 import { Logger } from './Logger';
 import { DelayTimer } from './DelayTimer';
 
-export class Tools {
+export class ECTools {
 
   static loadJQuery(callback) {
     let script = document.createElement("script");
@@ -28,11 +28,11 @@ export class Tools {
   // ----------------------------------------------------------------------------------------------------
 
   static redirect(time: Number, url: String = ""): DelayTimer {
-    Logger.log("[Tools.redirect()] Set redirect after " + Math.floor(time / 1000) + " seconds!");
+    Logger.log("[ECTools.redirect()] Set redirect after " + Math.floor(time / 1000) + " seconds!");
     if (!url) url = window.location;
 
     return new DelayTimer(this, (url: String) => {
-      Logger.log("[Tools.redirect()] Do redirect! url = '" + url + "'");
+      Logger.log("[ECTools.redirect()] Do redirect! url = '" + url + "'");
       window.location = url;
     }, [url], time);
   }

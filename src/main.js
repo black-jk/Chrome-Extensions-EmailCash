@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { AppConfig } from './global';
 import { HotKeyManager } from './global';
 import { Logger } from './lib/Logger';
-import { Tools } from './lib/Tools';
+import { ECTools } from './lib/ECTools';
 import { DelayTimer } from './lib/DelayTimer';
 import { EmailCacheConfig } from './lib/ChromeStorage';
 import AppContainer from './containers/AppContainer';
@@ -29,7 +29,7 @@ EmailCacheConfig.on("event_read_complete", (event: JEvent) => {
   } else {
     Logger.debug("Load jQuery");
     window.onload = function () {
-      Tools.loadJQuery(function () {
+      ECTools.loadJQuery(function () {
         // do nothing
       });
       main();
@@ -59,8 +59,8 @@ function main() {
   AppConfig.dailyRestartAt = nowTime + refreshTime;
   AppConfig.timeoutRestartAt = nowTime + startTimeout;
 
-  let dailyRestartTimer: DelayTimer = Tools.redirect(refreshTime, "https://www.emailcash.com.tw/");
-  let timeoutRestartTimer: DelayTimer = Tools.redirect(startTimeout, "");
+  let dailyRestartTimer: DelayTimer = ECTools.redirect(refreshTime, "https://www.emailcash.com.tw/");
+  let timeoutRestartTimer: DelayTimer = ECTools.redirect(startTimeout, "");
 
   $(document).ready(function () {
     require('./css/main.css');
