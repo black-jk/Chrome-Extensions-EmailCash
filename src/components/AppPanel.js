@@ -2,7 +2,7 @@
 // [AppPanel]
 // ====================================================================================================
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Button } from 'reactstrap';
 import KeyCode from 'keycode-js';
 import DraggableCore from 'react-draggable';
 import { HotKeyManager, AppConfig } from '../global';
@@ -20,9 +20,7 @@ export class AppPanel extends React.Component {
   // --------------------------------------------------
 
   _combinationListener: CombinationListener = new CombinationListener([`alt+${KeyCode.KEY_BACK_QUOTE}`], this, () => {
-    this.setState({
-      hidden: !this.state.hidden,
-    });
+    this._toggleShowHide();
   });
 
   // --------------------------------------------------
@@ -47,16 +45,29 @@ export class AppPanel extends React.Component {
       <DraggableCore>
         <div className={`EmailCashPanel ${hidden ? "small" : ""}`}>
           <div className="Header">
+            <Button onClick={this._toggleShowHide}>{`-`}</Button>
+
             <div className="OperatorLabel">{operatorTitle ? operatorTitle : "n/a"}</div>
             <RefreshTimeLabel />
             <div className="controls">
               <DebugCheckbox />
+              <span>
+                <Button onClick={this._toggleShowHide}>{`-`}</Button>
+              </span>
             </div>
           </div>
           <LoggerPanel {...this.props} hidden={hidden} />
         </div>
       </DraggableCore>
     );
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  _toggleShowHide = () => {
+    this.setState({
+      hidden: !this.state.hidden,
+    });
   }
 
 };

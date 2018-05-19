@@ -10,13 +10,13 @@ export class DebugCheckbox extends Component {
 
   render() {
     return (
-      <div className="EmailCacheConfig debug">
+      <span>
         <Label check>
           <Input id="debug" type="checkbox"
             checked={EmailCacheConfig.debug ? true : false}
             onChange={this._handleChange} />{`Debug`}
         </Label>
-      </div>
+      </span>
     );
   }
 

@@ -34,11 +34,16 @@
 
 #root .EmailCashPanel .Header .OperatorLabel {
   box-shadow: 0px 0px 0px 1px white;
+  margin-left: 10px;
 }
 
 #root .EmailCashPanel .Header .controls div {
   padding: 0px;
   box-shadow: none;
+}
+
+#root .EmailCashPanel .Header .controls span {
+  margin-left: 10px;
 }
 
 #root .EmailCashPanel .Header .controls {
