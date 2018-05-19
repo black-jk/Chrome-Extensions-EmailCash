@@ -3,6 +3,7 @@
 // ====================================================================================================
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
+import { ECTools } from '../../lib/ECTools';
 import { NotLoginError } from '../../lib/error/NotLoginError';
 import * as AppActions from '../../constants/actions/app';
 import { EmailCacheConfig } from '../../lib/ChromeStorage';
@@ -118,7 +119,7 @@ export class Operator {
 
     let survey_count = $("a[title='查看市調獎勵']").find("span").html();
     if (survey_count > 0) {
-      if (!this.checkFinished(EmailCacheConfig.lastSurveyAt)) {
+      if (!ECTools.checkFinished(EmailCacheConfig.lastSurveyAt)) {
         this.go_survey(AppConfig.redirectDelay);
         return true;
       }
@@ -210,38 +211,6 @@ export class Operator {
 
   done() {
     // Logger.debug("DONE");
-  }
-
-
-
-  // ----------------------------------------------------------------------------------------------------
-
-  checkFinished(time: String): Boolean {
-    let timeZoneShift: Number = 16 * 60 * 60 * 1000;
-    let seconds: Number = (time - timeZoneShift) % 86400000;
-    let lastTime = time - seconds + 86400000;
-
-    let now: Date = new Date();
-    let nowTime: Number = now.getTime();
-
-    // Logger.debug(`[lastTime] ${(new Date(lastTime)).toString()}`);
-    // Logger.debug(`[nowTime] ${(new Date(nowTime)).toString()}`);
-
-    if (nowTime >= lastTime) {
-      return false;
-    }
-    return true;
-  };
-
-  // ----------------------------------------------------------------------------------------------------
-
-  // [timezoneShift]
-  // 28800000 = 8 * 60 * 60 * 1000
-
-  parseNextActionDatetime(time: Number, timezoneShift: Number = 28800000): String {
-    let date: Date = new Date(time + timezoneShift);
-    let datetime: String = date.toISOString().replace(/T/, " ").replace(/\.[0-9][0-9][0-9]Z$/, "");
-    return datetime;
   }
 
 };

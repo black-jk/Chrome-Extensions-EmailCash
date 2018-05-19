@@ -3,9 +3,9 @@
 // ====================================================================================================
 import React from 'react';
 import { Alert, Label, Button, Form, FormGroup, Col, Input } from 'reactstrap';
+import { ECTools } from '../../../lib/ECTools';
 import { EmailCacheConfig } from '../../../lib/ChromeStorage';
 import { AppConfig } from '../../../global';
-import { Operator } from '../../../ec/operators/Operator';
 
 export class ChromeOptionsPanel extends React.Component {
 
@@ -25,8 +25,6 @@ export class ChromeOptionsPanel extends React.Component {
   // ----------------------------------------------------------------------------------------------------
 
   render() {
-    let operator: Operator = new Operator;
-
     let { errorMsg, successMsg } = this.state;
 
     this.state.errorMsg = "";
@@ -111,10 +109,10 @@ export class ChromeOptionsPanel extends React.Component {
 
             <hr size="1" />
 
-            <ECTimeFormGroup operator={operator} label="每日廣告" name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
-            <ECTimeFormGroup operator={operator} label="每日問答" name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
-            <ECTimeFormGroup operator={operator} label="以小搏大" name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
-            <ECTimeFormGroup operator={operator} label="問卷" name="lastSurveyAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup label="每日廣告" name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup label="每日問答" name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup label="以小搏大" name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup label="問卷" name="lastSurveyAt" onChange={() => { this.forceUpdate(); }} />
 
             <hr size="1" />
 
@@ -165,12 +163,11 @@ export class ChromeOptionsPanel extends React.Component {
 class ECTimeFormGroup extends React.Component {
 
   render() {
-    let operator: Operator = this.props.operator;
     let label: String = this.props.label;
     let name: String = this.props.name;
     let onChange: Function = this.props.onChange || (() => { });
 
-    let [date, time] = operator.parseNextActionDatetime(EmailCacheConfig[name]).split(" ");
+    let [date, time] = ECTools.parseNextActionDatetime(EmailCacheConfig[name]).split(" ");
 
     return (
       <FormGroup row>

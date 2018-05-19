@@ -3,6 +3,7 @@
 // ====================================================================================================
 import { AppConfig } from '../global';
 import { Logger } from '../lib/Logger';
+import { ECTools } from '../lib/ECTools';
 import { EmailCacheConfig } from '../lib/ChromeStorage';
 import * as AppActions from '../constants/actions/app';
 import { Operator } from './operators/Operator';
@@ -38,21 +39,21 @@ export class EmailCashDispatcher {
       operator = new Operator;
     }
 
-    if (!operator.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
+    if (!ECTools.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
       Logger.debug("[EmailCashDispatcher.execute()] ad-click!");
       if (!(operator instanceof AdclickOperator || operator instanceof AdviewOperator)) {
         Logger.log("[EmailCashDispatcher.execute()] go ad-click!");
         operator.go_adclick(AppConfig.redirectDelay);
         return;
       }
-    } else if (!operator.checkFinished(EmailCacheConfig.lastDailySurveyAt)) {
+    } else if (!ECTools.checkFinished(EmailCacheConfig.lastDailySurveyAt)) {
       Logger.debug("[EmailCashDispatcher.execute()] daily-survey!");
       if (!(operator instanceof DailySurveyOperator)) {
         Logger.log("[EmailCashDispatcher.execute()] go daily-survey!");
         operator.go_dailysurvey(AppConfig.redirectDelay);
         return;
       }
-    } else if (!operator.checkFinished(EmailCacheConfig.lastDailyGameAt)) {
+    } else if (!ECTools.checkFinished(EmailCacheConfig.lastDailyGameAt)) {
       Logger.debug("[EmailCashDispatcher.execute()] daily-games!");
       if (!(operator instanceof DailyGamesOperator)) {
         Logger.log("[EmailCashDispatcher.execute()] go daily-games!");

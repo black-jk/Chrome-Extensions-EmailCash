@@ -37,6 +37,38 @@ export class ECTools {
     }, [url], time);
   }
 
+
+
+  // ----------------------------------------------------------------------------------------------------
+
+  static checkFinished(time: Number): Boolean {
+    let timeZoneShift: Number = 16 * 60 * 60 * 1000;
+    let seconds: Number = (time - timeZoneShift) % 86400000;
+    let lastTime = time - seconds + 86400000;
+
+    let now: Date = new Date();
+    let nowTime: Number = now.getTime();
+
+    // Logger.debug(`[lastTime] ${(new Date(lastTime)).toString()}`);
+    // Logger.debug(`[nowTime] ${(new Date(nowTime)).toString()}`);
+
+    if (nowTime >= lastTime) {
+      return false;
+    }
+    return true;
+  };
+
+  // ----------------------------------------------------------------------------------------------------
+
+  // [timezoneShift]
+  // 28800000 = 8 * 60 * 60 * 1000
+
+  static parseNextActionDatetime(time: Number, timezoneShift: Number = 28800000): String {
+    let date: Date = new Date(time + timezoneShift);
+    let datetime: String = date.toISOString().replace(/T/, " ").replace(/\.[0-9][0-9][0-9]Z$/, "");
+    return datetime;
+  }
+
 };
 
 
