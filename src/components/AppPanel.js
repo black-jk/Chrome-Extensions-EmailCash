@@ -6,10 +6,10 @@ import { Button } from 'reactstrap';
 import KeyCode from 'keycode-js';
 import DraggableCore from 'react-draggable';
 import { HotKeyManager, AppConfig } from '../global';
-import { RefreshTimeLabel } from './refresh/RefreshTimeLabel';
-import { LoggerPanel } from './logger/LoggerPanel';
 import { CombinationListener } from '../ec/managers/HotKeyManager';
-import { DebugCheckbox } from './controls/DebugCheckbox';
+import { RefreshTimeLabel } from './app-panel/RefreshTimeLabel';
+import { DebugCheckbox } from './app-panel/DebugCheckbox';
+import { LoggerPanel } from './app-panel/LoggerPanel';
 
 export class AppPanel extends React.Component {
 

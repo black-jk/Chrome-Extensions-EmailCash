@@ -3,9 +3,9 @@
 // ====================================================================================================
 import React from 'react';
 import { Alert, Label, Button, Form, FormGroup, Col, Input } from 'reactstrap';
-import { EmailCacheConfig } from '../../lib/ChromeStorage';
-import { AppConfig } from '../../global';
-import { Operator } from '../../ec/operators/Operator';
+import { EmailCacheConfig } from '../../../lib/ChromeStorage';
+import { AppConfig } from '../../../global';
+import { Operator } from '../../../ec/operators/Operator';
 
 export class ChromeOptionsPanel extends React.Component {
 
