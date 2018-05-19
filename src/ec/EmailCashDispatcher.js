@@ -1,5 +1,5 @@
 // ====================================================================================================
-// [Dispatcher]
+// [EmailCashDispatcher]
 // ====================================================================================================
 import { AppConfig } from '../global';
 import { Logger } from '../lib/Logger';
@@ -19,13 +19,13 @@ import { MailDetailOperator } from './operators/MailDetailOperator';
 import { MailClickOperator } from './operators/MailClickOperator';
 import { SurveyOperator } from './operators/SurveyOperator';
 
-export class Dispatcher {
+export class EmailCashDispatcher {
 
   static execute() {
-    Logger.debug("[Dispatcher.execute()] start");
+    Logger.debug("[EmailCashDispatcher.execute()] start");
 
     let location: String = window.location.toString();
-    Logger.debug("[Dispatcher.execute()] location: " + location);
+    Logger.debug("[EmailCashDispatcher.execute()] location: " + location);
 
     let operator: Operator = this._getOperator();
     if (operator) {
@@ -39,36 +39,36 @@ export class Dispatcher {
     }
 
     if (!operator.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
-      Logger.debug("[Dispatcher.execute()] ad-click!");
+      Logger.debug("[EmailCashDispatcher.execute()] ad-click!");
       if (!(operator instanceof AdclickOperator || operator instanceof AdviewOperator)) {
-        Logger.log("[Dispatcher.execute()] go ad-click!");
+        Logger.log("[EmailCashDispatcher.execute()] go ad-click!");
         operator.go_adclick(AppConfig.redirectDelay);
         return;
       }
     } else if (!operator.checkFinished(EmailCacheConfig.lastDailySurveyAt)) {
-      Logger.debug("[Dispatcher.execute()] daily-survey!");
+      Logger.debug("[EmailCashDispatcher.execute()] daily-survey!");
       if (!(operator instanceof DailySurveyOperator)) {
-        Logger.log("[Dispatcher.execute()] go daily-survey!");
+        Logger.log("[EmailCashDispatcher.execute()] go daily-survey!");
         operator.go_dailysurvey(AppConfig.redirectDelay);
         return;
       }
     } else if (!operator.checkFinished(EmailCacheConfig.lastDailyGameAt)) {
-      Logger.debug("[Dispatcher.execute()] daily-games!");
+      Logger.debug("[EmailCashDispatcher.execute()] daily-games!");
       if (!(operator instanceof DailyGamesOperator)) {
-        Logger.log("[Dispatcher.execute()] go daily-games!");
+        Logger.log("[EmailCashDispatcher.execute()] go daily-games!");
         operator.go_dailygames(AppConfig.redirectDelay);
         return;
       }
     }
 
-    Logger.debug("[Dispatcher.execute()] end");
+    Logger.debug("[EmailCashDispatcher.execute()] end");
   }
 
   // --------------------------------------------------
 
   static _getOperator() {
     let location: String = window.location.toString();
-    Logger.debug("[Dispatcher] location: " + location);
+    Logger.debug("[EmailCashDispatcher] location: " + location);
 
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/?(default\.aspx?)?$/i)) {
       return new HomeOperator;
@@ -121,7 +121,7 @@ export class Dispatcher {
       return new SurveyOperator();
     }
 
-    Logger.debug("[Dispatcher] No operator!");
+    Logger.debug("[EmailCashDispatcher] No operator!");
     return null;
   }
 

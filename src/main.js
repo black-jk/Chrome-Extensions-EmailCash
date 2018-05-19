@@ -11,7 +11,7 @@ import { ECTools } from './lib/ECTools';
 import { DelayTimer } from './lib/DelayTimer';
 import { EmailCacheConfig } from './lib/ChromeStorage';
 import { AppContainer } from './redux/containers/AppContainer';
-import { Dispatcher } from './ec/Dispatcher';
+import { EmailCashDispatcher } from './ec/EmailCashDispatcher';
 import { JEvent } from './lib/event/EventsDispatcher';
 
 // ----------------------------------------------------------------------------------------------------
@@ -82,6 +82,6 @@ function main() {
       document.getElementById("root")
     );
 
-    Dispatcher.execute();
+    EmailCashDispatcher.execute();
   });
 };
