@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import * as ENV from '../constants/env';
-import appReducer from '../reducers';
+import appReducer from '../redux/reducers';
 import { Operator } from "../ec/operators/Operator";
 
 export default class AppConfig {

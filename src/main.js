@@ -10,7 +10,7 @@ import { Logger } from './lib/Logger';
 import { ECTools } from './lib/ECTools';
 import { DelayTimer } from './lib/DelayTimer';
 import { EmailCacheConfig } from './lib/ChromeStorage';
-import AppContainer from './containers/AppContainer';
+import { AppContainer } from './redux/containers/AppContainer';
 import { Dispatcher } from './ec/Dispatcher';
 import { JEvent } from './lib/event/EventsDispatcher';
 
