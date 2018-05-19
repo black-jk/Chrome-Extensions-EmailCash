@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { ChromeOptionsPanel } from './chrome/options/ChromeOptionsPanel';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import './css/options.css';
 
 ReactDOM.render(
   <ChromeOptionsPanel />,

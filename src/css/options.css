@@ -1,0 +1,11 @@
+#root .ChromeOptionsPanel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 550px;
+  background-color: #EEEEEE;
+}
+
+#root .ChromeOptionsPanel .FontLabel {
+  text-align: right;
+}

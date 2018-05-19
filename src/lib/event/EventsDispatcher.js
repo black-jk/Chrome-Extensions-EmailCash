@@ -54,7 +54,7 @@ export class EventsDispatcher {
     }
 
     listeners.forEach((listener: Function) => {
-      listener.apply(this._contextMap.get(listener), callbackArgs);
+      listener.apply(this._contextMap.get(listener), [listener, ...callbackArgs]);
     });
   }
 

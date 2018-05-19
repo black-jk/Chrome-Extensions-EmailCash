@@ -77,6 +77,9 @@ class EmailCacheConfig_ extends ChromeStorageBase {
 
   debug: Boolean = false;
 
+  startTimeout: Number = 30; // sec
+  refreshDelay: Number = 5;  // sec
+
   redirectDelay: Boolean = false;
   redirectDelayTime: Number = 0;
 
@@ -90,6 +93,9 @@ class EmailCacheConfig_ extends ChromeStorageBase {
   _makeDefaultPattern(): Object {
     return {
       debug: this.debug,
+
+      startTimeout: this.startTimeout,
+      refreshDelay: this.refreshDelay,
 
       redirectDelay: this.redirectDelay,
       redirectDelayTime: this.redirectDelayTime,

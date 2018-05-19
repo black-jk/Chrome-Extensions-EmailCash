@@ -16,7 +16,9 @@ import { Dispatcher } from './ec/Dispatcher';
 // ----------------------------------------------------------------------------------------------------
 
 EmailCacheConfig.read();
-EmailCacheConfig.on("event_read_complete", () => {
+EmailCacheConfig.on("event_read_complete", (listener: Function) => {
+  EmailCacheConfig.off("event_read_complete", listener);
+
   AppConfig.debug = EmailCacheConfig.debug;
   AppConfig.redirectDelay = (EmailCacheConfig.redirectDelay) ? EmailCacheConfig.redirectDelayTime : 0;
   // console.debug(AppConfig, EmailCacheConfig);
@@ -44,16 +46,20 @@ function main() {
 
   // ------------------------------
 
+  let refreshDelay: Number = EmailCacheConfig.refreshDelay * 1000;
+  let startTimeout: Number = EmailCacheConfig.startTimeout * 1000;
+
   let now: Date = new Date();
   let nowTime: Number = now.getTime();
   let tomorrow: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  let time: Number = (tomorrow.getTime() - nowTime + 5000) % 86400000;
+  let tomorrowTime: Number = tomorrow.getTime();
+  let refreshTime: Number = (tomorrowTime - nowTime + refreshDelay) % 86400000;
 
-  AppConfig.dailyRestartAt = nowTime + time;
-  AppConfig.timeoutRestartAt = nowTime + 30000;
+  AppConfig.dailyRestartAt = nowTime + refreshTime;
+  AppConfig.timeoutRestartAt = nowTime + startTimeout;
 
-  let dailyRestartTimer: DelayTimer = Tools.redirect(time, "https://www.emailcash.com.tw/");
-  let timeoutRestartTimer: DelayTimer = Tools.redirect(30000, "");
+  let dailyRestartTimer: DelayTimer = Tools.redirect(refreshTime, "https://www.emailcash.com.tw/");
+  let timeoutRestartTimer: DelayTimer = Tools.redirect(startTimeout, "");
 
   $(document).ready(function () {
     require('./css/main.css');
