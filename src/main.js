@@ -12,12 +12,13 @@ import { DelayTimer } from './lib/DelayTimer';
 import { EmailCacheConfig } from './lib/ChromeStorage';
 import AppContainer from './containers/AppContainer';
 import { Dispatcher } from './ec/Dispatcher';
+import { JEvent } from './lib/event/EventsDispatcher';
 
 // ----------------------------------------------------------------------------------------------------
 
 EmailCacheConfig.read();
-EmailCacheConfig.on("event_read_complete", (listener: Function) => {
-  EmailCacheConfig.off("event_read_complete", listener);
+EmailCacheConfig.on("event_read_complete", (event: JEvent) => {
+  event.off();
 
   AppConfig.debug = EmailCacheConfig.debug;
   AppConfig.redirectDelay = (EmailCacheConfig.redirectDelay) ? EmailCacheConfig.redirectDelayTime : 0;

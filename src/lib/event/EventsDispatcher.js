@@ -41,21 +41,66 @@ export class EventsDispatcher {
 
   // ----------------------------------------------------------------------------------------------------
 
-  trigger(eventName: String /*, arg1, arg2, ...*/) {
+  trigger(eventName: String, args: Object = {}) {
     let _eventsMap: Map = this._eventsMap;
     let listeners: Array = _eventsMap.get(eventName);
     if (!listeners || listeners.length == 0) return;
 
-    let callbackArgs: Array = [];
-    if (arguments.length > 1) {
-      for (let i = 1; i < arguments.length; i++) {
-        callbackArgs.push(arguments[i]);
-      }
-    }
-
     listeners.forEach((listener: Function) => {
-      listener.apply(this._contextMap.get(listener), [listener, ...callbackArgs]);
+      let event: JEvent = new JEvent(eventName, this, listener, args);
+      listener.apply(this._contextMap.get(listener), [event]);
     });
+  }
+
+};
+
+
+
+// ====================================================================================================
+
+export class JEvent {
+
+  _eventName: String;
+  _currentTarget: EventsDispatcher;
+  _listener: Function;
+  _args: Object = {};
+
+  // ----------------------------------------------------------------------------------------------------
+
+  constructor(eventName: String, currentTarget: EventsDispatcher, listener: Function, args: Object) {
+    this._eventName = eventName;
+    this._currentTarget = currentTarget;
+    this._listener = listener;
+    this._args = args;
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  get eventName(): String {
+    return this._eventName;
+  }
+
+  get currentTarget(): EventsDispatcher {
+    return this._currentTarget;
+  }
+
+  get listener(): Function {
+    return this._listener;
+  }
+
+  get args(): Object {
+    return this._args;
+  }
+
+
+
+  // ----------------------------------------------------------------------------------------------------
+
+  off() {
+    let eventName: String = this.eventName;
+    let currentTarget: EventsDispatcher = this.currentTarget;
+    let listener: Function = this.listener;
+    currentTarget.off(eventName, listener);
   }
 
 };

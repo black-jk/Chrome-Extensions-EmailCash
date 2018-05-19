@@ -45,7 +45,7 @@ class ChromeStorageBase extends EventsDispatcher {
             this[key] = items[key];
           }
 
-          this.trigger("event_read_complete", [this]);
+          this.trigger("event_read_complete");
         });
     } catch (e) {
       console.error(e);
@@ -61,7 +61,7 @@ class ChromeStorageBase extends EventsDispatcher {
         if (typeof callback == "function") {
           callback();
         }
-        this.trigger("event_save_complete", [this]);
+        this.trigger("event_save_complete");
       });
   }
 
