@@ -32,9 +32,9 @@ export class ChromeOptionsPanel extends React.Component {
 
     return (
       <div className="ChromeOptionsPanel">
-        <Alert color="primary">
+        <div className="PanelHeader">
           {`[${AppConfig.name}] v${AppConfig.version}`}
-        </Alert>
+        </div>
 
         <div style={{ padding: 15 }}>
           <Alert color="danger" style={{ padding: "5px 15px" }} hidden={!errorMsg}>{errorMsg}</Alert>
@@ -42,34 +42,25 @@ export class ChromeOptionsPanel extends React.Component {
 
           <Form>
             {/* [Debug] */}
-            <FormGroup inline check>
-              <Label className="FontLabel" check>
-                <Input id="debug" type="checkbox"
-                  checked={EmailCacheConfig.debug ? true : false}
-                  onChange={(event) => {
-                    EmailCacheConfig.debug = event.currentTarget.checked;
-                    // console.log(`[CHANGE] [EmailCacheConfig.debug]`, EmailCacheConfig.debug);
-                    this.forceUpdate();
-                  }} />{`Debug Mode`}
-              </Label>
-            </FormGroup>
+            <Button size="sm" color={(EmailCacheConfig.debug) ? "success" : "secondary"} style={{ width: 100 }}
+              onClick={(event) => {
+                EmailCacheConfig.debug = !EmailCacheConfig.debug;
+                // console.log(`[CHANGE] []`, EmailCacheConfig.debug);
+                this.forceUpdate();
+              }}>{`Debug: ${EmailCacheConfig.debug ? "on" : "off"}`}</Button>
             <span>{`　`}</span>
 
             {/* [redirectDelay] */}
+            <Button size="sm" color={(EmailCacheConfig.redirectDelay) ? "success" : "secondary"} style={{ width: 140, marginRight: 10 }}
+              onClick={(event) => {
+                EmailCacheConfig.redirectDelay = !EmailCacheConfig.redirectDelay;
+                // console.log(`[CHANGE] [EmailCacheConfig.redirectDelay]`, EmailCacheConfig.redirectDelay);
+                this.forceUpdate();
+              }}>
+              {`Redirect Delay: ${EmailCacheConfig.redirectDelay ? "on" : "off"}　`}
+            </Button>
             <FormGroup inline check>
-              <Label className="FontLabel" check>
-                <Input id="debug" type="checkbox"
-                  checked={EmailCacheConfig.redirectDelay ? true : false}
-                  onChange={(event) => {
-                    EmailCacheConfig.redirectDelay = event.currentTarget.checked;
-                    // console.log(`[CHANGE] [EmailCacheConfig.redirectDelay]`, EmailCacheConfig.redirectDelay);
-                    this.forceUpdate();
-                  }} />{`Redirect Delay (sec)`}
-              </Label>
-            </FormGroup>
-
-            <FormGroup inline check>
-              <Input id="redirectDelayTimeInput" type="number" bsSize="sm"
+              <Input id="redirectDelayTimeInput" type="number" bsSize="sm" style={{ width: 60 }}
                 step="1" min="0" max="600"
                 value={parseInt(EmailCacheConfig.redirectDelayTime) / 1000}
                 onChange={(event) => {
@@ -78,7 +69,6 @@ export class ChromeOptionsPanel extends React.Component {
                   this.forceUpdate();
                 }} />
             </FormGroup>
-
 
             {/* [startTimeout, refreshDelay] */}
             <FormGroup row style={{ marginTop: 10 }}>

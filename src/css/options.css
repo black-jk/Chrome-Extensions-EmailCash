@@ -6,6 +6,11 @@
   background-color: #EEEEEE;
 }
 
+#root .ChromeOptionsPanel .PanelHeader {
+  padding: 10px;
+  background-color: #cce5ff;
+}
+
 #root .ChromeOptionsPanel .FontLabel {
   text-align: right;
 }
