@@ -28,16 +28,10 @@ export class RefreshTimeLabel extends Component {
     let dailyRestartTime: Number = (dailyRestartAt - nowTime) / 1000;
     let timeoutRestartTime: Number = (timeoutRestartAt - nowTime) / 1000;
 
-    let style = {
-      // top: 7,
-      // right: 10,
-      // position: "absolute",
-    };
-
     return (
-      <div style={style}>
-        <span>{`　[Timeout: ${(timeoutRestartTime > 0) ? timeoutRestartTime.toFixed(0) : "--"}]`}</span>
-        <span>{`　[Reload: ${dailyRestartTime.toFixed(0)}]`}</span>
+      <div className="TimerLabel">
+        <span>{`Timeout: ${(timeoutRestartTime > 0) ? timeoutRestartTime.toFixed(0) : "--"}`}</span>
+        <span>{`Reload: ${dailyRestartTime.toFixed(0)}`}</span>
       </div>
     );
   }

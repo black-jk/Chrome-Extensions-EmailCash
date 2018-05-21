@@ -32,9 +32,22 @@
   box-shadow: none;
 }
 
-#root .EmailCashPanel .Header .OperatorLabel {
-  box-shadow: 0px 0px 0px 1px white;
+#root .EmailCashPanel .Header .OperatorLabel>span {
+  box-shadow: 0px 0px 0px 1px cyan;
   margin-left: 10px;
+  padding: 7px 10px;
+}
+
+#root .EmailCashPanel .Header .ProfileLabel>span {
+  box-shadow: 0px 0px 0px 1px greenyellow;
+  margin-left: 10px;
+  padding: 7px 10px;
+}
+
+#root .EmailCashPanel .Header .TimerLabel>span {
+  box-shadow: 0px 0px 0px 1px red;
+  margin-left: 10px;
+  padding: 7px 10px;
 }
 
 #root .EmailCashPanel .Header .controls div {

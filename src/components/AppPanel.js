@@ -47,11 +47,15 @@ export class AppPanel extends React.Component {
           <div className="Header">
             <Button onClick={this._toggleShowHide}>{`-`}</Button>
 
-            <div className="OperatorLabel">{operatorTitle ? operatorTitle : "n/a"}</div>
+            <div className="OperatorLabel">
+              <span>{operatorTitle ? operatorTitle : "n/a"}</span>
+            </div>
 
-            <div>
-              <span>{`　[可用: `}{$("a:contains('可用e元')").find("b").html()}{`e]`}</span>
-              <span>{`　[定存: `}{$("a:contains('定存e元')").find("b").html()}{`e]`}</span>
+            <div className="ProfileLabel">
+              <span>{`可用: `}{$("a:contains('可用e元')").find("b").html()}{`e`}</span>
+              <span>{`定存: `}{$("a:contains('定存e元')").find("b").html()}{`e`}</span>
+              <span>{`經驗值: `}{$("a:contains('經驗值')").find("b").html()}{``}</span>
+              <span>{`金幣: `}{$("a:contains('金幣')").find("b").html()}{``}</span>
             </div>
 
             <RefreshTimeLabel />
