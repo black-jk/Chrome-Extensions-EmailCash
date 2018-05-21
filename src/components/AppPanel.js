@@ -48,7 +48,14 @@ export class AppPanel extends React.Component {
             <Button onClick={this._toggleShowHide}>{`-`}</Button>
 
             <div className="OperatorLabel">{operatorTitle ? operatorTitle : "n/a"}</div>
+
+            <div>
+              <span>{`　[可用: `}{$("a:contains('可用e元')").find("b").html()}{`e]`}</span>
+              <span>{`　[定存: `}{$("a:contains('定存e元')").find("b").html()}{`e]`}</span>
+            </div>
+
             <RefreshTimeLabel />
+
             <div className="controls">
               <DebugCheckbox />
               <span>
