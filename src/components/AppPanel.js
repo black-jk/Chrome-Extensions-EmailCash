@@ -8,7 +8,9 @@ import DraggableCore from 'react-draggable';
 import { HotKeyManager, AppConfig } from '../global';
 import { CombinationListener } from '../ec/managers/HotKeyManager';
 import { RefreshTimeLabel } from './app-panel/RefreshTimeLabel';
-import { DebugCheckbox } from './app-panel/DebugCheckbox';
+import { DebugControl } from './app-panel/DebugControl';
+import { RedirectDelayControl } from './app-panel/RedirectDelayControl';
+import { PauseControl } from './app-panel/PauseControl';
 import { LoggerPanel } from './app-panel/LoggerPanel';
 
 export class AppPanel extends React.Component {
@@ -61,10 +63,14 @@ export class AppPanel extends React.Component {
             <RefreshTimeLabel />
 
             <div className="controls">
-              <DebugCheckbox />
-              <span>
-                <Button onClick={this._toggleShowHide}>{`-`}</Button>
-              </span>
+              <DebugControl />
+              <RedirectDelayControl />
+              <PauseControl />
+              {
+                // <span>
+                //   <Button onClick={this._toggleShowHide}>{`-`}</Button>
+                // </span>
+              }
             </div>
           </div>
           <LoggerPanel {...this.props} hidden={hidden} />

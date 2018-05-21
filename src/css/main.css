@@ -50,6 +50,12 @@
   padding: 7px 10px;
 }
 
+#root .EmailCashPanel .Header .controls {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+}
+
 #root .EmailCashPanel .Header .controls div {
   padding: 0px;
   box-shadow: none;
@@ -57,11 +63,6 @@
 
 #root .EmailCashPanel .Header .controls span {
   margin-left: 10px;
-}
-
-#root .EmailCashPanel .Header .controls {
-  position: absolute;
-  right: 10px;
 }
 
 #root .EmailCashPanel .Header .controls input {

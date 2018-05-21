@@ -42,22 +42,31 @@ export class ChromeOptionsPanel extends React.Component {
 
           <Form>
             {/* [Debug] */}
-            <Button size="sm" color={(EmailCacheConfig.debug) ? "success" : "secondary"} style={{ width: 100 }}
+            <Button size="sm" color={(EmailCacheConfig.debug) ? "warning" : "success"} style={{ width: 100 }}
               onClick={(event) => {
                 EmailCacheConfig.debug = !EmailCacheConfig.debug;
                 // console.log(`[CHANGE] []`, EmailCacheConfig.debug);
                 this.forceUpdate();
-              }}>{`Debug: ${EmailCacheConfig.debug ? "on" : "off"}`}</Button>
+              }}>{`Debug: ${EmailCacheConfig.debug ? "ON" : "OFF"}`}</Button>
+            <span>{`　`}</span>
+
+            {/* [Pause] */}
+            <Button size="sm" color={(EmailCacheConfig.pause) ? "warning" : "success"} style={{ width: 100 }}
+              onClick={(event) => {
+                EmailCacheConfig.pause = !EmailCacheConfig.pause;
+                // console.log(`[CHANGE] []`, EmailCacheConfig.pause);
+                this.forceUpdate();
+              }}>{`Pause: ${EmailCacheConfig.pause ? "ON" : "OFF"}`}</Button>
             <span>{`　`}</span>
 
             {/* [redirectDelay] */}
-            <Button size="sm" color={(EmailCacheConfig.redirectDelay) ? "success" : "secondary"} style={{ width: 140, marginRight: 10 }}
+            <Button size="sm" color={(EmailCacheConfig.redirectDelay) ? "warning" : "success"} style={{ width: 140, marginRight: 10 }}
               onClick={(event) => {
                 EmailCacheConfig.redirectDelay = !EmailCacheConfig.redirectDelay;
                 // console.log(`[CHANGE] [EmailCacheConfig.redirectDelay]`, EmailCacheConfig.redirectDelay);
                 this.forceUpdate();
               }}>
-              {`Redirect Delay: ${EmailCacheConfig.redirectDelay ? "on" : "off"}　`}
+              {`Redirect Delay: ${EmailCacheConfig.redirectDelay ? "ON" : "OFF"}　`}
             </Button>
             <FormGroup inline check>
               <Input id="redirectDelayTimeInput" type="number" bsSize="sm" style={{ width: 60 }}

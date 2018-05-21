@@ -3,6 +3,7 @@
 // ====================================================================================================
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
+import { DelayTimer } from '../../lib/DelayTimer';
 import { ECTools } from '../../lib/ECTools';
 import { NotLoginError } from '../../lib/error/NotLoginError';
 import * as AppActions from '../../constants/actions/app';
@@ -131,13 +132,19 @@ export class Operator {
   // ----------------------------------------------------------------------------------------------------
 
   goto(url, sleep) {
+    Logger.debug(`[goto] '${url}'`);
+
+    if (EmailCacheConfig.pause) {
+      Logger.log("[PAUSED]");
+      return;
+    }
+
     if (sleep > 0) {
-      Logger.debug("goto '" + url + "'   (sleep: " + sleep + ")");
-      window.setTimeout(function () {
+      Logger.debug(`[goto] sleep: ${sleep}`);
+      new DelayTimer(this, () => {
         window.location = url;
-      }, sleep);
+      }, [], sleep);
     } else {
-      Logger.debug("goto '" + url);
       window.location = url;
     }
   }
@@ -150,6 +157,11 @@ export class Operator {
 
   run() {
     try {
+      if (EmailCacheConfig.pause) {
+        Logger.log("[PAUSED]");
+        return;
+      }
+
       Logger.debug("[start()]");
       this.start();
 
