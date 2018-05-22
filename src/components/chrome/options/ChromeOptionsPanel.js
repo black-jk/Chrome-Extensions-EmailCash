@@ -50,15 +50,6 @@ export class ChromeOptionsPanel extends React.Component {
               }}>{`Debug: ${EmailCacheConfig.debug ? "ON" : "OFF"}`}</Button>
             <span>{`　`}</span>
 
-            {/* [Pause] */}
-            <Button size="sm" color={(EmailCacheConfig.pause) ? "warning" : "success"} style={{ width: 100 }}
-              onClick={(event) => {
-                EmailCacheConfig.pause = !EmailCacheConfig.pause;
-                // console.log(`[CHANGE] []`, EmailCacheConfig.pause);
-                this.forceUpdate();
-              }}>{`Pause: ${EmailCacheConfig.pause ? "ON" : "OFF"}`}</Button>
-            <span>{`　`}</span>
-
             {/* [redirectDelay] */}
             <Button size="sm" color={(EmailCacheConfig.redirectDelay) ? "warning" : "success"} style={{ width: 140, marginRight: 10 }}
               onClick={(event) => {
@@ -78,6 +69,15 @@ export class ChromeOptionsPanel extends React.Component {
                   this.forceUpdate();
                 }} />
             </FormGroup>
+
+            {/* [Pause] */}
+            <Button size="sm" color={(EmailCacheConfig.pause) ? "warning" : "success"} style={{ width: 100 }}
+              onClick={(event) => {
+                EmailCacheConfig.pause = !EmailCacheConfig.pause;
+                // console.log(`[CHANGE] []`, EmailCacheConfig.pause);
+                this.forceUpdate();
+              }}>{`Pause: ${EmailCacheConfig.pause ? "ON" : "OFF"}`}</Button>
+            <span>{`　`}</span>
 
             {/* [startTimeout, refreshDelay] */}
             <FormGroup row style={{ marginTop: 10 }}>
