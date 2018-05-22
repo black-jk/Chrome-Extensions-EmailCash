@@ -53,7 +53,7 @@ export class EmailCashDispatcher {
         operator.go_dailysurvey(AppConfig.redirectDelay);
         return;
       }
-    } else if (!ECTools.checkFinished(EmailCacheConfig.lastDailyGameAt)) {
+    } else if (!ECTools.checkFinished(EmailCacheConfig.lastDailyGameAt, 10 * 60 * 60 * 1000)) {
       Logger.debug("[EmailCashDispatcher.execute()] daily-games!");
       if (!(operator instanceof DailyGamesOperator)) {
         Logger.log("[EmailCashDispatcher.execute()] go daily-games!");
