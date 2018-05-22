@@ -13,11 +13,12 @@ export class RedirectDelayControl extends Component {
     let backgroundColor: String = (EmailCacheConfig.redirectDelay) ? "#ffc107" : "#28a745";
 
     return (
-      <span>
-        <Label>{`Delay: `}</Label>
-        <Button size="sm" style={{ width: 70, backgroundColor: backgroundColor }}
+      <div>
+        <Label>{`Delay`}</Label>
+        <br />
+        <Button size="sm" style={{ backgroundColor: backgroundColor }}
           onClick={this._handleClick}><b>{`${EmailCacheConfig.redirectDelay ? "ON" : "OFF"}`}</b></Button>
-      </span>
+      </div>
     );
   }
 

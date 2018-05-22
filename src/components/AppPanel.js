@@ -46,18 +46,19 @@ export class AppPanel extends React.Component {
     return (
       <DraggableCore>
         <div className={`EmailCashPanel ${hidden ? "small" : ""}`}>
-          <div className="Header">
-            <Button onClick={this._toggleShowHide}>{`-`}</Button>
-
-            <div className="OperatorLabel">
-              <span>{operatorTitle ? operatorTitle : "n/a"}</span>
+          <div className="Header" onDoubleClick={this._toggleShowHide}>
+            {
+              // <Button onClick={this._toggleShowHide}>{`-`}</Button>
+            }
+            <div className="Label OperatorLabel">
+              <div>{operatorTitle ? operatorTitle : "n/a"}<br />&nbsp;</div>
             </div>
 
-            <div className="ProfileLabel">
-              <span>{`可用: `}{$("a:contains('可用e元')").find("b").html()}{`e`}</span>
-              <span>{`定存: `}{$("a:contains('定存e元')").find("b").html()}{`e`}</span>
-              <span>{`經驗值: `}{$("a:contains('經驗值')").find("b").html()}{``}</span>
-              <span>{`金幣: `}{$("a:contains('金幣')").find("b").html()}{``}</span>
+            <div className="Label ProfileLabel">
+              <div>{`可用`}<br />{$("a:contains('可用e元')").find("b").html()}{`e`}</div>
+              <div>{`定存`}<br />{$("a:contains('定存e元')").find("b").html()}{`e`}</div>
+              <div>{`經驗值`}<br />{$("a:contains('經驗值')").find("b").html()}{``}</div>
+              <div>{`金幣`}<br />{$("a:contains('金幣')").find("b").html()}{``}</div>
             </div>
 
             <RefreshTimeLabel />

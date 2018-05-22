@@ -13,11 +13,12 @@ export class DebugControl extends Component {
     let backgroundColor: String = (EmailCacheConfig.debug) ? "#ffc107" : "#28a745";
 
     return (
-      <span>
-        <Label>{`Debug: `}</Label>
-        <Button size="sm" style={{ width: 60, backgroundColor: backgroundColor }}
+      <div>
+        <Label>{`Debug`}</Label>
+        <br />
+        <Button size="sm" style={{ backgroundColor: backgroundColor }}
           onClick={this._handleClick}><b>{`${EmailCacheConfig.debug ? "ON" : "OFF"}`}</b></Button>
-      </span>
+      </div>
     );
   }
 

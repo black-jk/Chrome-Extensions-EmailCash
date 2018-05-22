@@ -6,23 +6,26 @@
 /* ---------------------------------------------------------------------------------------------------- */
 
 #root .EmailCashPanel {
+  top: 30px;
   left: 30px;
-  bottom: 70px;
+  /* bottom: 70px; */
   z-index: 99999;
   position: fixed;
   background-color: white;
-  width: 90%;
+  width: 95%;
   height: calc(100% - 170px);
   max-height: 600px;
 }
 
 #root .EmailCashPanel.small {
-  height: 42px;
+  height: 60px;
 }
 
 /* -------------------------------------------------- */
 
 #root .EmailCashPanel .Header {
+  height: 55px;
+  padding: 2px;
   color: whitesmoke;
   background-color: black;
 }
@@ -32,33 +35,46 @@
   box-shadow: none;
 }
 
-#root .EmailCashPanel .Header .OperatorLabel>span {
+#root .EmailCashPanel .Header .Label>div {
+  display: inline-block;
+  min-width: 55px;
+  height: 45px;
+  margin-top: 0px;
+  margin-left: 1px;
+  padding: 0px 5px;
+  text-align: center;
+}
+
+#root .EmailCashPanel .Header .OperatorLabel>div {
+  margin-left: 0px;
   box-shadow: 0px 0px 0px 1px cyan;
-  margin-left: 10px;
-  padding: 7px 10px;
 }
 
-#root .EmailCashPanel .Header .ProfileLabel>span {
+#root .EmailCashPanel .Header .ProfileLabel>div {
   box-shadow: 0px 0px 0px 1px greenyellow;
-  margin-left: 10px;
-  padding: 7px 10px;
 }
 
-#root .EmailCashPanel .Header .TimerLabel>span {
+#root .EmailCashPanel .Header .TimerLabel>div {
   box-shadow: 0px 0px 0px 1px red;
-  margin-left: 10px;
-  padding: 7px 10px;
 }
 
 #root .EmailCashPanel .Header .controls {
   position: absolute;
-  right: 10px;
-  top: 7px;
+  right: 2px;
+  top: 2px;
 }
 
-#root .EmailCashPanel .Header .controls div {
-  padding: 0px;
-  box-shadow: none;
+#root .EmailCashPanel .Header .controls>div {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 3px;
+  box-shadow: 0px 0px 0px 1px white;
+  width: 70px;
+  text-align: center;
+}
+
+#root .EmailCashPanel .Header .controls>div>button {
+  width: 70px;
 }
 
 #root .EmailCashPanel .Header .controls span {
@@ -74,7 +90,7 @@
 #root .EmailCashPanel .LoggerPanel {
   overflow: auto;
   width: calc(100% - 10px);
-  height: calc(100% - 10px - 42px);
-  max-height: calc(600px - 10px - 42px);
+  height: calc(100% - 10px - 60px);
+  max-height: calc(600px - 10px - 60px);
   background-color: whitesmoke;
 }

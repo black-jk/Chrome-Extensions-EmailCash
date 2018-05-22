@@ -13,11 +13,12 @@ export class PauseControl extends Component {
     let backgroundColor: String = (EmailCacheConfig.pause) ? "#ffc107" : "#28a745";
 
     return (
-      <span>
-        <Label>{`Status: `}</Label>
-        <Button size="sm" style={{ width: 70, backgroundColor: backgroundColor }}
+      <div>
+        <Label>{`Status`}</Label>
+        <br />
+        <Button size="sm" style={{ backgroundColor: backgroundColor }}
           onClick={this._handleClick}><b>{`${EmailCacheConfig.pause ? "PAUSE" : "RUN"}`}</b></Button>
-      </span>
+      </div>
     );
   }
 
