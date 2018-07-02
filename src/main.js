@@ -4,40 +4,63 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-
 import { AppConfig } from './global';
+import { HotKeyManager } from './global';
 import { Logger } from './lib/Logger';
-import { Tools } from './lib/Tools';
+import { ECTools } from './lib/ECTools';
 import { DelayTimer } from './lib/DelayTimer';
-import { ChromeStorage } from './lib/ChromeStorage';
-import AppContainer from './containers/AppContainer';
-import { Dispatcher } from './ec/Dispatcher';
+import { EmailCacheConfig } from './lib/ChromeStorage';
+import { AppContainer } from './redux/containers/AppContainer';
+import { EmailCashDispatcher } from './ec/EmailCashDispatcher';
+import { JEvent } from './lib/event/EventsDispatcher';
 
-ChromeStorage.init();
+// ----------------------------------------------------------------------------------------------------
 
-// --------------------------------------------------
+EmailCacheConfig.read();
+EmailCacheConfig.on("event_read_complete", (event: JEvent) => {
+  event.off();
 
-let dailyRestartTimer: DelayTimer = 0;
-let timeoutRestartTimer: DelayTimer = 0;
+  AppConfig.debug = EmailCacheConfig.debug;
+  AppConfig.redirectDelay = (EmailCacheConfig.redirectDelay) ? EmailCacheConfig.redirectDelayTime : 0;
+  // console.debug(AppConfig, EmailCacheConfig);
+
+  if (window.jQuery) {
+    main();
+  } else {
+    Logger.debug("Load jQuery");
+    window.onload = function () {
+      ECTools.loadJQuery(function () {
+        // do nothing
+      });
+      main();
+    };
+  }
+});
+
+// ----------------------------------------------------------------------------------------------------
 
 function main() {
-  var location = window.location.toString();
+  let location = window.location.toString();
   if (AppConfig.debug) {
     Logger.debug("[main] location: " + location);
   }
 
   // ------------------------------
 
-  var now = new Date();
-  var nowTime = now.getTime();
-  var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  var time = (tomorrow.getTime() - nowTime + 90000) % 86400000;
+  let refreshDelay: Number = EmailCacheConfig.refreshDelay * 1000;
+  let startTimeout: Number = EmailCacheConfig.startTimeout * 1000;
 
-  dailyRestartTimer = Tools.redirect(time, "https://www.emailcash.com.tw/");
-  AppConfig.dailyRestartAt = nowTime + time;
+  let now: Date = new Date();
+  let nowTime: Number = now.getTime();
+  let tomorrow: Date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  let tomorrowTime: Number = tomorrow.getTime();
+  let refreshTime: Number = (tomorrowTime - nowTime + refreshDelay) % 86400000;
 
-  timeoutRestartTimer = Tools.redirect(30000, "");
-  AppConfig.timeoutRestartAt = nowTime + 30000;
+  AppConfig.dailyRestartAt = nowTime + refreshTime;
+  AppConfig.timeoutRestartAt = nowTime + startTimeout;
+
+  let dailyRestartTimer: DelayTimer = ECTools.redirect(refreshTime, "https://www.emailcash.com.tw/");
+  let timeoutRestartTimer: DelayTimer = ECTools.redirect(startTimeout, "");
 
   $(document).ready(function () {
     require('./css/main.css');
@@ -46,37 +69,19 @@ function main() {
     timeoutRestartTimer.cancel();
     AppConfig.timeoutRestartAt = 0;
 
-    let root = document.createElement("div");
+    let root: HTMLDivElement = document.createElement("div");
     root.setAttribute("id", "root");
 
-    let body = document.getElementsByTagName("body")[0];
+    let body: HTMLBodyElement = document.getElementsByTagName("body")[0];
     body.appendChild(root);
 
     ReactDOM.render(
       <Provider store={AppConfig.store}>
         <AppContainer />
       </Provider>,
-      document.getElementById('root')
+      document.getElementById("root")
     );
 
-    Dispatcher.execute();
+    EmailCashDispatcher.execute();
   });
 };
-
-// ----------------------------------------------------------------------------------------------------
-
-if (window.jQuery) {
-  main();
-} else {
-  Logger.debug('Load jQuery');
-  window.onload = function () {
-    Tools.loadJQuery(function () {
-      // do nothing
-    });
-    main();
-  };
-}
-
-
-
-// ----------------------------------------------------------------------------------------------------

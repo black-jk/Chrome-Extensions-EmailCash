@@ -1,8 +1,8 @@
 // ====================================================================================================
 // [Reducers] [App]
 // ====================================================================================================
-import * as AppActions from '../constants/actions/app';
-import * as AppStatus from '../constants/status/app';
+import * as AppActions from '../../constants/actions/app';
+import * as AppStatus from '../../constants/status/app';
 
 const defaultState = {
   operatorTitle: "",

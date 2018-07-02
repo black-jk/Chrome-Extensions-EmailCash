@@ -8,15 +8,15 @@ import * as AppActions from '../../constants/actions/app';
 
 export class LoggerData {
 
-  static _logs = [];
+  static _logs: Array = [];
 
-  static get logs() {
+  static get logs(): Array {
     return LoggerData._logs;
   }
 
   // ------------------------------
 
-  static add(type, message) {
+  static add(type: String, message: String) {
     LoggerData._logs.push(new LoggerData(type, message));
     AppConfig.store.dispatch({ type: AppActions.LOGGER, loggersCount: LoggerData.logs.length });
   }
@@ -25,10 +25,10 @@ export class LoggerData {
 
   // ====================================================================================================
 
-  type = "";
-  message = "";
+  type: String = "";
+  message: String = "";
 
-  constructor(type, message) {
+  constructor(type: String, message: String) {
     this.type = type;
     this.message = message;
   }

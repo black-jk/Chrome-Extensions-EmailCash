@@ -7,7 +7,7 @@ import { Operator } from './Operator';
 
 export class LattoOperator extends Operator {
 
-  title = "每日樂透";
+  title: String = "每日樂透";
 
 
 

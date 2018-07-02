@@ -3,27 +3,94 @@
   padding: 5px;
 }
 
-#root .Header {
-  color: whitesmoke;
-  background-color: black;
-}
-#root .Header > div {
-  display: inline-block;
-  box-shadow: none;
-  margin-right: 5px;
-}
+/* ---------------------------------------------------------------------------------------------------- */
 
 #root .EmailCashPanel {
-  right: 30px;
-  bottom: 60px;
+  top: 30px;
+  left: 30px;
+  /* bottom: 70px; */
   z-index: 99999;
   position: fixed;
   background-color: white;
+  width: 95%;
+  height: calc(100% - 170px);
+  max-height: 600px;
 }
 
-#root .LoggerPanel {
-  width: 1200px;
-  height: 300px;
+#root .EmailCashPanel.small {
+  height: 60px;
+}
+
+/* -------------------------------------------------- */
+
+#root .EmailCashPanel .Header {
+  height: 55px;
+  padding: 2px;
+  color: whitesmoke;
+  background-color: black;
+}
+
+#root .EmailCashPanel .Header>div {
+  display: inline-block;
+  box-shadow: none;
+}
+
+#root .EmailCashPanel .Header .Label>div {
+  display: inline-block;
+  min-width: 55px;
+  height: 45px;
+  margin-top: 0px;
+  margin-left: 1px;
+  padding: 0px 5px;
+  text-align: center;
+}
+
+#root .EmailCashPanel .Header .OperatorLabel>div {
+  margin-left: 0px;
+  box-shadow: 0px 0px 0px 1px cyan;
+}
+
+#root .EmailCashPanel .Header .ProfileLabel>div {
+  box-shadow: 0px 0px 0px 1px greenyellow;
+}
+
+#root .EmailCashPanel .Header .TimerLabel>div {
+  box-shadow: 0px 0px 0px 1px red;
+}
+
+#root .EmailCashPanel .Header .controls {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+
+#root .EmailCashPanel .Header .controls>div {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 3px;
+  box-shadow: 0px 0px 0px 1px white;
+  width: 70px;
+  text-align: center;
+}
+
+#root .EmailCashPanel .Header .controls>div>button {
+  width: 70px;
+}
+
+#root .EmailCashPanel .Header .controls span {
+  margin-left: 10px;
+}
+
+#root .EmailCashPanel .Header .controls input {
+  margin: 2px 5px 0px 5px;
+}
+
+/* -------------------------------------------------- */
+
+#root .EmailCashPanel .LoggerPanel {
   overflow: auto;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px - 60px);
+  max-height: calc(600px - 10px - 60px);
   background-color: whitesmoke;
 }

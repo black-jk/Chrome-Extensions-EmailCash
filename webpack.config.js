@@ -2,10 +2,13 @@ var webpack = require('webpack');
 var path = require('path');
 
 const webpackConfig = {
-  entry: './src/main.js',
+  entry: {
+    main: './src/main.js',
+    options: './src/options.js',
+  },
   output: {
     path: path.resolve(__dirname, './exports'),
-    filename: 'main.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -22,7 +25,7 @@ const webpackConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': { 'NODE_ENV': '"' + process.env.NODE_ENV + '"'}
+      'process.env': { 'NODE_ENV': '"' + process.env.NODE_ENV + '"' }
     })
   ]
 };

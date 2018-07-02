@@ -7,15 +7,15 @@ import { Operator } from './Operator';
 
 export class LoginOperator extends Operator {
 
-  title = "Login";
+  title: String = "Login";
 
-  autoLogin = false;
+  autoLogin: Boolean = false;
 
 
 
   // ----------------------------------------------------------------------------------------------------
 
-  operation = function () {
+  operation = () => {
     this.go_home(AppConfig.redirectDelay);
   }
 
