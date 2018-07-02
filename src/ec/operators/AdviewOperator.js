@@ -7,7 +7,7 @@ import { Operator } from './Operator';
 
 export class AdviewOperator extends Operator {
 
-  title = "每日廣告 VIEW";
+  title: String = "每日廣告 VIEW";
 
 
 
@@ -16,7 +16,7 @@ export class AdviewOperator extends Operator {
   operation() {
     window.ecAdview = function () {
       // check finished
-      var $span = $("#sViewStatus").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
+      let $span = $("#sViewStatus").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
       if ($span.length > 0) {
         Logger.debug($span.prop("outerHTML"));
         Logger.log('ad finished');
@@ -29,7 +29,7 @@ export class AdviewOperator extends Operator {
           Logger.log('call window.opener.onAdClosed() - success');
 
           // reload for close window
-          var delayId = window.setInterval(function () {
+          let delayId: Number = window.setInterval(function () {
             Logger.debug('call window.location.reload()');
             window.location.reload();
             window.clearInterval(delayId);
@@ -57,7 +57,7 @@ export class AdviewOperator extends Operator {
       /*
       $obj = $("#curSec");
       if ($obj.length > 0) {
-        var second = parseInt($obj.text());
+        let second = parseInt($obj.text());
         if (second > 1) {
           $obj.text("1");
         }

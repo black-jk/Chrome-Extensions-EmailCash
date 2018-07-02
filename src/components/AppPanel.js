@@ -2,24 +2,90 @@
 // [AppPanel]
 // ====================================================================================================
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Button } from 'reactstrap';
+import KeyCode from 'keycode-js';
 import DraggableCore from 'react-draggable';
-import RefreshTimeLabel from './refresh/RefreshTimeLabel';
-import LoggerPanel from './logger/LoggerPanel';
+import { HotKeyManager, AppConfig } from '../global';
+import { CombinationListener } from '../ec/managers/HotKeyManager';
+import { RefreshTimeLabel } from './app-panel/RefreshTimeLabel';
+import { DebugControl } from './app-panel/DebugControl';
+import { RedirectDelayControl } from './app-panel/RedirectDelayControl';
+import { PauseControl } from './app-panel/PauseControl';
+import { LoggerPanel } from './app-panel/LoggerPanel';
 
 export class AppPanel extends React.Component {
+
+  state = {
+    hidden: !AppConfig.debug,
+  };
+
+  // --------------------------------------------------
+
+  _combinationListener: CombinationListener = new CombinationListener([`alt+${KeyCode.KEY_BACK_QUOTE}`], this, () => {
+    this._toggleShowHide();
+  });
+
+  // --------------------------------------------------
+
+  componentDidMount() {
+    HotKeyManager.registerListener(this._combinationListener);
+  }
+
+  // --------------------------------------------------
+
+  componentWillUnmount() {
+    HotKeyManager.unregisterListener(this._combinationListener);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
   render() {
     let { operatorTitle, loggersCount } = this.props;
+    let { hidden } = this.state;
+
     return (
       <DraggableCore>
-        <div className="EmailCashPanel">
-          <div className="Header">
-            <div>[{operatorTitle ? operatorTitle : "n/a"}]</div>
+        <div className={`EmailCashPanel ${hidden ? "small" : ""}`}>
+          <div className="Header" onDoubleClick={this._toggleShowHide}>
+            {
+              // <Button onClick={this._toggleShowHide}>{`-`}</Button>
+            }
+            <div className="Label OperatorLabel">
+              <div>{operatorTitle ? operatorTitle : "n/a"}<br />&nbsp;</div>
+            </div>
+
+            <div className="Label ProfileLabel">
+              <div>{`可用`}<br />{$("a:contains('可用e元')").find("b").html()}{`e`}</div>
+              <div>{`定存`}<br />{$("a:contains('定存e元')").find("b").html()}{`e`}</div>
+              <div>{`經驗值`}<br />{$("a:contains('經驗值')").find("b").html()}{``}</div>
+              <div>{`金幣`}<br />{$("a:contains('金幣')").find("b").html()}{``}</div>
+            </div>
+
             <RefreshTimeLabel />
+
+            <div className="controls">
+              <DebugControl />
+              <RedirectDelayControl />
+              <PauseControl />
+              {
+                // <span>
+                //   <Button onClick={this._toggleShowHide}>{`-`}</Button>
+                // </span>
+              }
+            </div>
           </div>
-          <LoggerPanel {...this.props} />
+          <LoggerPanel {...this.props} hidden={hidden} />
         </div>
       </DraggableCore>
     );
   }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  _toggleShowHide = () => {
+    this.setState({
+      hidden: !this.state.hidden,
+    });
+  }
+
 };

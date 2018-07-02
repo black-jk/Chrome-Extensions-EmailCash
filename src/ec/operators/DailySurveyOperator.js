@@ -4,10 +4,11 @@
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
-export class QuestionOperator extends Operator {
+export class DailySurveyOperator extends Operator {
 
-  title = "每日問答";
+  title: String = "每日問答";
 
 
 
@@ -17,8 +18,12 @@ export class QuestionOperator extends Operator {
     let $obj = $("*:contains('謝謝您的參與，您已經獲得了今天的獎勵'),*:contains('感謝您的回應，您獲得了')");
     if ($obj.length > 0) {
       Logger.log($obj.text().trim());
-      this.go_dailygames(AppConfig.redirectDelay);
-      //this.go_account(AppConfig.redirectDelay);
+
+      EmailCacheConfig.lastDailySurveyAt = (new Date).getTime();
+      EmailCacheConfig.save([`lastDailySurveyAt`], () => {
+        this.go_dailygames(AppConfig.redirectDelay);
+        //this.go_account(AppConfig.redirectDelay);
+      });
       return;
     }
 
@@ -52,7 +57,8 @@ export class QuestionOperator extends Operator {
         </div>
     </div>
     */
-    var $input = $("div[class='td'] input[type='image']");
+
+    let $input = $("div[class='td'] input[type='image']");
     if ($input != "undefined") {
       $input.click();
       return;

@@ -1,0 +1,16 @@
+#root .ChromeOptionsPanel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 550px;
+  background-color: #EEEEEE;
+}
+
+#root .ChromeOptionsPanel .PanelHeader {
+  padding: 10px;
+  background-color: #cce5ff;
+}
+
+#root .ChromeOptionsPanel .FontLabel {
+  text-align: right;
+}

@@ -3,7 +3,9 @@
 // ====================================================================================================
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppPanel } from '../components/AppPanel';
+import { AppPanel } from '../../components/AppPanel';
+
+// ----------------------------------------------------------------------------------------------------
 
 const mapStateToProps = (state, ownProps) => {
   return state.app;
@@ -25,4 +27,4 @@ const AppContainer = connect(
   mapDispatchToProps
 )(AppPanel);
 
-export default AppContainer;
+export { AppContainer };

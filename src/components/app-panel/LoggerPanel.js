@@ -2,10 +2,9 @@
 // [LoggerPanel]
 // ====================================================================================================
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { LoggerData } from '../../lib/data/LoggerData';
 
-class LoggerPanel extends Component {
+export class LoggerPanel extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // scroll to bottom
@@ -16,18 +15,17 @@ class LoggerPanel extends Component {
   // --------------------------------------------------
 
   render() {
-    let logs = LoggerData.logs;
+    let logs: Array = LoggerData.logs;
+
     return (
-      <div className="LoggerPanel" ref="contentsDiv">
+      <div className="LoggerPanel" ref="contentsDiv" hidden={this.props.hidden}>
         {
-          logs.map((loggerData, index) => {
-            let span = <span key={index} style={{ color: loggerData.getColor() }}>{loggerData.message}<br /></span>
-            return span;
-          })
+          logs.map((loggerData: LoggerData, index) => (
+            <span key={index} style={{ color: loggerData.getColor() }}>{loggerData.message}<br /></span>
+          ))
         }
       </div>
     );
   }
-}
 
-export default LoggerPanel;
+}

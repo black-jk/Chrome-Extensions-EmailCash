@@ -4,10 +4,11 @@
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
 export class AdclickOperator extends Operator {
 
-  title = "每日廣告";
+  title: String = "每日廣告";
 
 
 
@@ -17,8 +18,6 @@ export class AdclickOperator extends Operator {
   /// <a href="view_adc.asp?id=1895&amp;sid=543928748&amp;u=w214nt8f4f2o&amp;c=244F90E1C2BB7C6" target="_blank" title="IKEA 櫥櫃收納">IKEA 櫥櫃收納</a>
 
   operation() {
-    const thisObject = this;
-
     let $href = this._findLink();
     if (!$href) {
       Logger.log("Ad link not found! Retry ...");
@@ -28,17 +27,21 @@ export class AdclickOperator extends Operator {
 
     // ------------------------------
 
-    let adWindow;
+    let adWindow: Window;
 
     // callback function for ad-view
-    window.onAdClosed = function () {
+    window.onAdClosed = () => {
       Logger.log('[onAdClosed] callback');
       adWindow.close();
-      thisObject.go_earn(AppConfig.redirectDelay);
+
+      EmailCacheConfig.lastAdClickedAt = (new Date).getTime();
+      EmailCacheConfig.save([`lastAdClickedAt`], () => {
+        this.go_dailysurvey(AppConfig.redirectDelay);
+      });
     };
 
     /// open ad-view url
-    var openAdWindow = function () {
+    let openAdWindow: Function = function () {
       if (adWindow != null) {
         if (adWindow.adFinished) {
           Logger.log("Ad finished, continue to next step.");
@@ -67,22 +70,22 @@ export class AdclickOperator extends Operator {
   // --------------------------------------------------
 
   _findLink() {
-    let patterns = [
+    let patterns: Array = [
       "UDN買東西",
       "IKEA 櫥櫃收納",
       "momo購物超划算"
     ];
 
-    for (var i in patterns) {
-      Logger.debug("[AdclickOperator._findLink()] '" + pattern + "'");
+    for (let i in patterns) {
+      Logger.debug(`[AdclickOperator._findLink()] '${pattern}'`);
 
-      let pattern = patterns[i];
-      let $href = $("a[title='" + pattern + "'][target='_blank']:contains('" + pattern + "')").attr("href");
+      let pattern: String = patterns[i];
+      let $href: String = $(`a[title='${pattern}'][target='_blank']:contains('${pattern}')`).attr("href");
       if ($href != "undefined" && $href != undefined && $href.length > 0) {
         return $href;
       }
 
-      Logger.debug("[AdclickOperator._findLink()] '" + pattern + "' (Missing. Try next ...");
+      Logger.debug(`[AdclickOperator._findLink()] '${pattern}' Missing. (Try next ...)`);
     }
 
     return undefined;

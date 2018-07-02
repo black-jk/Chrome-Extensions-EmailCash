@@ -6,13 +6,14 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import * as ENV from '../constants/env';
-import appReducer from '../reducers';
+import appReducer from '../redux/reducers';
+import { Operator } from "../ec/operators/Operator";
 
 export default class AppConfig {
 
-  name = "EmailCashOperator";
+  name: String = "EmailCashOperator";
 
-  version = "3.0.0";
+  version: String = "3.1.0" + (process.env.NODE_ENV == ENV.DEVELOPMENT ? "-develop" : "");
 
 
 
@@ -28,9 +29,9 @@ export default class AppConfig {
   // [Auto Reload]
   // ----------------------------------------------------------------------------------------------------
 
-  dailyRestartAt = 0;
+  dailyRestartAt: Number = 0;
 
-  timeoutRestartAt = 0;
+  timeoutRestartAt: Number = 0;
 
 
 
@@ -38,9 +39,9 @@ export default class AppConfig {
   // [Options]
   // ----------------------------------------------------------------------------------------------------
 
-  debug = /*/ true /*/ false /**/;
+  debug: Boolean = /*/ true /*/ false /**/;
 
-  redirectDelay = /*/ 3000 /*/ 0 /**/;
+  redirectDelay: Number = /*/ 3000 /*/ 0 /**/;
 
 
 
@@ -48,24 +49,24 @@ export default class AppConfig {
   // [Operator]
   // ----------------------------------------------------------------------------------------------------
 
-  _title = null;
+  _title: String = null;
 
-  _operator = null;
+  _operator: Operator = null;
 
   // --------------------------------------------------
 
-  get operator() {
+  get operator(): Operator {
     return this._operator;
   }
 
-  set operator(value) {
+  set operator(value: Operator) {
     this._operator = value;
     this._title = value.title;
   }
 
   // --------------------------------------------------
 
-  get title() {
+  get title(): String {
     return this._title;
   }
 
@@ -82,7 +83,7 @@ export default class AppConfig {
   // ----------------------------------------------------------------------------------------------------
 
   constructor() {
-    const middlewares = [];
+    const middlewares: Array = [];
 
     // if (this.env == ENV.DEVELOPMENT) {
     //   /// redux-logger - http://ithelp.ithome.com.tw/articles/10187344
@@ -97,9 +98,5 @@ export default class AppConfig {
       ),
     );
   }
-
-
-
-  // ----------------------------------------------------------------------------------------------------
 
 };
