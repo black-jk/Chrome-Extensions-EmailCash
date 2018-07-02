@@ -41,6 +41,23 @@ export class ECTools {
 
   // ----------------------------------------------------------------------------------------------------
 
+  static checkLogin(): Boolean {
+    let href: String = "";
+    let login: Boolean = true;
+    let $login_link = $("a:contains('會員登入')");
+    if ($login_link != null && $login_link.length > 0) {
+      Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
+      login = false;
+      href = $login_link.attr("href");
+    }
+    return {
+      login,
+      href
+    };
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
   static checkFinished(time: Number, shift: Number = 0): Boolean {
     let timeZoneShift: Number = 16 * 60 * 60 * 1000;
     let seconds: Number = (time - timeZoneShift - shift) % 86400000;

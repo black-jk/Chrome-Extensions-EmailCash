@@ -39,7 +39,10 @@ export class EmailCashDispatcher {
       operator = new Operator;
     }
 
-    if (!ECTools.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
+    let { login, href } = ECTools.checkLogin();
+    if (!login) {
+      // do nothing
+    } else if (!ECTools.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
       Logger.debug("[EmailCashDispatcher.execute()] ad-click!");
       if (!(operator instanceof AdclickOperator || operator instanceof AdviewOperator)) {
         Logger.log("[EmailCashDispatcher.execute()] go ad-click!");

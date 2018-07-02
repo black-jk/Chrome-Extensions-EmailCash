@@ -197,12 +197,9 @@ export class Operator {
   autoLogin: Boolean = true;
 
   checkLogin() {
-    let $login_link = $("a:contains('會員登入')");
-    if ($login_link != null && $login_link.length > 0) {
-      Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
-
+    let { login, href } = ECTools.checkLogin();
+    if (!login) {
       if (this.autoLogin) {
-        let href = $login_link.attr("href");
         this.goto(href, AppConfig.redirectDelay);
         Logger.log("Goto '" + href + "'");
       } else {
