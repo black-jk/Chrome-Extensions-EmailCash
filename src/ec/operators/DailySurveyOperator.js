@@ -58,8 +58,9 @@ export class DailySurveyOperator extends Operator {
     </div>
     */
 
-    let $input = $("div[class='td'] input[type='image']");
-    if ($input != "undefined") {
+    let $inputs = $("div[class='dailysurvey_award']").find("a[class='table-row']");
+    if ($inputs.length > 0) {
+      let $input = $inputs[0];
       $input.click();
       return;
     }

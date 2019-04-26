@@ -55,10 +55,10 @@ export class AppPanel extends React.Component {
             </div>
 
             <div className="Label ProfileLabel">
-              <div>{`可用`}<br />{$("a:contains('可用e元')").find("b").html()}{`e`}</div>
-              <div>{`定存`}<br />{$("a:contains('定存e元')").find("b").html()}{`e`}</div>
-              <div>{`經驗值`}<br />{$("a:contains('經驗值')").find("b").html()}{``}</div>
-              <div>{`金幣`}<br />{$("a:contains('金幣')").find("b").html()}{``}</div>
+              <div>{`可用`}<br />{$("a:contains('可　用')").find("b").find("span").html()}{`e`}</div>
+              <div>{`定存`}<br />{$("a:contains('定　存')").find("b").find("span").html()}{`e`}</div>
+              <div>{`經驗值`}<br />{$("a:contains('經驗值')").find("b").find("span").html()}{``}</div>
+              <div>{`金幣`}<br />{$("a:contains('金　幣')").find("b").find("span").html()}{``}</div>
             </div>
 
             <RefreshTimeLabel />

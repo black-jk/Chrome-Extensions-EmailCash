@@ -39,9 +39,12 @@ export class EmailCashDispatcher {
       operator = new Operator;
     }
 
-    let { login, href } = ECTools.checkLogin();
+    let { login, $login_link } = ECTools.checkLogin();
     if (!login) {
-      // do nothing
+      Logger.debug("[EmailCashDispatcher.execute()] Not login yet!");
+      if ($login_link) {
+        $login_link.click();
+      }
     } else if (!ECTools.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
       Logger.debug("[EmailCashDispatcher.execute()] ad-click!");
       if (!(operator instanceof AdclickOperator || operator instanceof AdviewOperator)) {
@@ -82,6 +85,7 @@ export class EmailCashDispatcher {
       return new LoginOperator;
     }
 
+    // https://www.emailcash.com.tw/Rewards/DailyAdvertising.aspx
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/DailyAdvertising.aspx?/i)) {
       return new AdclickOperator;
     }
@@ -90,6 +94,7 @@ export class EmailCashDispatcher {
       return new AdviewOperator;
     }
 
+    // https://www.emailcash.com.tw/Rewards/DailySurvey.aspx
     if (location.match(/^https?:\/\/www\.emailcash\.com\.tw\/Rewards\/DailySurvey\.aspx?/i) ||
       location.match(/^https?:\/\/www\.emailcash\.com\.tw\/Rewards\/DailySurveryQP\.aspx?/i)) {
       return new DailySurveyOperator;
@@ -99,13 +104,13 @@ export class EmailCashDispatcher {
       return new LattoOperator();
     }
 
+    // https://www.emailcash.com.tw/Games/DailyGames.aspx
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Games\/DailyGames.aspx/i)) {
       return new DailyGamesOperator();
     }
 
-    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/account\.asp/i) ||
-      location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Account\/MyAccount.aspx\?go=points?/i)
-    ) {
+    // https://www.emailcash.com.tw/Account/Points.aspx
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Account\/Points.aspx/i)) {
       return new AccountOperator();
     }
 

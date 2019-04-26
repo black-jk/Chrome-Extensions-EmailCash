@@ -133,6 +133,7 @@ export class CombinationListener {
     if (!this._keys || this._keys.length < 1) return;
 
     let keyCode: Number = event.keyCode;
+    if (!keyCode) return;
 
     let match: Boolean = false;
     let nextKey: any = this._keys[this._index + 1];
