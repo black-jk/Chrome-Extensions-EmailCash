@@ -59,11 +59,8 @@ export class DailyGamesOperator extends Operator {
     Logger.log("Click AutoNumber.");
     $(".AutoNumber")[0].click();
 
-    // Logger.log("Click SentFun.");
-    // $(".SentFun")[0].click();
-
     Logger.log("Click SentFun.");
-    // this.SentFunClick();
+    this.SentFunClick();
   }
 
   // ----------------------------------------------------------------------------------------------------
