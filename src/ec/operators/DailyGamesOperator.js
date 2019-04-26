@@ -31,10 +31,18 @@ export class DailyGamesOperator extends Operator {
   operation() {
     /// http://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
 
-    //取得投注扣除費用
-    let _efee = $("#ctl00_mainPlaceHolder_hidFee").val();
-    Logger.debug("_efee: " + _efee);
-    if (_efee > 0) {
+    /*
+      <div id="ContentPlaceHolder1_divAllGuessNoList" class="yellowbox margin_top5">
+        <p class="title margin_bottom5">目前選號</p>
+        <div>
+          <div class="current_choose">試玩 :<span> 011 257 442 708 729 871 931 </span></div>
+        </div>
+      </div>
+    */
+
+    let $currentNumbers = $("#ContentPlaceHolder1_divAllGuessNoList");
+    if ($currentNumbers.length > 0) {
+      Logger.log("Numbers found! Go next ...");
       EmailCacheConfig.lastDailyGameAt = (new Date).getTime();
       EmailCacheConfig.save([`lastDailyGameAt`], () => {
         this.go_account(AppConfig.redirectDelay);
@@ -42,72 +50,108 @@ export class DailyGamesOperator extends Operator {
       return;
     }
 
+    /*
+    <div class="number_btn_border">
+      <a href="javascript:void(0);" class="number_btn btn_auto AutoNumber">自動選號</a>
+      <a href="javascript:void(0);" class="number_btn btn_choose SentFun">確定選號</a>
+    </div>
+    */
     Logger.log("Click AutoNumber.");
-    $(".AutoNumber").click();
+    $(".AutoNumber")[0].click();
 
-    // act:0
-    // nick:w214nt8f4f2o
-    // numStr:|89|734|590|40|833|298|131|
+    // Logger.log("Click SentFun.");
+    // $(".SentFun")[0].click();
 
+    Logger.log("Click SentFun.");
+    // this.SentFunClick();
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  SentFunClick() {
     // copy from https://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
-    let BetNumStr: String = "|";
-    let errmark: Number = 0;
-    let n = $(".GuessNoList input").length;
 
-    for (let i: Number = 0; i < n; i++) {
-      let BetNum = $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").val().trim();
+    var BetNumStr = "|";
+    var errmark = 0;
+    var n = $(".GuessNoList").length;
+
+    for (var i = 0; i < n; i++) {
+      var ThisInput = $("#ContentPlaceHolder1_repeaterGuessInput_txtBetNum_" + i);
+      var BetNum = ThisInput.val().trim();
       if (BetNum.length > 0) {
         if (!isNaN(BetNum)) {
           if (BetNum > 0 && BetNum < 1000) {
-            $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").removeClass("Markfoucs");
+            ThisInput.removeClass("Markfoucs");
             BetNumStr = BetNumStr + BetNum + "|";
-          } else {
-            $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").addClass("Markfoucs");
+          }
+          else {
+            ThisInput.addClass("Markfoucs");
             errmark = 2;
           }
         } else {
-          $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").addClass("Markfoucs");
+          ThisInput.addClass("Markfoucs");
           errmark = 1;
         }
       } else {
-        $("#ctl00_mainPlaceHolder_repeaterGuessInput_ctl0" + i + "_txtBetNum").addClass("Markfoucs");
+        ThisInput.addClass("Markfoucs");
         errmark = 1;
       }
     }
 
+    if (errmark === 1) {
+      alert("請輸入數字！");
+      return false;
+    }
+    else if (errmark === 2) {
+      alert("請輸入數字1~999！");
+      return false;
+    }
+
     //設定存入DB的號碼
-    $("#ctl00_mainPlaceHolder_hidBetNumStr").val(BetNumStr);
+    $("#ContentPlaceHolder1_hidBetNumStr").val(BetNumStr);
+    //取得投注扣除費用
+    var _efee = $("#ContentPlaceHolder1_hidFee").val();
+    var msg = "";
 
-    let nick = $("#ctl00_mainPlaceHolder_hidNick").val();
-    let numStr = $("#ctl00_mainPlaceHolder_hidBetNumStr").val();
-    let datastr: String = `act=0&nick=${nick}&numStr=${numStr}`;
+    //第一次投注免扣e元
+    if (_efee == "0") {
+      msg = "是否確定送出？\n※送出後數字會由小到大排序。";
+    }
+    else {
+      msg = "送出後將扣除" + _efee + "e，是否確定送出？\n※送出後數字會由小到大排序。";
+    }
 
-    $.ajax({
-      type: "POST",
-      url: "DailyGamesAjax.aspx",
-      data: datastr,
-      success: function (res) {
-        if (res == "1") {
-          $("#ctl00_mainPlaceHolder_hidBetNumStr").value = "";
-          window.location.reload();
-        } else {
+    if (true || confirm(msg)) {
+      //return true;
+      var nick = $("#ContentPlaceHolder1_hidNick").val();
+      var numStr = $("#ContentPlaceHolder1_hidBetNumStr").val();
+      var datastr = "act=0&nick=" + nick + "&numStr=" + numStr;
+
+      $.ajax({
+        type: "POST",
+        url: "DailyGamesAjax.aspx",
+        data: datastr,
+        success: function (res) {
+          if (res == "1") {
+            $("#ContentPlaceHolder1_hidBetNumStr").value = "";
+            window.location.reload();
+          }
+          else {
+            alert("發生錯誤，請重新再試。");
+          }
+
+        },
+        beforeSend: function () {
+          //$("#loading").show();
+          //$(".loadingimg").show();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
           alert("發生錯誤，請重新再試。");
-          $("#loading").hide();
-          $(".loadingimg").hide();
+          //$("#loading").hide();
+          //$(".loadingimg").hide();
         }
-      },
-      beforeSend: function () {
-        $("#loading").show();
-        $(".loadingimg").show();
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        alert("發生錯誤，請重新再試。");
-        $("#loading").hide();
-        $(".loadingimg").hide();
-      }
-    });
-
-    // $("td[class=GuessNoList]").find("input").each(function(index, object) { object.value = index; });
+      });
+    }
   }
 
 };

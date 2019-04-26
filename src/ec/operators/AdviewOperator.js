@@ -16,7 +16,16 @@ export class AdviewOperator extends Operator {
   operation() {
     window.ecAdview = function () {
       // check finished
-      let $span = $("#sViewStatus").find("span[class='fbNeg']:contains('廣告e元獎勵已入帳'),span[class='fbPos']:contains('已加入您的EmailCash帳戶')");
+
+      /*
+        <div class="col-xs-6 text-center" id="sViewStatus">
+          <p class="red_w">
+            <span class="glyphicon glyphicon-remove"></span>
+            廣告e元獎勵已入帳
+          </p>
+        </div>
+      */
+      let $span = $("#sViewStatus").find("p[class='red_w']:contains('廣告e元獎勵已入帳'),p[class='red_w']:contains('已加入您的EmailCash帳戶')");
       if ($span.length > 0) {
         Logger.debug($span.prop("outerHTML"));
         Logger.log('ad finished');
@@ -67,7 +76,7 @@ export class AdviewOperator extends Operator {
 
       /// retry later
       Logger.warn("Retry later ...");
-      window.setTimeout(window.ecAdview, 1000);
+      //      window.setTimeout(window.ecAdview, 1000);
     };
     window.ecAdview();
   }

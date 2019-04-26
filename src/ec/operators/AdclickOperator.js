@@ -80,7 +80,7 @@ export class AdclickOperator extends Operator {
       Logger.debug(`[AdclickOperator._findLink()] '${pattern}'`);
 
       let pattern: String = patterns[i];
-      let $href: String = $(`a[title='${pattern}'][target='_blank']:contains('${pattern}')`).attr("href");
+      let $href: String = $(`a[target='_blank']:contains('${pattern}')`).attr("href");
       if ($href != "undefined" && $href != undefined && $href.length > 0) {
         return $href;
       }

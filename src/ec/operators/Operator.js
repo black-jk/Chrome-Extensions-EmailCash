@@ -52,8 +52,7 @@ export class Operator {
   // --------------------------------------------------
 
   go_account(sleep: Number) {
-    let href: String = $("a[title='查看e元報表']").attr("href");
-    this.goto(href, sleep);
+    this.goto("https://www.emailcash.com.tw/Account/Points.aspx", sleep);
   }
 
   // --------------------------------------------------
@@ -135,7 +134,7 @@ export class Operator {
     Logger.debug(`[goto] '${url}'`);
 
     if (EmailCacheConfig.pause) {
-      Logger.log("[PAUSED]");
+      Logger.warn("[PAUSED]");
       return;
     }
 
@@ -158,7 +157,7 @@ export class Operator {
   run() {
     try {
       if (EmailCacheConfig.pause) {
-        Logger.log("[PAUSED]");
+        Logger.warn("[PAUSED]");
         return;
       }
 
@@ -197,11 +196,11 @@ export class Operator {
   autoLogin: Boolean = true;
 
   checkLogin() {
-    let { login, href } = ECTools.checkLogin();
+    let { login, $login_link } = ECTools.checkLogin();
     if (!login) {
-      if (this.autoLogin) {
-        this.goto(href, AppConfig.redirectDelay);
-        Logger.log("Goto '" + href + "'");
+      if (this.autoLogin && $login_link) {
+        $login_link.click();
+        Logger.log("$login_link.click();");
       } else {
         Logger.log("Waiting for login!");
       }

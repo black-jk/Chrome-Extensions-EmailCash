@@ -42,17 +42,17 @@ export class ECTools {
   // ----------------------------------------------------------------------------------------------------
 
   static checkLogin(): Boolean {
-    let href: String = "";
     let login: Boolean = true;
-    let $login_link = $("a:contains('會員登入')");
-    if ($login_link != null && $login_link.length > 0) {
-      Logger.log("Loggin link found: '" + $login_link.text().trim() + "'");
+    let $login_link = null;
+    let $login_links = $("a.btn.btn_signin");
+    if ($login_links != null && $login_links.length > 0) {
+      Logger.log("Loggin button found!");
+      $login_link = $login_links[0];
       login = false;
-      href = $login_link.attr("href");
     }
     return {
       login,
-      href
+      $login_link,
     };
   }
 
