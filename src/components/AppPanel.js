@@ -12,6 +12,7 @@ import { DebugControl } from './app-panel/DebugControl';
 import { RedirectDelayControl } from './app-panel/RedirectDelayControl';
 import { PauseControl } from './app-panel/PauseControl';
 import { LoggerPanel } from './app-panel/LoggerPanel';
+import { EmailCacheConfig } from '../lib/ChromeStorage';
 
 export class AppPanel extends React.Component {
 
@@ -41,11 +42,13 @@ export class AppPanel extends React.Component {
 
   render() {
     let { operatorTitle, loggersCount } = this.props;
-    let { hidden } = this.state;
+
+    let debug: Boolean = EmailCacheConfig.debug;
+    let hidden: Boolean = this.state.hidden;
 
     return (
       <DraggableCore>
-        <div className={`EmailCashPanel ${hidden ? "small" : ""}`}>
+        <div className={`EmailCashPanel ${hidden ? "log-hidden" : ""}`}>
           <div className="Header" onDoubleClick={this._toggleShowHide}>
             {
               // <Button onClick={this._toggleShowHide}>{`-`}</Button>
@@ -55,10 +58,10 @@ export class AppPanel extends React.Component {
             </div>
 
             <div className="Label ProfileLabel">
-              <div>{`可用`}<br />{$("a:contains('可　用')").find("b").find("span").html()}{`e`}</div>
-              <div>{`定存`}<br />{$("a:contains('定　存')").find("b").find("span").html()}{`e`}</div>
+              <div>{`可　用`}<br />{$("a:contains('可　用')").find("b").find("span").html()}{``}</div>
+              <div>{`定　存`}<br />{$("a:contains('定　存')").find("b").find("span").html()}{``}</div>
               <div>{`經驗值`}<br />{$("a:contains('經驗值')").find("b").find("span").html()}{``}</div>
-              <div>{`金幣`}<br />{$("a:contains('金　幣')").find("b").find("span").html()}{``}</div>
+              <div>{`金　幣`}<br />{$("a:contains('金　幣')").find("b").find("span").html()}{``}</div>
             </div>
 
             <RefreshTimeLabel />

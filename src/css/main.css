@@ -6,7 +6,7 @@
 /* ---------------------------------------------------------------------------------------------------- */
 
 #root .EmailCashPanel {
-  top: 30px;
+  top: 90px;
   left: 30px;
   /* bottom: 70px; */
   z-index: 99999;
@@ -17,14 +17,14 @@
   max-height: 600px;
 }
 
-#root .EmailCashPanel.small {
-  height: 60px;
+#root .EmailCashPanel.log-hidden {
+  height: 73px;
 }
 
 /* -------------------------------------------------- */
 
 #root .EmailCashPanel .Header {
-  height: 55px;
+  height: 63px;
   padding: 2px;
   color: whitesmoke;
   background-color: black;
@@ -38,7 +38,7 @@
 #root .EmailCashPanel .Header .Label>div {
   display: inline-block;
   min-width: 55px;
-  height: 45px;
+  height: 50px;
   margin-top: 0px;
   margin-left: 1px;
   padding: 0px 5px;
@@ -69,7 +69,7 @@
   margin-left: 5px;
   padding: 3px;
   box-shadow: 0px 0px 0px 1px white;
-  width: 70px;
+  width: 75px;
   text-align: center;
 }
 
@@ -89,8 +89,8 @@
 
 #root .EmailCashPanel .LoggerPanel {
   overflow: auto;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px - 60px);
+  width: calc(100%);
+  height: calc(100% - 5px - 60px);
   max-height: calc(600px - 10px - 60px);
   background-color: whitesmoke;
 }

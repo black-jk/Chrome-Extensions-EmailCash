@@ -80,9 +80,12 @@ export class Tool {
       document.body :
       document.documentElement;
 
-    let scrollTop: Number = Math.max(0, $element.offset().top - 300);
-    body.scrollTop = scrollTop;
-    Logger.log(`[Tool.scrollTo()] scrollTop: ${scrollTop}`);
+    let $offset = $element.offset();
+    if ($offset) {
+      let scrollTop: Number = Math.max(0, $element.offset().top - 300);
+      body.scrollTop = scrollTop;
+      Logger.log(`[Tool.scrollTo()] scrollTop: ${scrollTop}`);
+    }
   }
 
 };

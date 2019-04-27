@@ -32,10 +32,10 @@ export class DailySurveyOperator extends Operator {
     $obj = $("*:contains('目前的問題您都回答過了，請按下確認鈕取得本日點數')");
     if ($obj.length > 0) {
       Logger.log($obj.text().trim());
-      $input = $obj.find("input[type='submit']");
-      if ($input.length > 0) {
+      $inputs = $obj.find("input[type='submit']");
+      if ($inputs.length > 0) {
         Logger.log("click submit button");
-        $input.click();  //$input.trigger("click");
+        $inputs[0].click();
       } else {
         Logger.error("Missing submit button");
       }
@@ -60,8 +60,7 @@ export class DailySurveyOperator extends Operator {
 
     let $inputs = $("div[class='dailysurvey_award']").find("a[class='table-row']");
     if ($inputs.length > 0) {
-      let $input = $inputs[0];
-      $input.click();
+      $inputs[0].click();
       return;
     }
 

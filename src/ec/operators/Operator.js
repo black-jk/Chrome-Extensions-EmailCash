@@ -74,54 +74,41 @@ export class Operator {
   go_next(): Boolean {
     Logger.debug("[go_next();]");
 
-    let $ad_link = $('a[title="每日廣告"]');
-    if ($ad_link.length > 0) {
-      Logger.debug("\$ad_link.click();");
-      $ad_link.click();
-      this.go_adclick(AppConfig.redirectDelay);
-      return true;
-    }
-
-    let $question_link = $('a[title="每日問答"]');
-    if ($question_link.length > 0) {
-      Logger.debug("\$question_link.click();");
-      $question_link.click();
-      this.go_dailysurvey(AppConfig.redirectDelay);
-      return true;
-    }
-
-    // ------------------------------
-
-    // <a href="/4G/Rewards/Mail.aspx" title="查看郵件獎勵">郵件(<span class="pending">1</span>)</a>
-    // <a href="/Account/MyAccount.aspx?go=message" title="查看個人訊息">個人訊息(<span class="pending">1</span>)</a>
-    // <a href="/Rewards/Survey.aspx" title="查看市調獎勵">問卷(<span class="pending">1</span>)</a>
-    let patterns: Array = [
-      '查看郵件獎勵',
-      '查看個人訊息',
-      // '查看市調獎勵',
+    /*
+    <ul class="RemindWrap">
+      <li><a href="/Account/MyAccount.aspx?go=message">個人訊息<span>(0)</span></a></li>
+      <li><a href="/Account/MyAccount.aspx?go=message">公告訊息<span>(0)</span></a></li>
+      <li><a href="/Rewards/Survey.aspx">獎勵問卷<span>(1)</span><b class="nfc-show"></b></a></li>
+      <li><a href="/Rewards/Mail.aspx">許可郵件<span>(0)</span></a></li>
+      <li><a href="/Rewards/DailySurvey.aspx">每日問答</a></li>
+      <li><a href="/Rewards/DailyAdvertising.aspx">每日廣告</a></li>
+    </ul>
+    */
+    let keys: Array = [
+      '個人訊息',
+      '公告訊息',
+      '獎勵問卷',
+      '許可郵件',
+      '每日問答',
+      '每日廣告',
     ];
-    for (let i: Number = 0; i < patterns.length; i++) {
-      let title: String = patterns[i];
-      let $link = $(`a[title="${title}"]`);
-      if ($link.length > 0) {
-        let $span = $($link[0]).find('span[class="pending"]');
-        if ($span.length > 0 && $span.html() > 0) {
-          let url: String = $link.attr("href");
-          Logger.debug(`\$link.click(); - ${url}`);
-          $link.click();
-          this.goto(url, AppConfig.redirectDelay);
-          return true;
+    for (let i: Number = 0; i < keys.length; i++) {
+      let key: String = keys[i];
+      let pattern: String = `ul[class='RemindWrap'] a:contains('${key}')`;
+      let $links = $(pattern);
+      if ($links.length > 0) {
+        let match = $links.text().match(/\(([0-9]+)\)/);
+        if (match) {
+          let number = parseInt(match[1]);
+          Logger.debug(`[${key}] number: ${number}     match: ${match[1]}`);
+
+          if (number > 0) {
+            // $links[0].click();
+            let url: String = $links.attr("href");
+            this.goto(url, AppConfig.redirectDelay);
+            return true;
+          }
         }
-      }
-    }
-
-    // ------------------------------
-
-    let survey_count = $("a[title='查看市調獎勵']").find("span").html();
-    if (survey_count > 0) {
-      if (!ECTools.checkFinished(EmailCacheConfig.lastSurveyAt)) {
-        this.go_survey(AppConfig.redirectDelay);
-        return true;
       }
     }
 
@@ -131,7 +118,7 @@ export class Operator {
   // ----------------------------------------------------------------------------------------------------
 
   goto(url, sleep) {
-    Logger.debug(`[goto] '${url}'`);
+    Logger.log(`[goto] '${url}'`);
 
     if (EmailCacheConfig.pause) {
       Logger.warn("[PAUSED]");
@@ -139,7 +126,7 @@ export class Operator {
     }
 
     if (sleep > 0) {
-      Logger.debug(`[goto] sleep: ${sleep}`);
+      Logger.log(`[goto] sleep: ${sleep / 1000} seconds`);
       new DelayTimer(this, () => {
         window.location = url;
       }, [], sleep);
@@ -200,9 +187,9 @@ export class Operator {
     if (!login) {
       if (this.autoLogin && $login_link) {
         $login_link.click();
-        Logger.log("$login_link.click();");
+        Logger.info("$login_link.click();");
       } else {
-        Logger.log("Waiting for login!");
+        Logger.info("Waiting for login!");
       }
 
       throw new NotLoginError(`[${this.title}] Not login yet!`);

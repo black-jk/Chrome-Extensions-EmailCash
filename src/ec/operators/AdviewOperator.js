@@ -4,6 +4,7 @@
 import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
+import { ECTools } from '../../lib/ECTools';
 
 export class AdviewOperator extends Operator {
 
@@ -76,9 +77,11 @@ export class AdviewOperator extends Operator {
 
       /// retry later
       Logger.warn("Retry later ...");
-      //      window.setTimeout(window.ecAdview, 1000);
+      window.setTimeout(window.ecAdview, 1000);
     };
     window.ecAdview();
+
+    ECTools.redirect(20000);
   }
 
 };
