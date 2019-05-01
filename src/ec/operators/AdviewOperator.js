@@ -82,6 +82,10 @@ export class AdviewOperator extends Operator {
     window.ecAdview();
 
     ECTools.redirect(20000);
+
+    window.alert = (message) => {
+      Logger.log(message);
+    }
   }
 
 };

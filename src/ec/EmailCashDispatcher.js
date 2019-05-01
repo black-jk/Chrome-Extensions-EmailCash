@@ -114,10 +114,12 @@ export class EmailCashDispatcher {
       return new AccountOperator();
     }
 
+    // https://www.emailcash.com.tw/Rewards/Mail.aspx
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/Mail\.aspx/i)) {
       return new MailOperator();
     }
 
+    // https://www.emailcash.com.tw/Rewards/MailDetail.aspx
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/MailDetail\.aspx/i)) {
       return new MailDetailOperator();
     }
@@ -126,8 +128,14 @@ export class EmailCashDispatcher {
       return new MailClickOperator();
     }
 
+    // https://www.emailcash.com.tw/Rewards/Survey.aspx
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/Survey\.aspx/i)) {
       return new SurveyOperator();
+    }
+
+    // https://shopping.udn.com/mall/Cc1a00.do?sid=2&utm_source=emailcash&utm_medium=CPS&utm_campaign=201709_emailcash
+    if (location.match(/^https?:\/\/shopping\.udn\.com.*emailcash/i)) {
+      window.close();
     }
 
     Logger.debug("[EmailCashDispatcher] No operator!");

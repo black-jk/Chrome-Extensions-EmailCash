@@ -58,8 +58,7 @@ export class Operator {
   // --------------------------------------------------
 
   go_mail(sleep: Number) {
-    let href: String = $("a[title='查看郵件獎勵']").attr("href");
-    this.goto(href, sleep);
+    this.goto("https://www.emailcash.com.tw/Rewards/Mail.aspx", sleep);
   }
 
   // --------------------------------------------------
@@ -97,17 +96,25 @@ export class Operator {
       let pattern: String = `ul[class='RemindWrap'] a:contains('${key}')`;
       let $links = $(pattern);
       if ($links.length > 0) {
+        let number: Number = 0;
         let match = $links.text().match(/\(([0-9]+)\)/);
         if (match) {
-          let number = parseInt(match[1]);
+          number = parseInt(match[1]);
           Logger.debug(`[${key}] number: ${number}     match: ${match[1]}`);
+        }
 
-          if (number > 0) {
-            // $links[0].click();
-            let url: String = $links.attr("href");
-            this.goto(url, AppConfig.redirectDelay);
-            return true;
-          }
+        /// <a href="/Rewards/DailySurvey.aspx">每日問答<b class="nfc-show"></b></a>
+        let active: Boolean = false;
+        let nfcShow = $links.find("b[class='nfc-show']");
+        if (nfcShow && nfcShow.length > 0) {
+          active = true;
+        }
+
+        if (number > 0 || active) {
+          // $links[0].click();
+          let url: String = $links.attr("href");
+          this.goto(url, AppConfig.redirectDelay);
+          return true;
         }
       }
     }

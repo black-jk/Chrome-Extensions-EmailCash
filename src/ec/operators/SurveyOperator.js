@@ -18,46 +18,38 @@ export class SurveyOperator extends Operator {
 
   operation() {
     /*
-    <tr>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblSuid">381733</span></td>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblLastAttpemt">107-05-16</span></td>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblSuStatus">開啟</span>
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidAnsStat" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidAnsStat" value="01">
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidClevel" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidClevel" value="0">
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidStatus" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidStatus" value="05">
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidPanelStatus" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidPanelStatus" value="05">
-      </td>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblPoints"><b>等待 e元</b></span></td>
-      <td>
-        <span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblSurvey">
-          <a href="javascript:startSurvey1('https://www.emailcash.com.tw/Rewards/SurveyDetail.aspx?surveyType=start2&amp;sid=w214nt8f4f2o&amp;codes=qhrmgcys')"><b>開始</b></a>
-        </span>
-        <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidCodes" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidCodes" value="qhrmgcys">
-      </td>
-    </tr>
-    <tr>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblSuid">382634</span></td>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblLastAttpemt">Never</span></td>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblSuStatus">開啟</span>
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidAnsStat" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidAnsStat" value="01">
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidClevel" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidClevel" value="0">
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidStatus" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidStatus" value="05">
-          <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidPanelStatus" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidPanelStatus" value="05">
-      </td>
-      <td><span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblPoints">0<b>新件</b></span></td>
-      <td>
-        <span id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_lblSurvey">
-          <a href="javascript:startSurvey1('https://www.emailcash.com.tw/Rewards/SurveyDetail.aspx?surveyType=start2&amp;sid=ppvivian&amp;codes=vqptvimu')"><b>開始</b></a>
-        </span>
-        <input type="hidden" name="ctl00$mainPlaceHolder$repeaterPanelSurvey$ctl00$hidCodes" id="ctl00_mainPlaceHolder_repeaterPanelSurvey_ctl00_hidCodes" value="vqptvimu">
-      </td>
-    </tr>
+    <div class="survey_award">
+      <div class="table-row dis head">
+        <div class="table-cell">問卷ID</div>
+        <div class="table-cell">前次回應時間</div>
+        <div class="table-cell">問卷狀況</div>
+        <div class="table-cell">e元狀況</div>
+        <div class="table-cell">問卷連結</div>
+      </div>
+      
+      <a class="table-row" href="javascript:startSurvey('/Rewards/SurveyDetail.aspx?surveyType=start&amp;sid=529722&amp;codes=khcfeihr')">
+        <div class="table-cell"><span class="dis-2">ID:</span>24156</div>
+        <div class="table-cell dis">Never</div>
+        <div class="table-cell">開啟</div>
+        <div class="table-cell red"><span class="dis-2">獎勵:</span>新件</div>
+        <div class="table-cell dis">連結  <span class="glyphicon glyphicon-link"></span></div>
+      </a>
+      
+      <a class="table-row" href="javascript:void(0)">
+        <div class="table-cell"><span class="dis-2">ID:</span>24022</div>
+        <div class="table-cell dis">108-04-02</div>
+        <div class="table-cell">已結束</div>
+        <div class="table-cell red"><span class="dis-2">獎勵:</span>30e元 入帳</div>
+        <div class="table-cell dis">已完成  <span class="glyphicon glyphicon-ok-circle"></span></div>
+      </a>
+    </div>
     */
 
-    new DelayTimer(null, Tool.scrollTo, [$("span:contains('我的問卷箱')"), -100], 200);
+    new DelayTimer(null, Tool.scrollTo, [$("p:contains('問卷清單')"), -200], 200);
 
-    let $links = $("tr:contains('新件')").find("a:contains('開始')");
+    let $links = $("div[class='survey_award'] a div:contains('開啟')");
     if ($links.length > 0) {
+      Logger.log('New survy found!')
       new DelayTimer(null, Tool.scrollTo, [$links, -300], 500);
       return;
     }

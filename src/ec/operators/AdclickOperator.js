@@ -5,6 +5,8 @@ import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 import { EmailCacheConfig } from '../../lib/ChromeStorage';
+import { DelayTimer } from '../../lib/DelayTimer';
+import { Tool } from '../../lib/Tool';
 
 export class AdclickOperator extends Operator {
 
@@ -32,7 +34,11 @@ export class AdclickOperator extends Operator {
     // callback function for ad-view
     window.onAdClosed = () => {
       Logger.log('[onAdClosed] callback');
-      adWindow.close();
+      try {
+        adWindow.close();
+      } catch (e) {
+        Logger.error(e);
+      }
 
       EmailCacheConfig.lastAdClickedAt = (new Date).getTime();
       EmailCacheConfig.save([`lastAdClickedAt`], () => {
@@ -41,7 +47,7 @@ export class AdclickOperator extends Operator {
     };
 
     /// open ad-view url
-    let openAdWindow: Function = function () {
+    let openAdWindow: Function = () => {
       if (adWindow != null) {
         if (adWindow.adFinished) {
           Logger.log("Ad finished, continue to next step.");
@@ -49,7 +55,11 @@ export class AdclickOperator extends Operator {
           return;
         } else {
           Logger.warn("Retry ad-view");
-          adWindow.close();
+          try {
+            adWindow.close();
+          } catch (e) {
+            Logger.error(e);
+          }
         }
       }
 
@@ -58,13 +68,21 @@ export class AdclickOperator extends Operator {
       adWindow.adFinished = false;
       Logger.log("Waiting for callback ...");
     };
+
     openAdWindow();
 
     /// set timeout for retry
+    /*
     window.setInterval(function () {
       Logger.warn("Timeup. Call openAdWindow() again.");
       openAdWindow();
     }, 60000);
+    */
+
+    new DelayTimer(this, () => {
+      Logger.log("Skip! go next ...");
+      this.go_dailysurvey(AppConfig.redirectDelay);
+    }, [], 10000);
   }
 
   // --------------------------------------------------

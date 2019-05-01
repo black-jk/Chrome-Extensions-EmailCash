@@ -16,26 +16,25 @@ export class MailOperator extends Operator {
 
   operation() {
     /*
-    <div class="tr_Cb2light txt_bold">
-        <div class="td"><a target="_blank" href="MailDetail.aspx?uid=w214nt8f4f2o&amp;aid={8EAA7DE8-C93A-40A4-9535-A71F5D132FA1}">無底價競標，蘋果iPad送給你</a></div>
-        <div class="td">2017/07/03</div>
-        <div class="td">未閱讀</div>
-    </div>
+      <tr>
+        <td class="text-left"><a target="_blank" href="/Rewards/MailDetail.aspx?uid=w214nt8f4f2o&amp;aid={6F53C928-D7C4-45C5-8A91-3979BAC38E51}">2019-05月電子報</a></td>
+        <td>2019/05/01</td>
+        <td>未閱讀</td>
+      </tr>
     */
 
     let test: Boolean = /*/ true /*/ false /**/;
 
     let pattern: String = (test) ? "已獎勵" : "未閱讀";
-    let $links = $(`div[class='td']:contains('${pattern}')`).parent().find("a");
+    let $links = $(`div[class='table-responsive mail'] tr:contains('${pattern}')`).find("a");
     if ($links.length == 0) {
       this.go_account(AppConfig.redirectDelay);
       return;
     }
 
-    Logger.log($links.text().trim());
-
     let href: String = $links.attr("href");
-    Logger.log(href);
+    Logger.log(`找到新郵件: ${$links.text().trim()}`);
+    Logger.log(`  URL = ${href}`);
 
     // ------------------------------
 
@@ -63,11 +62,12 @@ export class MailOperator extends Operator {
         }
       }
 
-      Logger.log(`open url: '${href}'  (waiting for callback)`);
+      Logger.log(`開啟郵件: '${href}'  (waiting for callback)`);
       mailWindow = window.open(href, "_blank");
       mailWindow.mailFinished = false;
       Logger.log("Waiting for callback ...");
     };
+
     openMailDetailWindow();
 
     // ------------------------------

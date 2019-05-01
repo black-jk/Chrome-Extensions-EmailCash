@@ -46,7 +46,7 @@ export class ECTools {
     let $login_link = null;
     let $login_links = $("a.btn.btn_signin");
     if ($login_links != null && $login_links.length > 0) {
-      Logger.log("Loggin button found!");
+      Logger.log("Login button found!");
       $login_link = $login_links[0];
       login = false;
     }
