@@ -84,12 +84,12 @@ export class Operator {
     </ul>
     */
     let keys: Array = [
-      '個人訊息',
-      '公告訊息',
-      '獎勵問卷',
-      '許可郵件',
       '每日問答',
+      '許可郵件',
       '每日廣告',
+      // '獎勵問卷',
+      // '個人訊息',
+      // '公告訊息',
     ];
     for (let i: Number = 0; i < keys.length; i++) {
       let key: String = keys[i];

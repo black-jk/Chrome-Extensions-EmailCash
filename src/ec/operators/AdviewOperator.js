@@ -5,6 +5,7 @@ import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 import { ECTools } from '../../lib/ECTools';
+import { DelayTimer } from '../../lib/DelayTimer';
 
 export class AdviewOperator extends Operator {
 
@@ -15,7 +16,7 @@ export class AdviewOperator extends Operator {
   // ----------------------------------------------------------------------------------------------------
 
   operation() {
-    window.ecAdview = function () {
+    window.ecAdview = () => {
       // check finished
 
       /*
@@ -81,7 +82,10 @@ export class AdviewOperator extends Operator {
     };
     window.ecAdview();
 
-    ECTools.redirect(20000);
+    // ECTools.redirect(20000);
+    new DelayTimer(this, () => {
+      window.close();
+    }, [], 20000);
 
     window.alert = (message) => {
       Logger.log(message);

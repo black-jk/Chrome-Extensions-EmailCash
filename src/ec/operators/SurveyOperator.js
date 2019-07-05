@@ -47,7 +47,8 @@ export class SurveyOperator extends Operator {
 
     new DelayTimer(null, Tool.scrollTo, [$("p:contains('問卷清單')"), -200], 200);
 
-    let $links = $("div[class='survey_award'] a div:contains('開啟')");
+    // let $links = $("div[class='survey_award'] a div:contains('新件')");
+    let $links = $("div[class='survey_award'] a div:contains('Never')");
     if ($links.length > 0) {
       Logger.log('New survy found!')
       new DelayTimer(null, Tool.scrollTo, [$links, -300], 500);

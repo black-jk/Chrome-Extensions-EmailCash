@@ -82,7 +82,7 @@ export class AdclickOperator extends Operator {
     new DelayTimer(this, () => {
       Logger.log("Skip! go next ...");
       this.go_dailysurvey(AppConfig.redirectDelay);
-    }, [], 10000);
+    }, [], 20000);
   }
 
   // --------------------------------------------------
