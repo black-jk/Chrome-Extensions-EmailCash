@@ -30,6 +30,7 @@ export class EmailCashDispatcher {
 
     let operator: Operator = this._getOperator();
     if (operator) {
+      window.operator = operator;
       AppConfig.operator = operator;
       AppConfig.store.dispatch({ type: AppActions.START, operator: operator });
       operator.run();
@@ -37,6 +38,7 @@ export class EmailCashDispatcher {
 
     if (!operator) {
       operator = new Operator;
+      window.operator = operator;
     }
 
     let { login, $login_link } = ECTools.checkLogin();

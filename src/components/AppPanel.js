@@ -13,6 +13,7 @@ import { RedirectDelayControl } from './app-panel/RedirectDelayControl';
 import { PauseControl } from './app-panel/PauseControl';
 import { LoggerPanel } from './app-panel/LoggerPanel';
 import { EmailCacheConfig } from '../lib/ChromeStorage';
+import { Operator } from '../ec/operators/Operator';
 
 export class AppPanel extends React.Component {
 
@@ -46,6 +47,8 @@ export class AppPanel extends React.Component {
     let debug: Boolean = EmailCacheConfig.debug;
     let hidden: Boolean = this.state.hidden;
 
+    let operator: Operator = window.operator;
+
     return (
       <DraggableCore>
         <div className={`EmailCashPanel ${hidden ? "log-hidden" : ""}`}>
@@ -67,6 +70,16 @@ export class AppPanel extends React.Component {
             <RefreshTimeLabel />
 
             <div className="controls">
+              <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_account(0); }}>{`帳戶`}</Button>
+              <span>{` `}</span>
+              <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_mail(0); }}>{`郵件`}</Button>
+              <span>{` `}</span>
+              <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_dailysurvey(0); }}>{`問答`}</Button>
+              <span>{` `}</span>
+              <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_adclick(0); }}>{`廣告`}</Button>
+              <span>{` `}</span>
+              <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_survey(0); }}>{`問卷`}</Button>
+              <span>{`　`}</span>
               <DebugControl />
               <RedirectDelayControl />
               <PauseControl />
