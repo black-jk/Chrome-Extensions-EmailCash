@@ -108,7 +108,7 @@ export class ChromeOptionsPanel extends React.Component {
 
             <hr size="1" />
 
-            <ECTimeFormGroup label="每日廣告" name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup label="每日廣告" name="lastAdFinishedAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup label="每日問答" name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup label="以小搏大" name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup label="問卷" name="lastSurveyAt" onChange={() => { this.forceUpdate(); }} />

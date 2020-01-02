@@ -47,7 +47,7 @@ export class EmailCashDispatcher {
       if ($login_link) {
         $login_link.click();
       }
-    } else if (!ECTools.checkFinished(EmailCacheConfig.lastAdClickedAt)) {
+    } else if (!ECTools.checkFinished(EmailCacheConfig.lastAdFinishedAt)) {
       Logger.debug("[EmailCashDispatcher.execute()] ad-click!");
       if (!(operator instanceof AdclickOperator || operator instanceof AdviewOperator)) {
         Logger.log("[EmailCashDispatcher.execute()] go ad-click!");

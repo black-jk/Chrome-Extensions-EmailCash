@@ -40,8 +40,8 @@ export class AdclickOperator extends Operator {
         Logger.error(e);
       }
 
-      EmailCacheConfig.lastAdClickedAt = (new Date).getTime();
-      EmailCacheConfig.save([`lastAdClickedAt`], () => {
+      EmailCacheConfig.lastAdFinishedAt = (new Date).getTime();
+      EmailCacheConfig.save([`lastAdFinishedAt`], () => {
         this.go_dailysurvey(AppConfig.redirectDelay);
       });
     };
