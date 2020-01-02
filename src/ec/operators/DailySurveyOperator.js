@@ -5,6 +5,7 @@ import { AppConfig } from '../../global';
 import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 import { EmailCacheConfig } from '../../lib/ChromeStorage';
+import { ECTools } from '../../lib/ECTools';
 
 export class DailySurveyOperator extends Operator {
 
@@ -21,10 +22,27 @@ export class DailySurveyOperator extends Operator {
 
       EmailCacheConfig.lastDailySurveyAt = (new Date).getTime();
       EmailCacheConfig.save([`lastDailySurveyAt`], () => {
-        this.go_dailygames(AppConfig.redirectDelay);
-        //this.go_account(AppConfig.redirectDelay);
+        // this.go_dailygames(AppConfig.redirectDelay);
+        this.go_account(AppConfig.redirectDelay);
       });
       return;
+    }
+
+    // ------------------------------
+
+    if (ECTools.checkFinished(EmailCacheConfig.lastDailySurveyAt)) {
+      let now: Number = (new Date).getTime();
+      if (now < EmailCacheConfig.lastDailySurveyAt + 1 * 60 * 1000) {
+        // this.go_dailygames(AppConfig.redirectDelay);
+        this.go_account(AppConfig.redirectDelay);
+        return;
+      } else {
+        EmailCacheConfig.lastDailySurveyAt = (new Date).getTime();
+        EmailCacheConfig.save([`lastDailySurveyAt`], () => {
+          // this.go_dailygames(AppConfig.redirectDelay);
+          this.go_account(AppConfig.redirectDelay);
+        });
+      }
     }
 
     // ------------------------------

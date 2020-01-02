@@ -7,6 +7,7 @@ import { Operator } from './Operator';
 import { EmailCacheConfig } from '../../lib/ChromeStorage';
 import { DelayTimer } from '../../lib/DelayTimer';
 import { Tool } from '../../lib/Tool';
+import { ECTools } from '../../lib/ECTools';
 
 export class AdclickOperator extends Operator {
 
@@ -29,60 +30,31 @@ export class AdclickOperator extends Operator {
 
     // ------------------------------
 
+    /// open ad-view
     let adWindow: Window;
 
-    // callback function for ad-view
-    window.onAdClosed = () => {
-      Logger.log('[onAdClosed] callback');
-      try {
-        adWindow.close();
-      } catch (e) {
-        Logger.error(e);
-      }
-
-      EmailCacheConfig.lastAdFinishedAt = (new Date).getTime();
-      EmailCacheConfig.save([`lastAdFinishedAt`], () => {
-        this.go_dailysurvey(AppConfig.redirectDelay);
-      });
-    };
-
-    /// open ad-view url
-    let openAdWindow: Function = () => {
-      if (adWindow != null) {
-        if (adWindow.adFinished) {
-          Logger.log("Ad finished, continue to next step.");
-          window.onAdClosed();
-          return;
-        } else {
-          Logger.warn("Retry ad-view");
-          try {
-            adWindow.close();
-          } catch (e) {
-            Logger.error(e);
-          }
-        }
-      }
-
-      Logger.log("open url: '" + $href + "'  (waiting for callback)");
+    let now: Number = (new Date).getTime();
+    if (now < EmailCacheConfig.lastAdClickedAt + 1 * 60 * 1000) {
+      Logger.log("Already clicked!");
+    } else {
+      Logger.log(`open url: ${$href}`);
       adWindow = window.open($href, "", "width:100, height:100");
-      adWindow.adFinished = false;
-      Logger.log("Waiting for callback ...");
-    };
+      Logger.log("Waiting for finish ...");
 
-    openAdWindow();
+      EmailCacheConfig.lastAdClickedAt = (new Date).getTime();
+      EmailCacheConfig.save([`lastAdClickedAt`], () => {
+        Logger.log("Save lastAdClickedAt");
+      });
+    }
 
-    /// set timeout for retry
-    /*
-    window.setInterval(function () {
-      Logger.warn("Timeup. Call openAdWindow() again.");
-      openAdWindow();
-    }, 60000);
-    */
+    new DelayTimer(this, this._checkFinish, [adWindow], 1000);
 
     new DelayTimer(this, () => {
-      Logger.log("Skip! go next ...");
-      this.go_dailysurvey(AppConfig.redirectDelay);
-    }, [], 20000);
+      if (adWindow) {
+        adWindow.close();
+      }
+      this.go_adclick(AppConfig.redirectDelay);
+    }, [], 30000);
   }
 
   // --------------------------------------------------
@@ -107,6 +79,31 @@ export class AdclickOperator extends Operator {
     }
 
     return undefined;
+  }
+
+  // --------------------------------------------------
+
+  _checkFinish(adWindow: Window) {
+    EmailCacheConfig.read();
+    if (ECTools.checkFinished(EmailCacheConfig.lastAdFinishedAt)) {
+      Logger.log("Ad finished!");
+
+      if (adWindow) {
+        try {
+          Logger.log("Close ad-view window!");
+          adWindow.close();
+        } catch (err) {
+          console.log(err);
+          debugger;
+        }
+      }
+
+      // this.go_dailysurvey(AppConfig.redirectDelay);
+      this.go_account(AppConfig.redirectDelay);
+      return;
+    }
+
+    new DelayTimer(this, this._checkFinish, [adWindow], 1000);
   }
 
 };

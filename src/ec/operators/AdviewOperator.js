@@ -6,6 +6,7 @@ import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 import { ECTools } from '../../lib/ECTools';
 import { DelayTimer } from '../../lib/DelayTimer';
+import { EmailCacheConfig } from '../../lib/ChromeStorage';
 
 export class AdviewOperator extends Operator {
 
@@ -16,6 +17,10 @@ export class AdviewOperator extends Operator {
   // ----------------------------------------------------------------------------------------------------
 
   operation() {
+    let reloadTimer: DelayTimer = new DelayTimer(this, () => {
+      window.location.reload();
+    }, [], 20000);
+
     window.ecAdview = () => {
       // check finished
 
@@ -32,30 +37,14 @@ export class AdviewOperator extends Operator {
         Logger.debug($span.prop("outerHTML"));
         Logger.log('ad finished');
 
-        window.adFinished = true;
+        EmailCacheConfig.lastAdFinishedAt = (new Date).getTime();
+        EmailCacheConfig.save([`lastAdFinishedAt`], () => {
+          new DelayTimer(this, () => {
+            window.close();
+          }, [], 5000);
+        });
 
-        try {
-          Logger.log('call window.opener.onAdClosed()');
-          window.opener.onAdClosed();
-          Logger.log('call window.opener.onAdClosed() - success');
-
-          // reload for close window
-          let delayId: Number = window.setInterval(function () {
-            Logger.debug('call window.location.reload()');
-            window.location.reload();
-            window.clearInterval(delayId);
-          }, 1000);
-        } catch (e) {
-          Logger.error(e);
-          /*
-          if (window.opener.location.pathname == "/4G/Rewards/DailyAdvertising.aspx") {
-            if (AppConfig.debug && confirm("[Error] " + e.message + "\n\nKeep window for debug?")) {
-              return;
-            }
-          }
-          */
-          window.close();
-        }
+        reloadTimer.cancel();
         return;
       }
 
@@ -77,19 +66,10 @@ export class AdviewOperator extends Operator {
       */
 
       /// retry later
-      Logger.warn("Retry later ...");
+      Logger.debug("Retry later ...");
       window.setTimeout(window.ecAdview, 1000);
     };
     window.ecAdview();
-
-    // ECTools.redirect(20000);
-    new DelayTimer(this, () => {
-      window.close();
-    }, [], 20000);
-
-    window.alert = (message) => {
-      Logger.log(message);
-    }
   }
 
 };

@@ -108,7 +108,8 @@ export class ChromeOptionsPanel extends React.Component {
 
             <hr size="1" />
 
-            <ECTimeFormGroup label="每日廣告" name="lastAdFinishedAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup label="每日廣告 (開始)" name="lastAdClickedAt" onChange={() => { this.forceUpdate(); }} />
+            <ECTimeFormGroup label="每日廣告 (完成)" name="lastAdFinishedAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup label="每日問答" name="lastDailySurveyAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup label="以小搏大" name="lastDailyGameAt" onChange={() => { this.forceUpdate(); }} />
             <ECTimeFormGroup label="問卷" name="lastSurveyAt" onChange={() => { this.forceUpdate(); }} />
@@ -166,24 +167,32 @@ class ECTimeFormGroup extends React.Component {
     let name: String = this.props.name;
     let onChange: Function = this.props.onChange || (() => { });
 
-    let [date, time] = ECTools.parseNextActionDatetime(EmailCacheConfig[name]).split(" ");
+    let src: Number = EmailCacheConfig[name];
+    let [date, time] = ECTools.parseNextActionDatetime(src).split(" ");
 
     return (
       <FormGroup row>
-        <Label className="FontLabel" for={`${name}Input`} sm={4}>{`${label}`}</Label>
-        <Col sm={4}>
+        <Label className="FontLabel" for={`${name}Input`} sm={3}>{`${label}`}</Label>
+        <Col sm={3}>
           <Input id={`${name}Input`} type="date" name="date" bsSize="sm"
             value={date}
             onChange={(event) => {
-              this._handleChange(`${event.currentTarget.value} ${time}`);
+              this._handleDatetimeChange(`${event.currentTarget.value} ${time}`);
               onChange();
             }} />
         </Col>
-        <Col sm={4}>
+        <Col sm={3}>
           <Input type="time" name="time" bsSize="sm"
             value={time}
             onChange={(event) => {
-              this._handleChange(`${date} ${event.currentTarget.value}`);
+              this._handleDatetimeChange(`${date} ${event.currentTarget.value}`);
+              onChange();
+            }} />
+        </Col>
+        <Col sm={3}>
+          <Input type="text" bsSize="sm" value={src}
+            onChange={(event) => {
+              this._handleTimeChange(`${event.currentTarget.value}`);
               onChange();
             }} />
         </Col>
@@ -193,11 +202,22 @@ class ECTimeFormGroup extends React.Component {
 
   // ----------------------------------------------------------------------------------------------------
 
-  _handleChange(datetime: String) {
-    // console.log(`[CHANGE] [datetime] ${datetime}`);
+  _handleDatetimeChange(datetime: String) {
     let name: String = this.props.name;
+    console.log(`[CHANGE] EmailCacheConfig.${name} = time of ${datetime}`);
+
     let time: Number = (new Date(datetime)).getTime();
     EmailCacheConfig[name] = time;
+    this.forceUpdate();
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  _handleTimeChange(time: String) {
+    let name: String = this.props.name;
+    console.log(`[CHANGE] EmailCacheConfig.${name} = ${time}`);
+
+    EmailCacheConfig[name] = parseInt(time);
     this.forceUpdate();
   }
 

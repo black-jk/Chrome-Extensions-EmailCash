@@ -41,9 +41,12 @@ EmailCacheConfig.on("event_read_complete", (event: JEvent) => {
 
 function main() {
   let location = window.location.toString();
-  if (AppConfig.debug) {
-    Logger.debug("[main] location: " + location);
-  }
+// debugger
+  Logger.debug(
+    `\n====================================================================================================` +
+    `\n[main] location: ${location}"` +
+    `\n====================================================================================================`
+  );
 
   // ------------------------------
 

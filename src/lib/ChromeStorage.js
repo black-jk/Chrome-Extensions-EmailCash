@@ -85,7 +85,8 @@ class EmailCacheConfig_ extends ChromeStorageBase {
   redirectDelay: Boolean = false;
   redirectDelayTime: Number = 0;
 
-  lastAdFinishedAt: Number = 0;   // 每日廣告
+  lastAdClickedAt: Number = 0;   // 每日廣告 (開始)
+  lastAdFinishedAt: Number = 0;  // 每日廣告 (完成)
   lastDailySurveyAt: Number = 0; // 每日問答
   lastDailyGameAt: Number = 0;   // 以小搏大
   lastSurveyAt: Number = 0;      // 問卷
@@ -104,6 +105,7 @@ class EmailCacheConfig_ extends ChromeStorageBase {
       redirectDelay: this.redirectDelay,
       redirectDelayTime: this.redirectDelayTime,
 
+      lastAdClickedAt: this.lastAdClickedAt,
       lastAdFinishedAt: this.lastAdFinishedAt,
       lastDailySurveyAt: this.lastDailySurveyAt,
       lastDailyGameAt: this.lastDailyGameAt,

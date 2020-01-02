@@ -28,7 +28,7 @@ export class ECTools {
   // ----------------------------------------------------------------------------------------------------
 
   static redirect(time: Number, url: String = ""): DelayTimer {
-    Logger.log("[ECTools.redirect()] Set redirect after " + Math.floor(time / 1000) + " seconds!");
+    Logger.log(`[ECTools.redirect()] Set redirect after ${Math.floor(time / 1000)} seconds! url = '${url}'`);
     if (!url) url = window.location;
 
     return new DelayTimer(this, (url: String) => {
@@ -61,7 +61,7 @@ export class ECTools {
   static checkFinished(time: Number, shift: Number = 0): Boolean {
     let timeZoneShift: Number = 16 * 60 * 60 * 1000;
     let seconds: Number = (time - timeZoneShift - shift) % 86400000;
-    let lastTime = time - seconds + 86400000;
+    let lastTime = time - seconds + 86400000;   // last check point = next day 00:00:00
 
     let now: Date = new Date();
     let nowTime: Number = now.getTime();
@@ -69,7 +69,7 @@ export class ECTools {
     // Logger.debug(`[lastTime] ${(new Date(lastTime)).toString()}`);
     // Logger.debug(`[nowTime] ${(new Date(nowTime)).toString()}`);
 
-    Logger.debug(`[nowTime >= lastTime] ${(nowTime - lastTime) / 1000 / 60 / 60} HR`)
+    Logger.debug(`[checkFinished] [nowTime >= lastTime] ${(nowTime - lastTime) / 1000 / 60 / 60} HR`)
     if (nowTime >= lastTime) {
       return false;
     }

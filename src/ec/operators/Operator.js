@@ -111,9 +111,18 @@ export class Operator {
         }
 
         if (number > 0 || active) {
-          // $links[0].click();
+          let sleep: Number = AppConfig.redirectDelay;
+          if (key == '每日廣告') {
+            let time: Number = (new Date).getTime() - 86400000;
+            EmailCacheConfig.lastAdClickedAt = time;
+            EmailCacheConfig.lastAdFinishedAt = time;
+            EmailCacheConfig.save([`lastAdClickedAt`, `lastAdFinishedAt`], () => { });
+
+            sleep = Math.max(5, sleep);
+          }
+
           let url: String = $links.attr("href");
-          this.goto(url, AppConfig.redirectDelay);
+          this.goto(url, sleep);
           return true;
         }
       }
