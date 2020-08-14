@@ -30,6 +30,22 @@ export class DailySurveyOperator extends Operator {
 
     // ------------------------------
 
+    let $div = $("div[class='content']:contains('填完即可獲得')");
+    if ($div.length > 0) {
+      // do nothing, waiting for user input
+      return;
+    }
+
+    // ------------------------------
+
+    let $inputs = $("div[class='dailysurvey_award']").find("a[class='table-row']");
+    if ($inputs.length > 0) {
+      $inputs[0].click();
+      return;
+    }
+
+    // ------------------------------
+
     if (ECTools.checkFinished(EmailCacheConfig.lastDailySurveyAt)) {
       let now: Number = (new Date).getTime();
       if (now < EmailCacheConfig.lastDailySurveyAt + 1 * 60 * 1000) {
@@ -75,12 +91,6 @@ export class DailySurveyOperator extends Operator {
         </div>
     </div>
     */
-
-    let $inputs = $("div[class='dailysurvey_award']").find("a[class='table-row']");
-    if ($inputs.length > 0) {
-      $inputs[0].click();
-      return;
-    }
 
     // ------------------------------
 
