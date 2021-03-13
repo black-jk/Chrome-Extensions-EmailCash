@@ -22,7 +22,8 @@
         "https://www.emailcash.com.tw/FaceBook*",
         "https://emailcash.com.tw/adtop.asp*",
         "https://www.emailcash.com.tw/adtop.asp*",
-        "https://www.emailcash.com.tw/dailylatto.asp"
+        "https://www.emailcash.com.tw/dailylatto.asp",
+        "https://shopping.udn.com/*" // "https://shopping.udn.com/mall/Cc1a00.do?sid=2&utm_source=emailcash&utm_medium=CPS&utm_campaign=201709_emailcash"
       ],
       "js": [
         "jquery-3.2.1.min.js",

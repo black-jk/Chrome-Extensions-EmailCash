@@ -32,7 +32,7 @@ export class AdviewOperator extends Operator {
           </p>
         </div>
       */
-      let $span = $("#sViewStatus").find("p[class='red_w']:contains('廣告e元獎勵已入帳'),p[class='red_w']:contains('已加入您的EmailCash帳戶')");
+      let $span = $("#sViewStatus:contains('廣告e元獎勵已入帳'),#sViewStatus:contains('已加入您的EmailCash帳戶')");
       if ($span.length > 0) {
         Logger.debug($span.prop("outerHTML"));
         Logger.log('ad finished');
