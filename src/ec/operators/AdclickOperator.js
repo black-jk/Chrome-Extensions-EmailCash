@@ -61,9 +61,10 @@ export class AdclickOperator extends Operator {
 
   _findLink() {
     let patterns: Array = [
-      "UDN買東西",
-      "IKEA 櫥櫃收納",
-      "momo購物超划算"
+      "Yahoo購物中心",
+      "台灣樂天",
+      "momo購物網",
+      "博客來",
     ];
 
     for (let i in patterns) {
@@ -76,6 +77,16 @@ export class AdclickOperator extends Operator {
       }
 
       Logger.debug(`[AdclickOperator._findLink()] '${pattern}' Missing. (Try next ...)`);
+    }
+
+    // <a href="/Rewards/DailyAdClicks.aspx?id=2158&amp;sid=tpghd355nuyy4b45nperrqm5&amp;u=ppvivian" target="_blank">博客來</a>
+    let links: Array = $(`a[target='_blank']`);
+    for (let i = 0; i < links.length; i++) {
+      let $link = $(links[i]);
+      let $href: String = $link.attr("href");
+      if ($href.match(/DailyAdClicks.aspx/)) {
+        return $link;
+      }
     }
 
     return undefined;

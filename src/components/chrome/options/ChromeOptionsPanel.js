@@ -93,7 +93,7 @@ export class ChromeOptionsPanel extends React.Component {
                   }} />
               </Col>
 
-              <Label className="FontLabel" for={`startTimeoutInput`} sm={4}>{`Refresh Delay (sec)`}</Label>
+              <Label className="FontLabel" for={`startTimeoutInput`} sm={4}>{`Daily Refresh Delay (sec)`}</Label>
               <Col xs={2} style={{ padding: "5px 30px 5px 0px" }}>
                 <Input id="refreshDelayInput" type="number" bsSize="sm"
                   step="1" min="0" max="600"
