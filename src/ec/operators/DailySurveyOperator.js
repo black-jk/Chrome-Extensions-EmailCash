@@ -40,7 +40,10 @@ export class DailySurveyOperator extends Operator {
 
     let $inputs = $("div[class='dailysurvey_award']").find("a[class='table-row']");
     if ($inputs.length > 0) {
-      $inputs[0].click();
+      try {
+        $inputs[0].click();
+      } catch (e) {
+      }
       return;
     }
 

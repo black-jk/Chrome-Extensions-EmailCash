@@ -66,6 +66,40 @@ function main() {
   let timeoutRestartTimer: DelayTimer = ECTools.redirect(startTimeout, "");
 
   $(document).ready(function () {
+
+    // ------------------------------
+    // [YouTube] - https://www.youtube.com/watch*
+    // ------------------------------
+    if (location.match(/^https?:\/\/www\.youtube\.com\/watch/i)) {
+      dailyRestartTimer.cancel();
+      timeoutRestartTimer.cancel();
+
+      let intervalId = setInterval(function () {
+        var btns = document.getElementsByClassName("ytp-ad-overlay-close-button");
+        for (var i = 0; i < btns.length; i++) {
+          console.log(btns[i]);
+          try {
+            btns[i].click();
+          } catch (e) {
+          }
+        }
+
+        var btns = document.getElementsByClassName("ytp-ad-text ytp-ad-skip-button-text");
+        for (var i = 0; i < btns.length; i++) {
+          console.log(btns[i]);
+          try {
+            btns[i].click();
+          } catch (e) {
+          }
+        }
+      }, 100);
+
+      console.log("[YT-AD] set interval: ", intervalId);
+      return;
+    }
+
+    // ------------------------------
+
     require('./css/main.css');
 
     Logger.debug("[AutoReload - Timeout] clear!");
