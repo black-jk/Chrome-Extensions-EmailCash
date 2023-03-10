@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "EmailCash Daily Operator",
-  "version": "3.2.5",
+  "version": "3.2.6",
   "author": "BlackJK",
   "description": "EmailCash Daily Operator",
   "options_page": "options.html",

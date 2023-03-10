@@ -56,11 +56,24 @@ export class DailyGamesOperator extends Operator {
       <a href="javascript:void(0);" class="number_btn btn_choose SentFun">確定選號</a>
     </div>
     */
-    Logger.log("Click AutoNumber.");
-    $(".AutoNumber")[0].click();
+    try {
+      Logger.log("Click AutoNumber.");
+      $(".AutoNumber")[0].click();
+    } catch (e) {
+      Logger.error(e);
+    }
 
-    Logger.log("Click SentFun.");
-    this.SentFunClick();
+    try {
+      Logger.log("Click SentFun.");
+      this.SentFunClick();
+
+    } catch (e) {
+      Logger.error(e);
+    }
+
+    new DelayTimer(this, () => {
+      this.go_account(AppConfig.redirectDelay);
+    }, [], 1000);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -68,6 +81,7 @@ export class DailyGamesOperator extends Operator {
   SentFunClick() {
     // copy from https://www.emailcash.com.tw/4G/js/games/DailyGamesJS.js
 
+    //送出號碼
     var BetNumStr = "|";
     var errmark = 0;
     var n = $(".GuessNoList").length;
@@ -116,6 +130,16 @@ export class DailyGamesOperator extends Operator {
     }
     else {
       msg = "送出後將扣除" + _efee + "e，是否確定送出？\n※送出後數字會由小到大排序。";
+
+      // [EmailCashOperator] >>>>>>>>>>
+      Logger.log("Already done!!! Go next ...");
+      EmailCacheConfig.lastDailyGameAt = (new Date).getTime();
+      EmailCacheConfig.save([`lastDailyGameAt`], () => {
+        this.go_account(AppConfig.redirectDelay);
+      });
+      this.go_account(AppConfig.redirectDelay);
+      return false;
+      // [EmailCashOperator] <<<<<<<<<<
     }
 
     if (true || confirm(msg)) {
@@ -129,21 +153,26 @@ export class DailyGamesOperator extends Operator {
         url: "DailyGamesAjax.aspx",
         data: datastr,
         success: function (res) {
+          $("#ContentPlaceHolder1_hidBetNumStr").value = "";
           if (res == "1") {
-            $("#ContentPlaceHolder1_hidBetNumStr").value = "";
-            window.location.reload();
+            alert("您的e元不足！");
+          } else if (res == "2") {
+            alert("您的e元明細錯誤，請聯絡客服中心！");
+          } else if (res == "3") {
+            alert("號碼已送出！");
+            location.href = location.href;
+          } else {
+            alert("系統忙碌，請稍候再試！");
           }
-          else {
-            alert("發生錯誤，請重新再試。");
-          }
-
         },
         beforeSend: function () {
-          //$("#loading").show();
-          //$(".loadingimg").show();
+          $(".btn_choose").hide();
+        },
+        complete: function () {
+          $(".btn_choose").show();
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          alert("發生錯誤，請重新再試。");
+          alert("發生錯誤，請重新登入再試。");
           //$("#loading").hide();
           //$(".loadingimg").hide();
         }
