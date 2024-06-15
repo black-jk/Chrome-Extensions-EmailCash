@@ -15,14 +15,19 @@ export class LoggerPanel extends Component {
   // --------------------------------------------------
 
   render() {
+    let lines: Array = [];
     let logs: Array = LoggerData.logs;
+    let index: Number = 0;
+    logs.forEach((loggerData: LoggerData) => {
+      loggerData.message.split("\n").forEach((line: String) => {
+        lines.push(<span key={index++} style={{ color: loggerData.getColor() }}>{line}<br /></span>);
+      });
+    });
 
     return (
       <div className="LoggerPanel" ref="contentsDiv" hidden={this.props.hidden}>
         {
-          logs.map((loggerData: LoggerData, index) => (
-            <span key={index} style={{ color: loggerData.getColor() }}>{loggerData.message}<br /></span>
-          ))
+          lines
         }
       </div>
     );

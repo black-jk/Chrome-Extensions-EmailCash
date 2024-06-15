@@ -13,7 +13,8 @@
       "matches": [
         "https://emailcash.com.tw/*",
         "https://www.emailcash.com.tw/*",
-        "https://www.youtube.com/watch*"
+        "https://www.youtube.com/watch*",
+        "https://alfred.camera/*"
       ],
       "exclude_matches": [
         "https://emailcash.com.tw/itemjoin.asp*",
