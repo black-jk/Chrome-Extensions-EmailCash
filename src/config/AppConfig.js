@@ -13,7 +13,7 @@ export default class AppConfig {
 
   name: String = "EmailCashOperator";
 
-  version: String = "3.2.7" + (process.env.NODE_ENV == ENV.DEVELOPMENT ? "-develop" : "");
+  version: String = "3.2.8" + (process.env.NODE_ENV == ENV.DEVELOPMENT ? "-develop" : "");
 
 
 

@@ -13,6 +13,7 @@ import { EmailCacheConfig } from './lib/ChromeStorage';
 import { AppContainer } from './redux/containers/AppContainer';
 import { EmailCashDispatcher } from './ec/EmailCashDispatcher';
 import { JEvent } from './lib/event/EventsDispatcher';
+import { Tool } from './lib/Tool';
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -41,7 +42,7 @@ EmailCacheConfig.on("event_read_complete", (event: JEvent) => {
 
 function main() {
   let location = window.location.toString();
-// debugger
+
   Logger.debug(
     `\n====================================================================================================` +
     `\n[main] location: ${location}"` +
@@ -68,6 +69,21 @@ function main() {
   $(document).ready(function () {
 
     // ------------------------------
+    // [阿福管家] - https://alfred.camera/*
+    // ------------------------------
+    if (location.match(/^https?:\/\/alfred\.camera\/.*/i)) {
+      dailyRestartTimer.cancel();
+      timeoutRestartTimer.cancel();
+
+      let intervalId = setInterval(function () {
+        Tool.killAD();
+      }, 1000);
+
+      console.log("[TRACE] [AF-AD] set interval: ", intervalId);
+      return;
+    }
+
+    // ------------------------------
     // [YouTube] - https://www.youtube.com/watch*
     // ------------------------------
     if (location.match(/^https?:\/\/www\.youtube\.com\/watch/i)) {
@@ -84,6 +100,8 @@ function main() {
           }
         }
 
+        // ------------------------------
+
         var btns = document.getElementsByClassName("ytp-ad-text ytp-ad-skip-button-text");
         for (var i = 0; i < btns.length; i++) {
           console.log(btns[i]);
@@ -92,10 +110,33 @@ function main() {
           } catch (e) {
           }
         }
+
+        // ------------------------------
+
+        var fadblock = $('#fadblock-popup #close-modal').click();
+        if (fadblock.length > 0) {
+          console.log(`[TRACE] [Kill fadblock]`, fadblock);
+        }
       }, 100);
 
       console.log("[YT-AD] set interval: ", intervalId);
       return;
+    }
+
+    // ------------------------------
+    // [EmailCash]
+    // ------------------------------
+    if (location.match(/emailcash/i)) {
+      let intervalId = setInterval(function () {
+        var divs = $("div[aria-label='關閉廣告']").click();
+        if (divs.length > 0) {
+          console.log(`[TRACE] [Click 關閉廣告]`, divs);
+        }
+
+        Tool.killAD();
+      }, 1000);
+
+      console.log("[EC-AD] set interval: ", intervalId);
     }
 
     // ------------------------------
