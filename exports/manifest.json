@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "EmailCash Daily Operator",
-  "version": "3.2.6",
+  "version": "3.2.7",
   "author": "BlackJK",
   "description": "EmailCash Daily Operator",
   "options_page": "options.html",
@@ -13,7 +13,6 @@
       "matches": [
         "https://emailcash.com.tw/*",
         "https://www.emailcash.com.tw/*",
-        "https://shopping.udn.com/*",
         "https://www.youtube.com/watch*"
       ],
       "exclude_matches": [

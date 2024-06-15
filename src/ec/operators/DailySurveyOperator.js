@@ -6,6 +6,7 @@ import { Logger } from '../../lib/Logger';
 import { Operator } from './Operator';
 import { EmailCacheConfig } from '../../lib/ChromeStorage';
 import { ECTools } from '../../lib/ECTools';
+import { DelayTimer } from '../../lib/DelayTimer';
 
 export class DailySurveyOperator extends Operator {
 
@@ -38,11 +39,12 @@ export class DailySurveyOperator extends Operator {
 
     // ------------------------------
 
-    let $inputs = $("div[class='dailysurvey_award']").find("a[class='table-row']");
-    if ($inputs.length > 0) {
+    let $objects = $("div[class='dailysurvey_award']").find("a[class='table-row']").find("div[class='table-cell']");
+    if ($objects.length > 0) {
       try {
-        $inputs[0].click();
+        $objects[0].click();
       } catch (e) {
+        Logger.error(e);
       }
       return;
     }
