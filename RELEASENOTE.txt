@@ -6,6 +6,7 @@
   [2024-??-??] [v3.2.8]
    - kill google ad
    - fix log display
+   - add RewardsOperator
 
   [2023-05-13] [v3.2.7]
    - fixup for daily survey

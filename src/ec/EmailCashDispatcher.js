@@ -19,6 +19,7 @@ import { MailOperator } from './operators/MailOperator';
 import { MailDetailOperator } from './operators/MailDetailOperator';
 import { MailClickOperator } from './operators/MailClickOperator';
 import { SurveyOperator } from './operators/SurveyOperator';
+import { RewardsOperator } from './operators/RewardsOperator';
 
 export class EmailCashDispatcher {
 
@@ -133,6 +134,11 @@ export class EmailCashDispatcher {
     // https://www.emailcash.com.tw/Rewards/Survey.aspx
     if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/Survey\.aspx/i)) {
       return new SurveyOperator();
+    }
+
+    // https://www.emailcash.com.tw/Rewards/3C4F6693EA/Survey4Com.aspx?p=47422163&idt=03756230344F416FB409
+    if (location.match(/^https?:\/\/(www\.)?emailcash\.com\.tw\/Rewards\/.*\/Survey4Com\.aspx/i)) {
+      return new RewardsOperator();
     }
 
     // https://shopping.udn.com/mall/Cc1a00.do?sid=2&utm_source=emailcash&utm_medium=CPS&utm_campaign=201709_emailcash
