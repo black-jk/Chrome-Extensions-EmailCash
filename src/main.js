@@ -66,12 +66,44 @@ function main() {
   let dailyRestartTimer: DelayTimer = ECTools.redirect(refreshTime, "https://www.emailcash.com.tw/");
   let timeoutRestartTimer: DelayTimer = ECTools.redirect(startTimeout, "");
 
+
+  // ------------------------------
+  // [XXX]
+  // ------------------------------
+  if (location.match(/^https?:\/\/zh\.stripchat\.com\/.*/i)
+    || location.match(/^https?:\/\/www\.dlsite\.com\/.*/i)
+    || location.match(/^https?:\/\/t\.doujindomain\.com\/.*/i)
+    || location.match(/^https?:\/\/tongren\.jp\/.*/i)
+    || location.match(/^https?:\/\/javhd\.com\/.*/i)
+    || location.match(/^https?:\/\/holahupa\.com\/.*/i)
+    || location.match(/^https?:\/\/tw\.trip\.com\/.*/i)
+    || location.match(/^https?:\/\/syacomic\.com\/.*/i)
+    || location.match(/^https?:\/\/videocampaign\.co\/.*/i)
+    || location.match(/^https?:\/\/crazyvideotodownload\.com\/.*/i)
+    || location.match(/^https?:\/\/www.luluba.xyz\/.*/i)
+    || location.match(/^https?:\/\/camssurveys.com\/.*/i)
+    || location.match(/^https?:\/\/goodcoolsurvey.com\/.*/i)
+  ) {
+    window.close();
+    return;
+  }
+
+  // ------------------------------
+
   $(document).ready(function () {
 
     // ------------------------------
     // [阿福管家] - https://alfred.camera/*
+    // www.twbook.cc/*
+    // hornydragon.blogspot.com/*
     // ------------------------------
-    if (location.match(/^https?:\/\/alfred\.camera\/.*/i)) {
+    if (location.match(/^https?:\/\/www\.twbook\.cc\/.*/i) ||
+        location.match(/^https?:\/\/hornydragon\.blogspot\.com\/.*/i) ||
+        location.match(/^https?:\/\/alfred\.camera\/.*/i) ||
+
+        location.match(/^https?:\/\/www\.thiscozyden\.com\/.*/i) ||
+        false
+    ) {
       dailyRestartTimer.cancel();
       timeoutRestartTimer.cancel();
 
@@ -79,7 +111,7 @@ function main() {
         Tool.killAD();
       }, 1000);
 
-      console.log("[TRACE] [AF-AD] set interval: ", intervalId);
+      console.log("[TRACE] [AUTO-KILL-AD] set interval: ", intervalId);
       return;
     }
 

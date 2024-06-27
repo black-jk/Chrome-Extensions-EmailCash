@@ -95,13 +95,65 @@ export class Tool {
   // ----------------------------------------------------------------------------------------------------
 
   static killAD() {
-    // Google AD
-    var ads = $('.adsbygoogle').remove();
-    if (ads.length > 0) {
-      console.log(`[TRACE] [Remove adsbygoogle]`, ads);
+    try {
+      // Google AD
+      var ads = $('.adsbygoogle').remove();
+      if (ads.length > 0) {
+        console.log(`[TRACE] [Remove adsbygoogle]`, ads);
+      }
+    } catch (err) {
+      console.error('[Tool.killAD()]', err);
+    }
+
+    try {
+      // adBlock
+      var ads = $('.adBlock').remove();
+      if (ads.length > 0) {
+        console.log(`[TRACE] [Remove adBlock]`, ads);
+      }
+    } catch (err) {
+      console.error('[Tool.killAD()]', err);
+    }
+
+    try {
+      var ads = $('.gadBlock').remove();
+      if (ads.length > 0) {
+        console.log(`[TRACE] [Remove gadBlock]`, ads);
+      }
+    } catch (err) {
+      console.error('[Tool.killAD()]', err);
+    }
+
+    try {
+      // "https://hornydragon.blogspot.com/*"
+      // $("div[id^='adGeek']")
+      var ads = $("div[id^='adGeek']").remove();
+      if (ads.length > 0) {
+        console.log(`[TRACE] [Remove adGeek]`, ads);
+      }
+
+      var ads = $("div[id^='google_ads_iframe']").remove();
+      if (ads.length > 0) {
+        console.log(`[TRACE] [Remove google_ads_iframe]`, ads);
+      }
+
+      var ads = $(".compass-fit-ad").remove();
+      if (ads.length > 0) {
+        console.log(`[TRACE] [Remove compass-fit-ad]`, ads);
+      }
+    } catch (err) {
+      console.error('[Tool.killAD()]', err);
+    }
+
+    try {
+      var ads = $("div[class='close-btn']").click();
+      if (ads.length > 0) {
+        console.log(`[TRACE] [Remove gadBlock]`, ads);
+      }
+    } catch (err) {
+      console.error('[Tool.killAD()]', err);
     }
   }
-
 
 
 };

@@ -15,7 +15,26 @@
         "https://www.emailcash.com.tw/*",
         "https://www.youtube.com/watch*",
         "https://alfred.camera/*"
-      ],
+        ,"https://www.twbook.cc/*"
+        ,"https://hornydragon.blogspot.com/*"
+
+,"https://www.thiscozyden.com/*"
+
+,"https://zh.stripchat.com/*"
+,"https://www.dlsite.com/*"
+,"https://t.doujindomain.com/*"
+,"https://tongren.jp/*"
+,"https://javhd.com/*"
+,"https://holahupa.com/*"
+,"https://tw.trip.com/*"
+,"https://syacomic.com/*"
+,"https://videocampaign.co/*"
+,"https://crazyvideotodownload.com/*"
+,"https://www.luluba.xyz/*"
+,"https://camssurveys.com/*"
+,"https://goodcoolsurvey.com/*"
+
+],
       "exclude_matches": [
         "https://emailcash.com.tw/itemjoin.asp*",
         "https://www.emailcash.com.tw/itemjoin.asp*",
