@@ -72,6 +72,8 @@ export class AppPanel extends React.Component {
             <div className="controls">
               <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_account(0); }}>{`帳戶`}</Button>
               <span>{` `}</span>
+              <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_bank(0); }}>{`儲蓄`}</Button>
+              <span>{` `}</span>
               <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_mail(0); }}>{`郵件`}</Button>
               <span>{` `}</span>
               <Button size="sm" style={{ backgroundColor: "#336633" }} onClick={() => { operator.go_dailysurvey(0); }}>{`問答`}</Button>

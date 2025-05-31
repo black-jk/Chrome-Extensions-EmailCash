@@ -57,6 +57,12 @@ export class Operator {
 
   // --------------------------------------------------
 
+  go_bank(sleep: Number) {
+    this.goto("https://www.emailcash.com.tw/Rewards/Bank.aspx", sleep);
+  }
+
+  // --------------------------------------------------
+
   go_mail(sleep: Number) {
     this.goto("https://www.emailcash.com.tw/Rewards/Mail.aspx", sleep);
   }

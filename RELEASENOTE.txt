@@ -3,6 +3,10 @@
 
   ----------------------------------------------------------------------------------------------------
 
+  [2025-05-31] [v3.2.9]
+    - 增加 「儲蓄」 連結
+    - 嘗試改用 Docker React 開發 - https://docs.google.com/document/d/1r07dmTzsmjKuLjtJ3XOEim2U1srBqNIhIaGOqLSb3ew/edit?tab=t.be2w0bt16sk7#bookmark=id.e79sdadmiv4r
+
   [2024-??-??] [v3.2.8]
    - kill google ad
    - fix log display
