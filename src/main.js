@@ -13,6 +13,7 @@ import { EmailCacheConfig } from './lib/ChromeStorage';
 import { AppContainer } from './redux/containers/AppContainer';
 import { EmailCashDispatcher } from './ec/EmailCashDispatcher';
 import { JEvent } from './lib/event/EventsDispatcher';
+import { Tool } from './lib/Tool';
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -41,7 +42,7 @@ EmailCacheConfig.on("event_read_complete", (event: JEvent) => {
 
 function main() {
   let location = window.location.toString();
-// debugger
+
   Logger.debug(
     `\n====================================================================================================` +
     `\n[main] location: ${location}"` +
@@ -65,7 +66,54 @@ function main() {
   let dailyRestartTimer: DelayTimer = ECTools.redirect(refreshTime, "https://www.emailcash.com.tw/");
   let timeoutRestartTimer: DelayTimer = ECTools.redirect(startTimeout, "");
 
+
+  // ------------------------------
+  // [XXX]
+  // ------------------------------
+  if (location.match(/^https?:\/\/zh\.stripchat\.com\/.*/i)
+    || location.match(/^https?:\/\/www\.dlsite\.com\/.*/i)
+    || location.match(/^https?:\/\/t\.doujindomain\.com\/.*/i)
+    || location.match(/^https?:\/\/tongren\.jp\/.*/i)
+    || location.match(/^https?:\/\/javhd\.com\/.*/i)
+    || location.match(/^https?:\/\/holahupa\.com\/.*/i)
+    || location.match(/^https?:\/\/tw\.trip\.com\/.*/i)
+    || location.match(/^https?:\/\/syacomic\.com\/.*/i)
+    || location.match(/^https?:\/\/videocampaign\.co\/.*/i)
+    || location.match(/^https?:\/\/crazyvideotodownload\.com\/.*/i)
+    || location.match(/^https?:\/\/www.luluba.xyz\/.*/i)
+    || location.match(/^https?:\/\/camssurveys.com\/.*/i)
+    || location.match(/^https?:\/\/goodcoolsurvey.com\/.*/i)
+  ) {
+    window.close();
+    return;
+  }
+
+  // ------------------------------
+
   $(document).ready(function () {
+
+    // ------------------------------
+    // [阿福管家] - https://alfred.camera/*
+    // www.twbook.cc/*
+    // hornydragon.blogspot.com/*
+    // ------------------------------
+    if (location.match(/^https?:\/\/www\.twbook\.cc\/.*/i) ||
+        location.match(/^https?:\/\/hornydragon\.blogspot\.com\/.*/i) ||
+        location.match(/^https?:\/\/alfred\.camera\/.*/i) ||
+
+        location.match(/^https?:\/\/www\.thiscozyden\.com\/.*/i) ||
+        false
+    ) {
+      dailyRestartTimer.cancel();
+      timeoutRestartTimer.cancel();
+
+      let intervalId = setInterval(function () {
+        Tool.killAD();
+      }, 1000);
+
+      console.log("[TRACE] [AUTO-KILL-AD] set interval: ", intervalId);
+      return;
+    }
 
     // ------------------------------
     // [YouTube] - https://www.youtube.com/watch*
@@ -84,6 +132,8 @@ function main() {
           }
         }
 
+        // ------------------------------
+
         var btns = document.getElementsByClassName("ytp-ad-text ytp-ad-skip-button-text");
         for (var i = 0; i < btns.length; i++) {
           console.log(btns[i]);
@@ -92,10 +142,33 @@ function main() {
           } catch (e) {
           }
         }
+
+        // ------------------------------
+
+        var fadblock = $('#fadblock-popup #close-modal').click();
+        if (fadblock.length > 0) {
+          console.log(`[TRACE] [Kill fadblock]`, fadblock);
+        }
       }, 100);
 
       console.log("[YT-AD] set interval: ", intervalId);
       return;
+    }
+
+    // ------------------------------
+    // [EmailCash]
+    // ------------------------------
+    if (location.match(/emailcash/i)) {
+      let intervalId = setInterval(function () {
+        var divs = $("div[aria-label='關閉廣告']").click();
+        if (divs.length > 0) {
+          console.log(`[TRACE] [Click 關閉廣告]`, divs);
+        }
+
+        Tool.killAD();
+      }, 1000);
+
+      console.log("[EC-AD] set interval: ", intervalId);
     }
 
     // ------------------------------
